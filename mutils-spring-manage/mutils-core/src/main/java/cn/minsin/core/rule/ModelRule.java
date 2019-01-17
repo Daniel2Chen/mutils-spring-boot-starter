@@ -46,7 +46,8 @@ public abstract class ModelRule implements Serializable {
 		boolean flag = false;
 		SortedMap<String, String> tree = new TreeMap<>();
 		for (Field field : getAllFields()) {
-			if(verificationField(field)) continue;
+			if (verificationField(field))
+				continue;
 			NotNull annotation = field.getAnnotation(NotNull.class);
 			try {
 				String key = field.getName();
@@ -56,7 +57,7 @@ public abstract class ModelRule implements Serializable {
 					if (StringUtil.isBlank(object)) {
 						String description = annotation.value();
 						throw new MutilsException(String.format(mssage, key, description));
-					}
+					} 
 				}
 				if (!StringUtil.isBlank(object)) {
 					tree.put(key, object.toString());
@@ -67,7 +68,7 @@ public abstract class ModelRule implements Serializable {
 				continue;
 			}
 		}
-		if(flag) {
+		if (flag) {
 			throw new MutilsErrorException("Some fields is null.Program termination");
 		}
 		return tree;
@@ -92,7 +93,8 @@ public abstract class ModelRule implements Serializable {
 	 */
 	public void verificationField() {
 		for (Field field : getAllFields()) {
-			if(verificationField(field)) continue;
+			if (verificationField(field))
+				continue;
 			NotNull annotation = field.getAnnotation(NotNull.class);
 			if (annotation != null && annotation.notNull()) {
 				try {
@@ -113,12 +115,13 @@ public abstract class ModelRule implements Serializable {
 
 	/**
 	 * 验证某个字段
+	 * 
 	 * @param field
 	 * @return
 	 */
 	protected boolean verificationField(Field field) {
 		int modifiers = field.getModifiers();
-		if(Modifier.isStatic(modifiers) || !Modifier.isPrivate(modifiers)||Modifier.isFinal(modifiers)){
+		if (Modifier.isStatic(modifiers) || !Modifier.isPrivate(modifiers) || Modifier.isFinal(modifiers)) {
 			return true;
 		}
 		return false;

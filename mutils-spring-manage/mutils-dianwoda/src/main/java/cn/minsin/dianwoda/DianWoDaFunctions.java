@@ -46,7 +46,7 @@ public class DianWoDaFunctions extends FunctionRule {
 	 * @param businessParams 业务参数
 	 * @return 响应结果
 	 */
-	static JSONObject doSend(String url, Map<String, Object> businessParams) throws MutilsErrorException {
+	protected static JSONObject doSend(String url, Map<String, Object> businessParams) throws MutilsErrorException {
 
 		/* 生成签名 */
 		String sign = SignUtil.sign(businessParams, config.getSercret());

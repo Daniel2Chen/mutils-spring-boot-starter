@@ -196,7 +196,7 @@ public class FileFunctions extends FunctionRule {
 		}
 	}
 
-	static String localSave(MultipartFile file) throws MutilsErrorException {
+	protected static String localSave(MultipartFile file) throws MutilsErrorException {
 		try {
 			String fileName = file.getOriginalFilename();
 			String gName = fileName;

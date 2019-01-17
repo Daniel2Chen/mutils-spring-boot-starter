@@ -1,5 +1,8 @@
 package cn.minsin.core.tools;
 
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,18 +21,30 @@ public class StringUtil extends StringUtils {
 	 * @return true 有 false 无
 	 */
 	public static boolean isBlank(Object... param) {
-		for (Object object : param) {
-			if (object == null || isBlank(object.toString())) {
-				return true;
+		try {
+			for (Object object : param) {
+				if (object == null || isBlank(object.toString())) {
+					return true;
+				} else if(object instanceof Collection || object instanceof Map){
+					// 如果是集合或者map
+					Method declaredMethod = object.getClass().getDeclaredMethod("isEmpty");
+					Object invoke = declaredMethod.invoke(object);
+					if ("true".equals(invoke.toString())) {
+						return true;
+					}
+				}
 			}
+			return param.length == 0 ? true : false;
+		} catch (Exception e) {
+			return true;
 		}
-		return param.length == 0 ? true : false;
+
 	}
 
 	/**
 	 * 判断是否为空 如果为空则返回默认值
 	 * 
-	 * @param cs 判断的字符串
+	 * @param cs  判断的字符串
 	 * @param def 默认值字符串
 	 * @return
 	 */

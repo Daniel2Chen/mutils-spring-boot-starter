@@ -27,9 +27,10 @@ import cn.minsin.core.rule.FunctionRule;
 import cn.minsin.core.web.VO;
 
 /**
- * 集成支付宝常用功能
- * 
- * @author mintonzhang@163.com 2018年12月6日
+ * 	支付宝功能列表
+ * @author mintonzhang
+ * @date 2019年1月17日
+ * @since 0.1.0
  */
 public class AlipayFunctions extends FunctionRule {
 
@@ -142,13 +143,13 @@ public class AlipayFunctions extends FunctionRule {
 					config.getSignType())) {
 				return init.toObject(NotifyModel.class);
 			}
-			throw new MutilsErrorException("签名验证失败");
+			throw new MutilsErrorException("Alipay signature verification failed.");
 		} catch (Exception e) {
-			throw new MutilsErrorException(e, "支付宝回调解析失败");
+			throw new MutilsErrorException(e, "Parsing alipay callback failed.");
 		}
 	}
 
-	static AlipayClient initAlipayClient() {
+	protected static AlipayClient initAlipayClient() {
 		return new DefaultAlipayClient(
 				config.getServerUrl(),
 				config.getAppid(), 

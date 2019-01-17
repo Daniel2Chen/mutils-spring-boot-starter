@@ -24,6 +24,7 @@
 	    <module>mutils-wechat-app</module>
 	    <module>mutils-union-pay</module>
     	<module>mutils-gexin-push</module>
+    	<module>mutils-aliyun-sms</module>
   </modules>
 
 	<properties>
@@ -96,6 +97,11 @@
 			<dependency>
 				<groupId>cn.minsin</groupId>
 				<artifactId>mutils-gexin-push</artifactId>
+				<version>${mutils.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.minsin</groupId>
+				<artifactId>mutils-aliyun-sms</artifactId>
 				<version>${mutils.version}</version>
 			</dependency>
 			<dependency>

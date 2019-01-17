@@ -25,7 +25,6 @@ public class WechatAppFunctions extends WeChatPayFunctions {
 	 * @throws MutilsErrorException
 	 */
 	public static Map<String, String> createAppPayParamter(AppOrderPayModel model) throws MutilsErrorException {
-		
 		try {
 			Map<String, String> doXMLParse = createUnifiedOrder(model);
 			checkMap(doXMLParse);

@@ -96,7 +96,7 @@ public class AlipayConfig extends InitConfig {
 
 	@Override
 	protected void checkConfig() {
-		slog.info("Required for initialization appid、privateKey、publicKey、notifyUrl、returnUrl.");
+		slog.info("Required for initialization appid、privateKey、publicKey、notifyUrl.");
 		
 		if (StringUtil.isBlank(appid, privateKey, publicKey, notifyUrl, serverUrl)) {
 			throw new MutilsException("支付宝支付初始化失败,请检查配置文件是否正确.");

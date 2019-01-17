@@ -3,6 +3,7 @@ package cn.minsin.spring.boot.autoconfigure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import cn.minsin.core.init.AlipayConfig;
+import cn.minsin.core.init.AliyunSmsConfig;
 import cn.minsin.core.init.DianWoDaConfig;
 import cn.minsin.core.init.ExcelConfig;
 import cn.minsin.core.init.FileConfig;
@@ -84,6 +85,10 @@ public class MutilsProperties {
 	 * 	个推推送
 	 */
 	private GexinPushConfig gexinPush = new GexinPushConfig();
+	/**
+	 * 	阿里大鱼短信
+	 */
+	private AliyunSmsConfig aliyunSms = new AliyunSmsConfig();
 	
 	/**
 	 * 描述文件:
@@ -93,6 +98,14 @@ public class MutilsProperties {
 	private String readMe;
 	
 	
+	public AliyunSmsConfig getAliyunSms() {
+		return aliyunSms;
+	}
+
+	public void setAliyunSms(AliyunSmsConfig aliyunSms) {
+		this.aliyunSms = aliyunSms;
+	}
+
 	public UnionPayConfig getUnionPay() {
 		return unionPay;
 	}

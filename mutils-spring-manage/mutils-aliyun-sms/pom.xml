@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.minsin</groupId>
+		<artifactId>mutils-spring-manage</artifactId>
+		<version>0.2.4</version>
+	</parent>
+	<artifactId>mutils-aliyun-sms</artifactId>
+	<name>mutils-aliyun-sms</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<aliyuncore.version>4.3.2</aliyuncore.version>
+		<dysmsapi.version>1.1.0</dysmsapi.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-core</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core -->
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>${aliyuncore.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-dysmsapi -->
+		<dependency>
+		    <groupId>com.aliyun</groupId>
+		    <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+		    <version>${dysmsapi.version}</version>
+		</dependency>
+		
+
+	</dependencies>
+</project>

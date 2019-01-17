@@ -117,4 +117,19 @@ public class ListUtil {
 
 		return list == null || list.isEmpty() ? true : false;
 	}
+
+	/**
+	 * 判断数组集合
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static boolean isEmpty(List<?>... list) {
+		for (List<?> list2 : list) {
+			if (!isEmpty(list2)) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
