@@ -7,6 +7,8 @@ import java.util.TreeMap;
 import org.mutils.wechat.app.model.AppOrderPayModel;
 import org.mutils.wechat.app.model.AppRefundModel;
 import org.mutils.wechat.wechatpay.core.WeChatPayFunctions;
+import org.mutils.wechat.wechatpay.core.model.RefundReturnModel;
+
 import cn.minsin.core.exception.MutilsErrorException;
 
 /**
@@ -53,7 +55,7 @@ public class WechatAppFunctions extends WeChatPayFunctions {
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static Map<String, String> createMiniProgramRefundParamter(AppRefundModel model) throws MutilsErrorException {
+	public static RefundReturnModel createMiniProgramRefundParamter(AppRefundModel model) throws MutilsErrorException {
 		return createRefundRequest(model);
 	}
 }

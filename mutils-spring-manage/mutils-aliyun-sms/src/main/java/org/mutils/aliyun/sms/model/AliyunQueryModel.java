@@ -26,6 +26,29 @@ public class AliyunQueryModel extends ModelRule {
 
 	@NotNull("短信发送日期，支持查询最近30天的记录。格式为yyyyMMdd，例如20181225。")
 	private Date sendDate;
+	
+	@NotNull("连接超时时间 默认1000ms")
+	private Long  defaultConnectTimeout=1000L;
+	
+	@NotNull("读取超时时间 默认1000ms")
+	private Long defaultReadTimeout=1000L;
+	
+	
+	public Long getDefaultConnectTimeout() {
+		return defaultConnectTimeout;
+	}
+
+	public void setDefaultConnectTimeout(Long defaultConnectTimeout) {
+		this.defaultConnectTimeout = defaultConnectTimeout;
+	}
+
+	public Long getDefaultReadTimeout() {
+		return defaultReadTimeout;
+	}
+
+	public void setDefaultReadTimeout(Long defaultReadTimeout) {
+		this.defaultReadTimeout = defaultReadTimeout;
+	}
 
 	public Long getCurrentPage() {
 		return currentPage;

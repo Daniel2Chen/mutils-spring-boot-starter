@@ -24,6 +24,7 @@ import org.mutils.wechat.miniprogram.model.MiniProgramOrderPayModel;
 import org.mutils.wechat.miniprogram.model.MiniProgramRefundModel;
 import org.mutils.wechat.miniprogram.model.UserInfoModel;
 import org.mutils.wechat.wechatpay.core.WeChatPayFunctions;
+import org.mutils.wechat.wechatpay.core.model.RefundReturnModel;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -40,8 +41,8 @@ import cn.minsin.core.tools.HttpClientUtil;
  * @date 2019年1月10日
  */
 public class WechatMiniProgramFunctions extends WeChatPayFunctions {
-	
-	private static final WechatMiniProgramConfig config =InitConfig.loadConfig(WechatMiniProgramConfig.class);
+
+	private static final WechatMiniProgramConfig config = InitConfig.loadConfig(WechatMiniProgramConfig.class);
 
 	/**
 	 * 获取sessionkey和openid,一般用于小程序授权登录.
@@ -51,12 +52,12 @@ public class WechatMiniProgramFunctions extends WeChatPayFunctions {
 	 * @throws MutilsErrorException
 	 */
 	public static Code2SessionReturnModel jscode2session(String code) throws MutilsErrorException {
-		
+
 		try {
 			String url = "https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code";
 
-			url = url.replace("APPID", config.getAppid()).replace("SECRET", config.getAppSecret())
-					.replace("JSCODE", code);
+			url = url.replace("APPID", config.getAppid()).replace("SECRET", config.getAppSecret()).replace("JSCODE",
+					code);
 			HttpGet get = HttpClientUtil.getGetMethod(url);
 
 			CloseableHttpClient build = HttpClientBuilder.create().build();
@@ -81,7 +82,7 @@ public class WechatMiniProgramFunctions extends WeChatPayFunctions {
 	 * @throws MutilsErrorException
 	 */
 	public static UserInfoModel getUserInfo(String encryptedData, String code, String iv) throws MutilsErrorException {
-		
+
 		try {
 			Code2SessionReturnModel jscode2session = jscode2session(code);
 			// 被加密的数据
@@ -148,15 +149,15 @@ public class WechatMiniProgramFunctions extends WeChatPayFunctions {
 	}
 
 	/**
-	 * 发起退款申请
+	 * 	发起退款申请
 	 * 
 	 * @param model
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static Map<String, String> createMiniProgramRefundParamter(MiniProgramRefundModel model)
+	public static RefundReturnModel createMiniProgramRefundParamter(MiniProgramRefundModel model)
 			throws MutilsErrorException {
-		
+
 		return createRefundRequest(model);
 	}
 }

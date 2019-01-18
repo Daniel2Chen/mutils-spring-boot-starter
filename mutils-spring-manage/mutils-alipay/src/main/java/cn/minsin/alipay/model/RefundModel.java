@@ -1,5 +1,7 @@
 package cn.minsin.alipay.model;
 
+import java.math.BigDecimal;
+
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.ModelRule;
 
@@ -18,7 +20,7 @@ public class RefundModel extends ModelRule{
 	@NotNull("接入方生成的退款订单号")
 	private String out_trade_no;
 	@NotNull("预退款金额 必须大于0、不能大于总金额 且最多两位小数")
-	private String refund_amount;
+	private BigDecimal refund_amount;
 	@NotNull("付款成功时支付宝返回的订单号")
 	private String trade_no;
 	@NotNull(value="不是全额退款，部分退款使用该参数",notNull=false)
@@ -50,11 +52,11 @@ public class RefundModel extends ModelRule{
 		this.out_trade_no = out_trade_no;
 	}
 
-	public String getRefund_amount() {
+	public BigDecimal getRefund_amount() {
 		return refund_amount;
 	}
 
-	public void setRefund_amount(String refund_amount) {
+	public void setRefund_amount(BigDecimal refund_amount) {
 		this.refund_amount = refund_amount;
 	}
 

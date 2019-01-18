@@ -31,6 +31,28 @@ public class AliyunSendSmsModel extends ModelRule {
 	@NotNull("短信模板变量对应的实际值")
 	private List<VO> templateParam = new ArrayList<>();
 
+	@NotNull("连接超时时间 默认1000ms")
+	private Long defaultConnectTimeout = 1000L;
+
+	@NotNull("读取超时时间 默认1000ms")
+	private Long defaultReadTimeout = 1000L;
+
+	public Long getDefaultConnectTimeout() {
+		return defaultConnectTimeout;
+	}
+
+	public void setDefaultConnectTimeout(Long defaultConnectTimeout) {
+		this.defaultConnectTimeout = defaultConnectTimeout;
+	}
+
+	public Long getDefaultReadTimeout() {
+		return defaultReadTimeout;
+	}
+
+	public void setDefaultReadTimeout(Long defaultReadTimeout) {
+		this.defaultReadTimeout = defaultReadTimeout;
+	}
+
 	public AliyunSendSmsModel addPhoneNumber(String phone) {
 		this.phones.add(phone);
 		return this;
@@ -39,7 +61,6 @@ public class AliyunSendSmsModel extends ModelRule {
 	public void setTemplateCode(String templateCode) {
 		this.templateCode = templateCode;
 	}
-
 
 	public AliyunSendSmsModel addPhoneNumber(List<String> phoneNumbers) {
 		this.phones.addAll(phoneNumbers);

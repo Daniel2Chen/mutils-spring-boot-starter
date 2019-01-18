@@ -41,7 +41,7 @@ public class AliyunSmsFunctions extends FunctionRule {
 	public static SendSmsResponse sendSingleSms(AliyunSendSmsModel model)
 			throws ServerException, ClientException, MutilsErrorException {
 
-		return initClient(1000, 1000).getAcsResponse(model.toSendSmsRequest());
+		return initClient(model.getDefaultConnectTimeout(), model.getDefaultReadTimeout()).getAcsResponse(model.toSendSmsRequest());
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class AliyunSmsFunctions extends FunctionRule {
 	public static SendBatchSmsResponse sendBatchSms(AliyunSendSmsModel model)
 			throws ServerException, ClientException, MutilsErrorException {
 
-		return initClient(1000, 1000).getAcsResponse(model.toSendBatchSmsRequest());
+		return initClient(model.getDefaultConnectTimeout(), model.getDefaultReadTimeout()).getAcsResponse(model.toSendBatchSmsRequest());
 	}
 
 	/**
@@ -68,9 +68,15 @@ public class AliyunSmsFunctions extends FunctionRule {
 	 */
 	public static QuerySendDetailsResponse querySendDetails(AliyunQueryModel model)
 			throws ServerException, ClientException {
-		return initClient(1000, 1000).getAcsResponse(model.toQuerySendDetailsRequest());
+		return initClient(model.getDefaultConnectTimeout(), model.getDefaultReadTimeout()).getAcsResponse(model.toQuerySendDetailsRequest());
 	}
 
+	/**
+	 * 初始化短信客户端
+	 * @param defaultConnectTimeout 连接超时时间
+	 * @param defaultReadTimeout 读取超时时间
+	 * @return
+	 */
 	protected static IAcsClient initClient(long defaultConnectTimeout, long defaultReadTimeout) {
 		// 可自助调整超时时间
 		System.setProperty("sun.net.client.defaultConnectTimeout", String.valueOf(defaultConnectTimeout));

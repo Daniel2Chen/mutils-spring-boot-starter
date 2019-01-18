@@ -14,6 +14,7 @@ public enum MutilsFunctions {
 	WECHATPAY_CORE("mutils-wechat-wechatpay-core",  WechatPayCoreConfig.class),
 	UNION_PAY("mutils-union-pay",  UnionPayConfig.class),
 	GEXIN_PUSH("mutils-gexin-push",  GexinPushConfig.class),
+	DIANWODA("mutils-dianwoda",  DianWoDaConfig.class),
 	ALIYUN_SMS("mutils-aliyun-sms",  AliyunSmsConfig.class);
 
 	private String artifactId;

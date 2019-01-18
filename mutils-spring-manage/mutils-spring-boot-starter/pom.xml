@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.4</version>
+		<version>0.2.6</version>
 	</parent>
 	<artifactId>mutils-spring-boot-starter</artifactId>
 	<name>mutils-spring-boot-starter</name>
@@ -21,60 +21,66 @@
 			<artifactId>mutils-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-alipay</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-dianwoda</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-excel</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-file</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-kuaidi100</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-yiketong</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-wechat-miniprogram</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-wechat-app</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-wechat-jsapi</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-union-pay</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-gexin-push</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-wechat-wechatpay-core</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-spring-boot-autoconfigure</artifactId>
+		</dependency>
+		
+		<!-- 以下为可移除模块 如果不需要请用exclusion 标签进行移除-->
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-alipay</artifactId><!-- 支付宝 	 -->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-dianwoda</artifactId><!-- 点我达 	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-excel</artifactId><!-- Excel导入导出 	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-file</artifactId><!-- 文件上传	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-kuaidi100</artifactId><!-- 快递100	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-yiketong</artifactId><!-- 移客通	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-wechat-miniprogram</artifactId><!-- 微信小程序	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-wechat-app</artifactId><!-- 微信接入第三方app	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-wechat-jsapi</artifactId><!-- 微信接入jsapi(公众号)	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-union-pay</artifactId><!-- 银联支付	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-gexin-push</artifactId><!-- 个推推送	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-wechat-wechatpay-core</artifactId><!-- 微信核心模块 如果要使用微信相关功能 此模块必须存在	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-aliyun-sms</artifactId><!-- 阿里云短信	-->
 		</dependency>
 	</dependencies>
 </project>

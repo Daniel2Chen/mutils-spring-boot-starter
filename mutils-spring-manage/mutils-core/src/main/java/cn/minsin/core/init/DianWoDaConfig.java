@@ -7,7 +7,7 @@ import cn.minsin.core.tools.StringUtil;
 public class DianWoDaConfig extends InitConfig {
 
 	
-	//点我达有测试地址和正式服地址 
+	//	点我达有测试地址和正式服地址 
 	private String url;
 	
 	private String pk;

@@ -17,6 +17,7 @@ import org.apache.http.util.EntityUtils;
 import org.mutils.wechat.wechatpay.core.model.BaseWeChatPayModel;
 import org.mutils.wechat.wechatpay.core.model.NotifyModel;
 import org.mutils.wechat.wechatpay.core.model.RefundModel;
+import org.mutils.wechat.wechatpay.core.model.RefundReturnModel;
 import org.mutils.wechat.wechatpay.core.model.WithdrawModel;
 import org.mutils.wechat.wechatpay.core.util.ParseXmlUtil;
 import org.mutils.wechat.wechatpay.core.util.SignUtil;
@@ -39,11 +40,11 @@ public class WeChatPayFunctions extends FunctionRule {
 
 	protected final static WechatPayCoreConfig payconfig = InitConfig.loadConfig(WechatPayCoreConfig.class);
 
-
 	/**
-	 * 	发起微信转账(提现)
+	 * 发起微信转账(提现)
+	 * 
 	 * @param model 发起提现的包装类
-	 * @return 
+	 * @return
 	 * @throws MutilsErrorException
 	 */
 	public static Map<String, String> createWithdrawXml(WithdrawModel model) throws MutilsErrorException {
@@ -52,12 +53,10 @@ public class WeChatPayFunctions extends FunctionRule {
 		CloseableHttpClient httpclient = null;
 		CloseableHttpResponse response = null;
 		try {
-			httpclient = HttpClientUtil.getSSLInstance(
-					payconfig.getPartnerId(),
-					payconfig.getCertificatePath(),
+			httpclient = HttpClientUtil.getSSLInstance(payconfig.getPartnerId(), payconfig.getCertificatePath(),
 					payconfig.getCertificateFormat());
 			HttpPost httpost = HttpClientUtil.getPostMethod(payconfig.getWithdrawUrl());
-			
+
 			httpost.setEntity(new StringEntity(xml, "UTF-8"));
 			response = httpclient.execute(httpost);
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
@@ -77,15 +76,13 @@ public class WeChatPayFunctions extends FunctionRule {
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	protected static Map<String, String> createRefundRequest(RefundModel model) throws MutilsErrorException {
+	protected static RefundReturnModel createRefundRequest(RefundModel model) throws MutilsErrorException {
 		String xmlParam = model.toXml(payconfig.getPartnerKey());
 		log.info("refund xml is {}", xmlParam);
 		CloseableHttpClient httpclient = null;
 		CloseableHttpResponse response = null;
 		try {
-			httpclient = HttpClientUtil.getSSLInstance(
-					payconfig.getPartnerId(), 
-					payconfig.getCertificatePath(),
+			httpclient = HttpClientUtil.getSSLInstance(payconfig.getPartnerId(), payconfig.getCertificatePath(),
 					payconfig.getCertificateFormat());
 			HttpPost httpost = HttpClientUtil.getPostMethod(payconfig.getRefundUrl());
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
@@ -93,7 +90,7 @@ public class WeChatPayFunctions extends FunctionRule {
 
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 			log.info("refund json is {}", jsonStr);
-			return ParseXmlUtil.doXMLParse(jsonStr);
+			return MapUtil.mapToObject(ParseXmlUtil.doXMLParse(jsonStr), RefundReturnModel.class);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "发起退款失败");
 		} finally {
@@ -148,13 +145,14 @@ public class WeChatPayFunctions extends FunctionRule {
 	protected static String createSign(SortedMap<String, String> sortMap) {
 		return SignUtil.createSign(sortMap, payconfig.getPartnerKey());
 	}
-	
+
 	/**
-	 * 	微信支付回调解析
-	 * 	<xml><return_code><![CDATA[STATE]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>
-	 * 	如果成功 将STATE替换为SUCCESS 如果失败替换为FAIL 反馈给微信服务器不用再重复请求。 使用PrintWriter.println直接输出
+	 * 微信支付回调解析
+	 * <xml><return_code><![CDATA[STATE]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>
+	 * 如果成功 将STATE替换为SUCCESS 如果失败替换为FAIL 反馈给微信服务器不用再重复请求。 使用PrintWriter.println直接输出
+	 * 
 	 * @param req
-	 * @throws MutilsErrorException 
+	 * @throws MutilsErrorException
 	 */
 	public static NotifyModel parseNotify(final HttpServletRequest req) throws MutilsErrorException {
 		try {
@@ -166,8 +164,8 @@ public class WeChatPayFunctions extends FunctionRule {
 			}
 			Map<String, String> map = ParseXmlUtil.doXMLParse(sb.toString());
 			return MapUtil.mapToObject(map, NotifyModel.class);
-		}catch (Exception e) {
-			throw new MutilsErrorException(e,"微信回调解析失败");
+		} catch (Exception e) {
+			throw new MutilsErrorException(e, "微信回调解析失败");
 		}
 
 	}

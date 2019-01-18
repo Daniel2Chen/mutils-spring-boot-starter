@@ -30,7 +30,7 @@ public class GexinPushFunctions extends FunctionRule {
 	private final static GexinPushConfig config = InitConfig.loadConfig(GexinPushConfig.class);
 
 	protected static IGtPush initPush() {
-		return new IGtPush(config.getUrl(), config.getAppKey(), config.getMasterSecret());
+		return new IGtPush(config.getUrl(), config.getAppkey(), config.getMasterSecret());
 	}
 
 	/**
@@ -68,8 +68,8 @@ public class GexinPushFunctions extends FunctionRule {
 		model.verificationField();// 检查
 		IGtPush push = initPush();
 		TransmissionTemplate template = new TransmissionTemplate();
-		template.setAppId(config.getAppId());
-		template.setAppkey(config.getAppKey());
+		template.setAppId(config.getAppid());
+		template.setAppkey(config.getAppkey());
 		template.setTransmissionType(model.getTransmissionType());
 		template.setTransmissionContent(model.getContent());
 
@@ -94,7 +94,7 @@ public class GexinPushFunctions extends FunctionRule {
 				message.setPushNetWorkType(model.getPushNetWorkType());
 
 				Target target = new Target();
-				target.setAppId(config.getAppId());
+				target.setAppId(config.getAppid());
 				target.setClientId(clientids.get(0));
 				return push.pushMessageToSingle(message, target);
 			}
@@ -107,7 +107,7 @@ public class GexinPushFunctions extends FunctionRule {
 			List<Target> targets = new ArrayList<Target>();
 			for (String clientid : clientids) {
 				Target target = new Target();
-				target.setAppId(config.getAppId());
+				target.setAppId(config.getAppid());
 				target.setClientId(clientid);
 				targets.add(target);
 			}

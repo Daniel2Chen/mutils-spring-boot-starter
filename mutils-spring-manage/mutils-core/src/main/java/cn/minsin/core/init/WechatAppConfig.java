@@ -7,10 +7,10 @@ import cn.minsin.core.tools.StringUtil;
 public class WechatAppConfig extends InitConfig {
 	
 	
-	//移动应用appid
+	//	移动应用appid
 	private String appid;
 	
-	//移动应用appSecret
+	//	移动应用appSecret
 	private String appSecret;
 	
 	public String getAppid() {

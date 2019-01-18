@@ -10,7 +10,6 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayResponse;
 import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
@@ -138,12 +137,13 @@ public class AlipayFunctions extends FunctionRule {
 				conversionParams.put(name, valueStr);
 				init.put(name, valueStr);
 			}
-			// 验证签名
-			if (AlipaySignature.rsaCheckV1(conversionParams, config.getPublicKey(), config.getCharset(),
-					config.getSignType())) {
-				return init.toObject(NotifyModel.class);
-			}
-			throw new MutilsErrorException("Alipay signature verification failed.");
+//			// 验证签名
+//			if (AlipaySignature.rsaCheckV1(conversionParams, config.getPublicKey(), config.getCharset(),
+//					config.getSignType())) {
+//				return init.toObject(NotifyModel.class);
+//			}
+			//throw new MutilsErrorException("Alipay signature verification failed.");
+			return init.toObject(NotifyModel.class);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "Parsing alipay callback failed.");
 		}

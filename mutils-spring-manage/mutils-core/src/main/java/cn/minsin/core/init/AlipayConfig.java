@@ -6,13 +6,13 @@ import cn.minsin.core.tools.StringUtil;
 
 public class AlipayConfig extends InitConfig {
 
-	// 支付宝的APPID 需要在官方申请
+	// 	支付宝的APPID 需要在官方申请
 	private String appid;
 
-	// 2.私钥 pkcs8格式的
+	// 	2.私钥 pkcs8格式的
 	private String privateKey;
 
-	// 3.支付宝公钥
+	// 	3.支付宝公钥
 	private String publicKey;
 
 	// 4.异步通知页面路径 不能写localhost或127.0.0.1等内网地址，必须要填写外网能够访问到的地址

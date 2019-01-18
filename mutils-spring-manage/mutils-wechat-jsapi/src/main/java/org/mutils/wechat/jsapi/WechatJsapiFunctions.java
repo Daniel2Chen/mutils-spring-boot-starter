@@ -11,6 +11,7 @@ import org.mutils.wechat.jsapi.model.AccessTokenModel;
 import org.mutils.wechat.jsapi.model.JsapiOrderPayModel;
 import org.mutils.wechat.jsapi.model.JsapiRefundModel;
 import org.mutils.wechat.wechatpay.core.WeChatPayFunctions;
+import org.mutils.wechat.wechatpay.core.model.RefundReturnModel;
 import org.mutils.wechat.wechatpay.core.util.Sha1Util;
 
 import com.alibaba.fastjson.JSON;
@@ -38,7 +39,7 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static Map<String, String> createMiniProgramRefundParamter(JsapiRefundModel model)
+	public static RefundReturnModel createJsapiRefundParamter(JsapiRefundModel model)
 			throws MutilsErrorException {
 		
 		return createRefundRequest(model);
@@ -140,7 +141,7 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 	 * @return 公众号能发起的请求的包装内容
 	 * @throws MutilsErrorException
 	 */
-	public static Map<String, String> createJSAPIPayParamter(JsapiOrderPayModel model) throws MutilsErrorException {
+	public static Map<String, String> createJsapiPayParamter(JsapiOrderPayModel model) throws MutilsErrorException {
 		
 		try {
 			Map<String, String> doXMLParse = createUnifiedOrder(model);
