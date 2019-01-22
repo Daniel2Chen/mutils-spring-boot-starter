@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,15 +42,12 @@ import cn.minsin.core.tools.IOUtil;
  */
 public class QRcodeFunctions extends FunctionRule {
 
+
 	/**
-	 * 生成二维码图片
-	 * 
-	 * @param content
-	 * @param logoPath
-	 * @param savePath
-	 * @param remark
+	 *  生成二维码图片
+	 * @param model 创建实体类
 	 * @return
-	 * @throws MutilsErrorException 
+	 * @throws MutilsErrorException
 	 */
 	public static boolean createQRCode(QrcodeModel model) throws MutilsErrorException {
 		model.verificationField();
@@ -91,15 +88,11 @@ public class QRcodeFunctions extends FunctionRule {
 		}
 	}
 
+
 	/**
-	 * 是否需要给二维码图片添加Logo
-	 * 
-	 * @param bim
-	 * @param logoPath
-	 * @param savePath
-	 * @param logoConfig
-	 * @param remark
-	 * @return
+	 * 创建logo
+	 * @param image
+	 * @param model
 	 * @throws MutilsErrorException
 	 */
 	protected static void encode(BufferedImage image, QrcodeModel model) throws MutilsErrorException {
@@ -157,15 +150,15 @@ public class QRcodeFunctions extends FunctionRule {
 	/**
 	 * 二维码解码
 	 * 
-	 * @param imgPath
+	 * @param input 二维码文件流
 	 * @return
+	 * @throws MutilsErrorException 
 	 */
-	public static String decode(String imgPath) {
+	public static String decode(InputStream input) throws MutilsErrorException {
 		BufferedImage image = null;
 		Result result = null;
 		try {
-			File file = new File(imgPath);
-			image = ImageIO.read(file);
+			image = ImageIO.read(input);
 			if (image == null) {
 				System.out.println("the decode image may be not exit.");
 			}
@@ -176,9 +169,8 @@ public class QRcodeFunctions extends FunctionRule {
 			result = new MultiFormatReader().decode(bitmap, hints);
 			return result.getText();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new MutilsErrorException(e, "解析二维码失败");
 		}
-		return null;
 	}
 
 	/**
