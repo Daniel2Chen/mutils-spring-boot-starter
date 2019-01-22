@@ -49,7 +49,7 @@ public class StringUtil extends StringUtils {
 	 * @return
 	 */
 	public static String isBlankWithDefault(String cs, String def) {
-		return isBlank(cs) ? cs : def;
+		return isBlank(cs) ? def :cs;
 	}
 
 	/**

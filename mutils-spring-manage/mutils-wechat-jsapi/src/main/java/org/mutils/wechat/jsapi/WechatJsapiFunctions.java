@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -21,6 +22,7 @@ import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.WechatJsapiConfig;
 import cn.minsin.core.init.core.InitConfig;
 import cn.minsin.core.tools.HttpClientUtil;
+import cn.minsin.core.tools.IOUtil;
 
 /**
  * jsapi相关功能
@@ -73,20 +75,17 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 			packageParams.put("jsapi_ticket", jsapi_ticket);
 			packageParams.put("url", url);
 			String sign = Sha1Util.createSHA1Sign(packageParams);
-			
 			SortedMap<String, Object> returnMap = new TreeMap<>();
 			returnMap.put("appId", config.getAppid());
 			returnMap.put("nonceStr", nonce_str);
 			returnMap.put("timestamp", timestamp);
 			returnMap.put("signature", sign);
 			returnMap.put("jsApiList", functions);
-			returnMap.put("debug", false);
+			returnMap.put("debug", debug);
 			return returnMap;
-
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new MutilsErrorException(e,"jsapi初始化失败");
 		}
-		return null;
 	}
 
 	/**
@@ -95,9 +94,10 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 	 * @return
 	 * @throws Exception
 	 */
-	public static AccessTokenModel getAccessToken() throws Exception {
+	public static AccessTokenModel getAccessToken() throws MutilsErrorException {
 		
 		CloseableHttpClient instance = HttpClientUtil.getInstance();
+		CloseableHttpResponse response =null;
 		try {
 			String accessTokenUrl = config.getAccessTokenUrl();
 
@@ -110,14 +110,14 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 			String requestUrl = accessTokenUrl.replace("APPID", appid).replace("APPSECRET", appSecret);
 
 			HttpGet getMethod = HttpClientUtil.getGetMethod(requestUrl);
-			
-			String string = EntityUtils.toString(instance.execute(getMethod).getEntity(), "UTF-8");
+			response = instance.execute(getMethod);
+			String string = EntityUtils.toString(response.getEntity(), "UTF-8");
 			getMethod.releaseConnection();
 			JSONObject jsonObject = JSON.parseObject(string);
 			String access_token = jsonObject.get("access_token").toString();
 			String jsapi_ticketurl = jsapiTicketUrl.replace("ACCESS_TOKEN", access_token);
 			getMethod = HttpClientUtil.getGetMethod(jsapi_ticketurl);
-			string = EntityUtils.toString(instance.execute(getMethod).getEntity(), "UTF-8");
+			string = EntityUtils.toString(response.getEntity(), "UTF-8");
 			getMethod.releaseConnection();
 			jsonObject = JSON.parseObject(string);
 			String jsapi_ticke = jsonObject.get("ticket").toString();
@@ -130,7 +130,7 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "获取AccessToken失败");
 		}finally {
-			instance.close();
+			IOUtil.close(instance,response);
 		}
 	}
 

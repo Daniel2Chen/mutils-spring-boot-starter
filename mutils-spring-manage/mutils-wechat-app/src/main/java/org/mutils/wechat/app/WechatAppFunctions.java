@@ -55,7 +55,7 @@ public class WechatAppFunctions extends WeChatPayFunctions {
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static RefundReturnModel createMiniProgramRefundParamter(AppRefundModel model) throws MutilsErrorException {
+	public static RefundReturnModel createAppRefundParamter(AppRefundModel model) throws MutilsErrorException {
 		return createRefundRequest(model);
 	}
 }

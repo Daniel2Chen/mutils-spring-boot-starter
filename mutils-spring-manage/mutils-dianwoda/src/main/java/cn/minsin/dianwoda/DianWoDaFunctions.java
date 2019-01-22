@@ -10,7 +10,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
@@ -21,6 +20,8 @@ import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.DianWoDaConfig;
 import cn.minsin.core.init.core.InitConfig;
 import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.tools.HttpClientUtil;
+import cn.minsin.core.tools.IOUtil;
 import cn.minsin.core.tools.MapUtil;
 import cn.minsin.dianwoda.model.OrderModel;
 import cn.minsin.dianwoda.util.SignUtil;
@@ -47,16 +48,18 @@ public class DianWoDaFunctions extends FunctionRule {
 	 * @return 响应结果
 	 */
 	protected static JSONObject doSend(String url, Map<String, Object> businessParams) throws MutilsErrorException {
-
-		/* 生成签名 */
-		String sign = SignUtil.sign(businessParams, config.getSercret());
-
-		businessParams.put("pk", config.getPk());
-		businessParams.put("v", config.getVersion());
-		businessParams.put("format", config.getFormat());
-		businessParams.put("sig", sign);
-		businessParams.put("timestamp", config.getTimestamp());
+		CloseableHttpClient build = HttpClientUtil.getInstance();
+		CloseableHttpResponse response = null;
 		try {
+			/* 生成签名 */
+			String sign = SignUtil.sign(businessParams, config.getSercret());
+
+			businessParams.put("pk", config.getPk());
+			businessParams.put("v", config.getVersion());
+			businessParams.put("format", config.getFormat());
+			businessParams.put("sig", sign);
+			businessParams.put("timestamp", config.getTimestamp());
+
 			HttpPost post = new HttpPost(config.getUrl() + url);
 			List<NameValuePair> list = new LinkedList<>();
 			businessParams.keySet().forEach(k -> {
@@ -65,17 +68,16 @@ public class DianWoDaFunctions extends FunctionRule {
 			UrlEncodedFormEntity uefEntity = new UrlEncodedFormEntity(list, "UTF-8");
 			post.setEntity(uefEntity);
 
-			CloseableHttpClient build = HttpClientBuilder.create().build();
 			log.info("Request infomation is {}", JSONObject.toJSONString(list));
-			CloseableHttpResponse response = build.execute(post);
+			response = build.execute(post);
 			HttpEntity entity = response.getEntity();
 			String string = EntityUtils.toString(entity);
-			response.close();
-			build.close();
 			log.info("Request infomation is {}", string);
 			return JSON.parseObject(string);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "点我达请求下单失败");
+		} finally {
+			IOUtil.close(build, response);
 		}
 	}
 

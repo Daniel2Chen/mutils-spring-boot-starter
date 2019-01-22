@@ -1,5 +1,6 @@
 package org.mutils.wechat.miniprogram;
 
+import java.io.InputStream;
 import java.security.AlgorithmParameters;
 import java.security.Security;
 import java.util.Map;
@@ -13,13 +14,17 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.encoders.Base64;
+import org.mutils.wechat.miniprogram.model.AccessTokenModel;
 import org.mutils.wechat.miniprogram.model.Code2SessionReturnModel;
+import org.mutils.wechat.miniprogram.model.MiniProgramCodeModel;
 import org.mutils.wechat.miniprogram.model.MiniProgramOrderPayModel;
 import org.mutils.wechat.miniprogram.model.MiniProgramRefundModel;
 import org.mutils.wechat.miniprogram.model.UserInfoModel;
@@ -33,6 +38,7 @@ import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.WechatMiniProgramConfig;
 import cn.minsin.core.init.core.InitConfig;
 import cn.minsin.core.tools.HttpClientUtil;
+import cn.minsin.core.tools.IOUtil;
 
 /**
  * 小程序相关功能
@@ -46,13 +52,14 @@ public class WechatMiniProgramFunctions extends WeChatPayFunctions {
 
 	/**
 	 * 获取sessionkey和openid,一般用于小程序授权登录.
-	 * 
+	 * 官方文档 https://developers.weixin.qq.com/miniprogram/dev/api/code2Session.html
 	 * @param code 小程序获取的code
 	 * @return
 	 * @throws MutilsErrorException
 	 */
 	public static Code2SessionReturnModel jscode2session(String code) throws MutilsErrorException {
-
+		CloseableHttpClient build = HttpClientUtil.getInstance();
+		CloseableHttpResponse response = null;
 		try {
 			String url = "https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code";
 
@@ -60,16 +67,15 @@ public class WechatMiniProgramFunctions extends WeChatPayFunctions {
 					code);
 			HttpGet get = HttpClientUtil.getGetMethod(url);
 
-			CloseableHttpClient build = HttpClientBuilder.create().build();
-			CloseableHttpResponse response = build.execute(get);
+			response = build.execute(get);
 			HttpEntity entity = response.getEntity();
 			String string = EntityUtils.toString(entity);
-			response.close();
-			build.close();
 			log.info("Code2SessionReturnModel string is {}", string);
 			return JSON.parseObject(string, Code2SessionReturnModel.class);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "小程序使用code换取openid等信息失败");
+		} finally {
+			IOUtil.close(build, response);
 		}
 	}
 
@@ -82,7 +88,6 @@ public class WechatMiniProgramFunctions extends WeChatPayFunctions {
 	 * @throws MutilsErrorException
 	 */
 	public static UserInfoModel getUserInfo(String encryptedData, String code, String iv) throws MutilsErrorException {
-
 		try {
 			Code2SessionReturnModel jscode2session = jscode2session(code);
 			// 被加密的数据
@@ -118,14 +123,13 @@ public class WechatMiniProgramFunctions extends WeChatPayFunctions {
 
 	/**
 	 * 创建小程序支付的请求参数 小程序将用其发起微信支付 注意：小程序必须要要使用填写openid
-	 * 
+	 * 参考 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4
 	 * @param model 下单时的包装对象
 	 * @return 小程序能发起的请求的包装内容
 	 * @throws MutilsErrorException
 	 */
 	public static Map<String, String> createMiniProgramPayParamter(MiniProgramOrderPayModel model)
 			throws MutilsErrorException {
-
 		try {
 			Map<String, String> doXMLParse = createUnifiedOrder(model);
 			checkMap(doXMLParse);
@@ -149,15 +153,67 @@ public class WechatMiniProgramFunctions extends WeChatPayFunctions {
 	}
 
 	/**
-	 * 	发起退款申请
-	 * 
+	 * 发起退款申请
+	 * 参考 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4
 	 * @param model
 	 * @return
 	 * @throws MutilsErrorException
 	 */
 	public static RefundReturnModel createMiniProgramRefundParamter(MiniProgramRefundModel model)
 			throws MutilsErrorException {
-
 		return createRefundRequest(model);
+	}
+
+	/**
+	 * 小程序获取accessToken
+	 * 详情参考 https://developers.weixin.qq.com/miniprogram/dev/api/getAccessToken.html
+	 * @return
+	 * @throws MutilsErrorException
+	 */
+	public static AccessTokenModel getAccessToken() throws MutilsErrorException {
+		CloseableHttpClient instance = HttpClientUtil.getInstance();
+		CloseableHttpResponse response = null;
+		try {
+			String accessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+			String requestUrl = accessTokenUrl.replace("APPID", config.getAppid()).replace("APPSECRET",
+					config.getAppSecret());
+
+			HttpGet getMethod = HttpClientUtil.getGetMethod(requestUrl);
+			response = instance.execute(getMethod);
+			String string = EntityUtils.toString(response.getEntity(), "UTF-8");
+			getMethod.releaseConnection();
+			return JSON.parseObject(string, AccessTokenModel.class);
+		} catch (Exception e) {
+			throw new MutilsErrorException(e, "小程序获取AccessToken失败");
+		} finally {
+			IOUtil.close(instance, response);
+		}
+	}
+
+	/**
+	 * 获取小程序码
+	 * 参考 https://developers.weixin.qq.com/miniprogram/dev/api/getWXACodeUnlimit.html
+	 * @param model
+	 * @return
+	 * @throws MutilsErrorException
+	 */
+	public static InputStream getMiniProgramQrCode(MiniProgramCodeModel model) throws MutilsErrorException {
+		model.verificationField();
+		CloseableHttpClient httpClient = HttpClientUtil.getInstance();
+		CloseableHttpResponse response =null;
+		try {
+			HttpPost httpPost = HttpClientUtil.getPostMethod("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + model.getAccess_token()); // 接口
+			httpPost.addHeader(HTTP.CONTENT_TYPE, "application/json");
+			StringEntity entity = new StringEntity(model.toString());
+			entity.setContentType("image/png");
+			httpPost.setEntity(entity);
+			 response = httpClient.execute(httpPost);
+			return response.getEntity().getContent();
+		} catch (Exception e) {
+			throw new MutilsErrorException(e, "获取小程序码二维码失败");
+		}finally {
+			IOUtil.close(httpClient,response);
+		}
+
 	}
 }

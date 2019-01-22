@@ -38,7 +38,7 @@ public abstract class ModelRule implements Serializable {
 
 	@Override
 	public String toString() {
-		verificationField();
+		//移除校验 since 0.2.7
 		return JSON.toJSONString(this);
 	}
 

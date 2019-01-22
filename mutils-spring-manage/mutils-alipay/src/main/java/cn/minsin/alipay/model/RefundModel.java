@@ -19,12 +19,16 @@ public class RefundModel extends ModelRule{
 	
 	@NotNull("接入方生成的退款订单号")
 	private String out_trade_no;
+	
 	@NotNull("预退款金额 必须大于0、不能大于总金额 且最多两位小数")
 	private BigDecimal refund_amount;
+	
 	@NotNull("付款成功时支付宝返回的订单号")
 	private String trade_no;
+	
 	@NotNull(value="不是全额退款，部分退款使用该参数",notNull=false)
-	private String out_request_no = String.valueOf(System.currentTimeMillis());
+	private String out_request_no;
+	
 	@NotNull("退款原因")
 	private String refund_reason ="正常退款";
 

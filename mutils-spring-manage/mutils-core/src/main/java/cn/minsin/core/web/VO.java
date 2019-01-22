@@ -65,6 +65,12 @@ public class VO extends HashMap<String, Object> implements Serializable {
 			throw new MutilsException(e, "类型转换失败");
 		}
 	}
+	
+
+	@Override
+	public boolean isEmpty() {
+		return super.isEmpty();
+	}
 
 	@Override
 	public String toString() {

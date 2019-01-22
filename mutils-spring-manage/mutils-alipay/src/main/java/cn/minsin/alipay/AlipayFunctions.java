@@ -1,6 +1,5 @@
 package cn.minsin.alipay;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -8,12 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
-import com.alipay.api.AlipayResponse;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 
 import cn.minsin.alipay.model.NotifyModel;
 import cn.minsin.alipay.model.PayModel;
@@ -43,13 +45,13 @@ public class AlipayFunctions extends FunctionRule {
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static AlipayResponse createWebAlipayParams(PayModel payModel) throws MutilsErrorException {
+	public static AlipayTradePrecreateResponse createWebAlipayParams(PayModel payModel) throws MutilsErrorException {
 
 		try {
 			AlipayTradePrecreateRequest alipayRequest = new AlipayTradePrecreateRequest();
 			alipayRequest.setBizContent(payModel.toString());
 			alipayRequest.setNotifyUrl(config.getNotifyUrl());// 设置回调地址
-			return initAlipayClient().execute(alipayRequest);
+			 return  initAlipayClient().execute(alipayRequest);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "Create Alipay Web payment failure.");
 		}
@@ -63,13 +65,13 @@ public class AlipayFunctions extends FunctionRule {
 	 * @return 2018年7月18日
 	 * @throws MutilsErrorException
 	 */
-	public static AlipayResponse createAlipayParams(PayModel payModel) throws MutilsErrorException {
+	public static AlipayTradeAppPayResponse createAlipayParams(PayModel payModel) throws MutilsErrorException {
 		try {
 			// 进行保留两位小数
 			AlipayTradeAppPayRequest alipayRequest = new AlipayTradeAppPayRequest();
 			alipayRequest.setBizContent(payModel.toString());
 			alipayRequest.setNotifyUrl(config.getNotifyUrl());// 设置回调地址
-			return initAlipayClient().sdkExecute(alipayRequest);
+			 return initAlipayClient().sdkExecute(alipayRequest);
 		} catch (AlipayApiException e) {
 			throw new MutilsErrorException(e, "Create Alipay mobile payment failure.");
 		}
@@ -83,7 +85,7 @@ public class AlipayFunctions extends FunctionRule {
 	 * @return 2018年12月6日
 	 * @throws MutilsErrorException
 	 */
-	public static AlipayResponse transfer(TransferModel model) throws MutilsErrorException {
+	public static AlipayFundTransToaccountTransferResponse transfer(TransferModel model) throws MutilsErrorException {
 
 		try {
 			AlipayFundTransToaccountTransferRequest alipayRequest = new AlipayFundTransToaccountTransferRequest();
@@ -96,17 +98,17 @@ public class AlipayFunctions extends FunctionRule {
 
 	/**
 	 * 支付宝退款
-	 * 
+	 * 退款是需要验证public_key 请确认是否和sign_type匹配
 	 * @param model
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static AlipayResponse refund(RefundModel model) throws MutilsErrorException {
+	public static AlipayTradeRefundResponse refund(RefundModel model) throws MutilsErrorException {
 
 		try {
 			AlipayTradeRefundRequest alipayRequest = new AlipayTradeRefundRequest();
 			alipayRequest.setBizContent(model.toString());
-			return initAlipayClient().execute(alipayRequest);
+			 return initAlipayClient().execute(alipayRequest);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "Initiating Alipay refund failed.");
 		}
@@ -121,10 +123,9 @@ public class AlipayFunctions extends FunctionRule {
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static NotifyModel parseNotify(final HttpServletRequest req) throws MutilsErrorException {
+	public static NotifyModel parseNotify(HttpServletRequest req) throws MutilsErrorException {
 		try {
 			req.setCharacterEncoding("utf-8");
-			Map<String, String> conversionParams = new HashMap<String, String>();
 			VO init = VO.init();
 			Map<String, String[]> requestParams = req.getParameterMap();
 			for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -134,15 +135,8 @@ public class AlipayFunctions extends FunctionRule {
 				for (int i = 0; i < values.length; i++) {
 					valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
 				}
-				conversionParams.put(name, valueStr);
 				init.put(name, valueStr);
 			}
-//			// 验证签名
-//			if (AlipaySignature.rsaCheckV1(conversionParams, config.getPublicKey(), config.getCharset(),
-//					config.getSignType())) {
-//				return init.toObject(NotifyModel.class);
-//			}
-			//throw new MutilsErrorException("Alipay signature verification failed.");
 			return init.toObject(NotifyModel.class);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "Parsing alipay callback failed.");

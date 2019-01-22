@@ -6,9 +6,9 @@ package cn.minsin.kuaidi100;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -19,6 +19,7 @@ import cn.minsin.core.init.KuaiDi100Config;
 import cn.minsin.core.init.core.InitConfig;
 import cn.minsin.core.rule.FunctionRule;
 import cn.minsin.core.tools.HttpClientUtil;
+import cn.minsin.core.tools.IOUtil;
 import cn.minsin.kuaidi100.util.MD5Util;
 
 /**
@@ -38,7 +39,8 @@ public class KuaiDi100Functions extends FunctionRule {
 	 * @return 2018年7月20日
 	 */
 	public static String getLogistics(String logisticsCode, String logisticsNumber) throws MutilsErrorException {
-
+		CloseableHttpClient httpclient = null;
+		CloseableHttpResponse response = null;
 		try {
 			String param = "{\"com\":\"" + logisticsNumber + "\",\"num\":\"" + logisticsCode + "\"}";
 			String sign = MD5Util.encode(param + config.getKey() + config.getCustomer());
@@ -46,16 +48,17 @@ public class KuaiDi100Functions extends FunctionRule {
 			params.add(new BasicNameValuePair("param", param));
 			params.add(new BasicNameValuePair("sign", sign));
 			params.add(new BasicNameValuePair("customer", config.getCustomer()));
-			CloseableHttpClient httpclient = HttpClientUtil.getInstance();
+			httpclient = HttpClientUtil.getInstance();
 			HttpPost post = HttpClientUtil.getPostMethod(config.getUrl());
 			post.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
-			HttpResponse response = httpclient.execute(post);
+			 response = httpclient.execute(post);
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 			System.out.println("物流json是:" + jsonStr);
-			httpclient.close();
 			return jsonStr;
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "快递100查询物流失败");
+		}finally {
+			IOUtil.close(response,httpclient);
 		}
 	}
 }

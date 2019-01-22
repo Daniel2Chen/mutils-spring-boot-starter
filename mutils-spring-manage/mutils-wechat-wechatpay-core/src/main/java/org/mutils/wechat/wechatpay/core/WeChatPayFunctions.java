@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.SortedMap;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -154,18 +153,24 @@ public class WeChatPayFunctions extends FunctionRule {
 	 * @param req
 	 * @throws MutilsErrorException
 	 */
-	public static NotifyModel parseNotify(final HttpServletRequest req) throws MutilsErrorException {
+	public static NotifyModel parseNotify( HttpServletRequest req) throws MutilsErrorException {
+		BufferedReader br =null;
+		InputStreamReader inputStreamReader =null;
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) req.getInputStream()));
+			 inputStreamReader = new InputStreamReader(req.getInputStream());
+			 br = new BufferedReader(inputStreamReader);
 			String line = null;
 			StringBuilder sb = new StringBuilder();
 			while ((line = br.readLine()) != null) {
 				sb.append(line);
 			}
+			br.close();
 			Map<String, String> map = ParseXmlUtil.doXMLParse(sb.toString());
 			return MapUtil.mapToObject(map, NotifyModel.class);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "微信回调解析失败");
+		}finally {
+			IOUtil.close(br,inputStreamReader);
 		}
 
 	}

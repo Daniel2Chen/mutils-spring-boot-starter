@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Random;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -20,7 +20,6 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.util.IOUtils;
 
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.exception.MutilsException;
@@ -61,6 +60,7 @@ public class FileFunctions extends FunctionRule {
 			return localSave(file);
 		}
 		CloseableHttpClient httpClient = HttpClients.createDefault();
+		CloseableHttpResponse response = null;
 		try {
 			String[] serverList = config.getServerList();
 			int nextInt = new Random().nextInt(serverList.length);
@@ -72,7 +72,7 @@ public class FileFunctions extends FunctionRule {
 			builder.addTextBody("filename", fileName);// 类似浏览器表单提交，对应input的name和value
 			HttpEntity entity = builder.build();
 			httpPost.setEntity(entity);
-			HttpResponse response = httpClient.execute(httpPost);// 执行提交
+			 response = httpClient.execute(httpPost);// 执行提交
 			HttpEntity responseEntity = response.getEntity();
 			// 将响应内容转换为字符串
 			String result = EntityUtils.toString(responseEntity, Charset.forName("UTF-8"));
@@ -81,7 +81,7 @@ public class FileFunctions extends FunctionRule {
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "文件保存失败. file save faild");
 		} finally {
-			IOUtils.close(httpClient);
+			IOUtil.close(httpClient,response);
 		}
 	}
 

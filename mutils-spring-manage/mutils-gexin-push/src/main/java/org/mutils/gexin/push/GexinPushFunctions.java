@@ -86,7 +86,7 @@ public class GexinPushFunctions extends FunctionRule {
 		}
 		try {
 			boolean pushMany = model.isPushMany();
-			if (pushMany) {
+			if (!pushMany) {
 				SingleMessage message = new SingleMessage();
 				message.setOffline(true);
 				message.setOfflineExpireTime(model.getTimeout());
@@ -100,9 +100,9 @@ public class GexinPushFunctions extends FunctionRule {
 			}
 			ListMessage message = new ListMessage();
 			message.setOffline(true);
-			message.setOfflineExpireTime(24 * 3600 * 1000);
+			message.setOfflineExpireTime(model.getTimeout());
 			message.setData(template);
-			message.setPushNetWorkType(0);
+			message.setPushNetWorkType(model.getPushNetWorkType());
 
 			List<Target> targets = new ArrayList<Target>();
 			for (String clientid : clientids) {

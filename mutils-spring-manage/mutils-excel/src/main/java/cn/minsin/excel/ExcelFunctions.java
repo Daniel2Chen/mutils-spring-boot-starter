@@ -31,6 +31,7 @@ import cn.minsin.core.exception.MutilsException;
 import cn.minsin.core.init.ExcelConfig;
 import cn.minsin.core.init.core.InitConfig;
 import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.tools.IOUtil;
 import cn.minsin.core.tools.StringUtil;
 import cn.minsin.excel.model.ExcelRowModel;
 
@@ -57,7 +58,7 @@ import cn.minsin.excel.model.ExcelRowModel;
  * @2018年10月11日
  */
 public class ExcelFunctions extends FunctionRule {
-	
+
 	private final static ExcelConfig config = InitConfig.loadConfig(ExcelConfig.class);
 
 	private ExcelVersion excelVersion;
@@ -177,13 +178,14 @@ public class ExcelFunctions extends FunctionRule {
 	 * @throws Exception
 	 */
 	public void export(String filename) throws MutilsErrorException {
+		FileOutputStream fileOutputStream = null;
 		try {
-			FileOutputStream fileOutputStream = new FileOutputStream(filename + excelVersion.getSuffix());
+			fileOutputStream = new FileOutputStream(filename + excelVersion.getSuffix());
 			workbook.write(fileOutputStream);
-			fileOutputStream.close();
-			workbook.close();
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "Excel读取失败！");
+		} finally {
+			IOUtil.close(workbook, fileOutputStream);
 		}
 	}
 
@@ -201,9 +203,10 @@ public class ExcelFunctions extends FunctionRule {
 			resp.setContentType("application/x-msdownload; charset=utf-8");
 			resp.setHeader("content-disposition", "attachment;filename=" + fileName);
 			workbook.write(resp.getOutputStream());
-			workbook.close();
 		} catch (Exception e) {
 			error(resp, "excel导出失败，已切换为错误模板", e);
+		} finally {
+			IOUtil.close(workbook);
 		}
 	}
 
@@ -354,8 +357,7 @@ public class ExcelFunctions extends FunctionRule {
 		try {
 			String errorTemplateUrl = config.getErrorTemplatePath();
 			String errorMessage = error == null ? "" : error.getMessage();
-			ExcelFunctions.builder(new FileInputStream(errorTemplateUrl))
-					.sheet(config.getErrorTemplateSheetIndex())
+			ExcelFunctions.builder(new FileInputStream(errorTemplateUrl)).sheet(config.getErrorTemplateSheetIndex())
 					.row(config.getErrorTemplateRowIndex())
 					.cell(config.getErrorTemplateCellIndex(), message + "\n\n" + errorMessage)
 					.export(resp, config.getErrorTemplateExportName());
