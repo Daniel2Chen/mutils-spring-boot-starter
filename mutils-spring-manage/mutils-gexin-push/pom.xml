@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.8</version>
+		<version>0.2.9</version>
 	</parent>
 	<artifactId>mutils-gexin-push</artifactId>
 	<name>mutils-gexin-push</name>
@@ -28,6 +28,7 @@
 		</dependency>
 	</dependencies>
 	<repositories>
+		<!--	经测试,个推的包并没有被同步到阿里云仓库。如果使用该仓库，那么就不能配置阿里云的mirror在setting文件中, -->
 		<repository>
 			<id>getui-nexus</id>
 			<url>http://mvn.gt.igexin.com/nexus/content/repositories/releases/</url>

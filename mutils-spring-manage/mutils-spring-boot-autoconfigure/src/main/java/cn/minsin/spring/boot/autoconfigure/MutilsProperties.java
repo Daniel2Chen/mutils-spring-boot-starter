@@ -3,6 +3,7 @@ package cn.minsin.spring.boot.autoconfigure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import cn.minsin.core.init.AlipayConfig;
+import cn.minsin.core.init.AliyunOssConfig;
 import cn.minsin.core.init.AliyunSmsConfig;
 import cn.minsin.core.init.DianWoDaConfig;
 import cn.minsin.core.init.ExcelConfig;
@@ -89,6 +90,10 @@ public class MutilsProperties {
 	 * 	阿里大鱼短信
 	 */
 	private AliyunSmsConfig aliyunSms = new AliyunSmsConfig();
+	/**
+	 * 	阿里云Oss储存
+	 */
+	private AliyunOssConfig aliyunOss = new AliyunOssConfig();
 	
 	/**
 	 * 描述文件:
@@ -98,6 +103,14 @@ public class MutilsProperties {
 	private String readMe;
 	
 	
+	public AliyunOssConfig getAliyunOss() {
+		return aliyunOss;
+	}
+
+	public void setAliyunOss(AliyunOssConfig aliyunOss) {
+		this.aliyunOss = aliyunOss;
+	}
+
 	public AliyunSmsConfig getAliyunSms() {
 		return aliyunSms;
 	}

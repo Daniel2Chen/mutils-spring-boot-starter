@@ -1,6 +1,9 @@
 package org.mutils.wechat.wechatpay.core.model;
 
+import java.math.BigDecimal;
+
 import cn.minsin.core.annotation.NotNull;
+import cn.minsin.core.tools.NumberUtil;
 
 public class PayModel extends BaseWeChatPayModel {
 
@@ -28,7 +31,7 @@ public class PayModel extends BaseWeChatPayModel {
 	private String out_trade_no;
 	
 	@NotNull("总金额 单位为分 必须要大于0")
-	private Integer total_fee;
+	private BigDecimal total_fee;
 	
 	@NotNull("下单ip 默认 192.168.1.1")
 	private String spbill_create_ip = "192.168.1.1";
@@ -83,11 +86,17 @@ public class PayModel extends BaseWeChatPayModel {
 		this.out_trade_no = out_trade_no;
 	}
 
-	public int getTotal_fee() {
+	public BigDecimal getTotal_fee() {
+		if(total_fee!=null) {
+			return NumberUtil.toYuan(total_fee);
+		}
 		return total_fee;
 	}
 
-	public void setTotal_fee(int total_fee) {
+	public void setTotal_fee(BigDecimal total_fee) {
+		if(total_fee!=null) {
+			total_fee = NumberUtil.toCent(total_fee);
+		}
 		this.total_fee = total_fee;
 	}
 

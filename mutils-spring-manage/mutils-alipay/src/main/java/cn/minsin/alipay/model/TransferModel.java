@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.tools.NumberUtil;
 
 /**
  * 支付宝转账
@@ -67,6 +68,9 @@ public class TransferModel extends ModelRule {
 	}
 
 	public void setAmount(BigDecimal amount) {
+		if(amount!=null) {
+			amount =NumberUtil.keepLenthDecimals(2, amount);
+		}
 		this.amount = amount;
 	}
 

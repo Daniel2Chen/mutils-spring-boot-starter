@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.tools.NumberUtil;
 
 /**
  * 支付宝退款
@@ -26,7 +27,7 @@ public class RefundModel extends ModelRule{
 	@NotNull("付款成功时支付宝返回的订单号")
 	private String trade_no;
 	
-	@NotNull(value="不是全额退款，部分退款使用该参数",notNull=false)
+	@NotNull(value="不是全额退款，部分退款必填该参数",notNull=false)
 	private String out_request_no;
 	
 	@NotNull("退款原因")
@@ -61,6 +62,9 @@ public class RefundModel extends ModelRule{
 	}
 
 	public void setRefund_amount(BigDecimal refund_amount) {
+		if(refund_amount!=null) {
+			refund_amount =NumberUtil.keepLenthDecimals(2, refund_amount);
+		}
 		this.refund_amount = refund_amount;
 	}
 

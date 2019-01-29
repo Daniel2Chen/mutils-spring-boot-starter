@@ -7,10 +7,13 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.8</version>
+		<version>0.2.9</version>
 	</parent>
 	<artifactId>mutils-alipay</artifactId>
 	<name>mutils-alipay</name>
+	<description>
+	mutils组件中提供支付宝转账、付款、退款等操作，该组件不可单独引用至maven依赖。详情请查看AliPayFunctions
+	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<aliypay.version>3.0.0</aliypay.version>

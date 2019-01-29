@@ -1,7 +1,10 @@
 package cn.minsin.dianwoda.model;
 
+import java.math.BigDecimal;
+
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.tools.NumberUtil;
 
 /**
  * 点我达下单时所需的模板 需要初始化它
@@ -22,7 +25,7 @@ public class OrderModel extends ModelRule {
 	@NotNull("订单备注")
 	private String order_remark;
 	@NotNull("订单金额(分) 必须大于0")
-	private Integer order_price;
+	private BigDecimal order_price;
 	@NotNull("订单商品重量，单位：克，若无则传0")
 	private Integer cargo_weight = 0;
 	@NotNull("商品份数，默认传1")
@@ -86,11 +89,14 @@ public class OrderModel extends ModelRule {
 		this.order_remark = order_remark;
 	}
 
-	public Integer getOrder_price() {
+	public BigDecimal getOrder_price() {
 		return order_price;
 	}
 
-	public void setOrder_price(Integer order_price) {
+	public void setOrder_price(BigDecimal order_price) {
+		if(order_price!=null) {
+			order_price = NumberUtil.keepLenthDecimals(2, order_price).multiply(new BigDecimal(100));
+		}
 		this.order_price = order_price;
 	}
 

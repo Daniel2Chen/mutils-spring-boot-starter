@@ -7,11 +7,13 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.8</version>
+		<version>0.2.9</version>
 	</parent>
 	<artifactId>mutils-aliyun-sms</artifactId>
 	<name>mutils-aliyun-sms</name>
-	<url>http://maven.apache.org</url>
+	<description>
+	mutils组件中提供阿里大鱼短信发送短信、短信使用率等操作，该组件不可单独引用至maven依赖。详情请查看AliyunSmsFunctions
+	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<aliyuncore.version>4.3.2</aliyuncore.version>

@@ -174,4 +174,7 @@ public class WeChatPayFunctions extends FunctionRule {
 		}
 
 	}
+	
+	public static void main(String[] args) {
+	}
 }

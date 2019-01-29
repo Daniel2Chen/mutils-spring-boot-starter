@@ -7,8 +7,9 @@ import cn.minsin.core.tools.StringUtil;
 public class DianWoDaConfig extends InitConfig {
 
 	
-	//	点我达有测试地址和正式服地址 
-	private String url;
+	//正式服 http://api.dianwoda.com
+	//测试服 http://docking-normal-qa.dwbops.com 默认
+	private String url="http://docking-normal-qa.dwbops.com";
 	
 	private String pk;
 	

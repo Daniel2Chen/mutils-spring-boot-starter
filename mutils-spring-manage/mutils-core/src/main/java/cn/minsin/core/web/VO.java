@@ -34,7 +34,7 @@ public class VO extends HashMap<String, Object> implements Serializable {
 	}
 
 	public VO put(String key, Object value) {
-		super.put(key, value == null ? "" : value);
+		super.put(key,value);
 		return this;
 	}
 

@@ -2,6 +2,7 @@ package cn.minsin.core.tools;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -53,5 +54,28 @@ public class NumberUtil extends NumberUtils {
 			return old;
 		}
 		return old.setScale(length, BigDecimal.ROUND_HALF_UP);
+	}
+	
+	/**
+	 * 转换成分
+	 * @param bigDecimal
+	 * @return
+	 */
+	public static BigDecimal toCent(BigDecimal bigDecimal) {
+		if(bigDecimal!=null) {
+			return keepLenthDecimals(2, bigDecimal).multiply(new BigDecimal(100));
+		}
+		return bigDecimal;
+	}
+	/**
+	 * 转换成分
+	 * @param bigDecimal
+	 * @return
+	 */
+	public static BigDecimal toYuan(BigDecimal bigDecimal) {
+		if(bigDecimal!=null) {
+			return bigDecimal.divide(new BigDecimal(100),2,RoundingMode.HALF_DOWN);
+		}
+		return bigDecimal;
 	}
 }

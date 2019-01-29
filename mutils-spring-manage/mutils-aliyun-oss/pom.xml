@@ -9,25 +9,30 @@
 		<artifactId>mutils-spring-manage</artifactId>
 		<version>0.2.9</version>
 	</parent>
-	<artifactId>mutils-spring-boot-autoconfigure</artifactId>
-	<name>mutils-spring-boot-autoconfigure</name>
-	<url>http://maven.apache.org</url>
+	<artifactId>mutils-aliyun-oss</artifactId>
+	<name>mutils-aliyun-oss</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<oss.version>3.4.0</oss.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-autoconfigure</artifactId>
-		</dependency>
-		<!-- @ConfigurationProperties annotation processing (metadata for IDEs) -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-core</artifactId>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss -->
+		<dependency>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>${oss.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 </project>

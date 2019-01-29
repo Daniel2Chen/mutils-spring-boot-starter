@@ -6,7 +6,7 @@
 	<name>mutils-spring-manage</name>
 	<description>A mini utils for java.</description>
 	<url>https://github.com/mintonzhang/mutils-spring-boot-starter</url>
-	<version>0.2.8</version>
+	<version>0.2.9</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mutils-core</module>
@@ -26,10 +26,11 @@
     	<module>mutils-gexin-push</module>
     	<module>mutils-aliyun-sms</module>
     	<module>mutils-qrcode</module>
+    	<module>mutils-aliyun-oss</module>
   </modules>
 
 	<properties>
-		<mutils.version>0.2.8</mutils.version>
+		<mutils.version>0.2.9</mutils.version>
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<spring-boot.version>2.0.0.RELEASE</spring-boot.version>
 		<fastjson.version>1.2.54</fastjson.version>
@@ -113,6 +114,11 @@
 			<dependency>
 				<groupId>cn.minsin</groupId>
 				<artifactId>mutils-aliyun-sms</artifactId>
+				<version>${mutils.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.minsin</groupId>
+				<artifactId>mutils-aliyun-oss</artifactId>
 				<version>${mutils.version}</version>
 			</dependency>
 			<dependency>

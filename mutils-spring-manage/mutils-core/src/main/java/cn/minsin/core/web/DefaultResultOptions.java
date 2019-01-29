@@ -6,8 +6,9 @@ package cn.minsin.core.web;
  *
  */
 public enum DefaultResultOptions implements ResultOptions {
-
-	EXCEPTION(404, "系统开小差了，请稍后重试"), 
+	
+	ERROR(500, "服务器跑路了，请稍后重试"),
+	EXCEPTION(404, "系统开小差了，请稍后重试"),
 	SUCCESS(200, "操作成功"), 
 	FAIL(201, "操作失败"),
 	OUTTIME(202, "您的身份过期了，请重新登录"),

@@ -15,11 +15,12 @@ import com.gexin.rp.sdk.template.TransmissionTemplate;
 
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.GexinPushConfig;
+import cn.minsin.core.init.childconfig.GexinPushMultiConfig;
 import cn.minsin.core.init.core.InitConfig;
 import cn.minsin.core.rule.FunctionRule;
 
 /**
- * 	推送功能列表
+ * 推送功能列表
  * 
  * @author mintonzhang
  * @date 2019年1月16日
@@ -29,8 +30,14 @@ public class GexinPushFunctions extends FunctionRule {
 
 	private final static GexinPushConfig config = InitConfig.loadConfig(GexinPushConfig.class);
 
-	protected static IGtPush initPush() {
-		return new IGtPush(config.getUrl(), config.getAppkey(), config.getMasterSecret());
+	private GexinPushMultiConfig childConfig;
+
+	protected GexinPushFunctions(GexinPushMultiConfig childConfig) {
+		this.childConfig = childConfig;
+	}
+
+	protected IGtPush initPush() throws MutilsErrorException {
+		return new IGtPush(config.getUrl(), childConfig.getAppkey(), childConfig.getMasterSecret());
 	}
 
 	/**
@@ -40,7 +47,7 @@ public class GexinPushFunctions extends FunctionRule {
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static IPushResult pushSingle(PushModel model) throws MutilsErrorException {
+	public IPushResult pushSingle(PushModel model) throws MutilsErrorException {
 		model.setPushMany(false);
 		return push(model);
 	}
@@ -52,24 +59,24 @@ public class GexinPushFunctions extends FunctionRule {
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static IPushResult pushMany(PushModel model) throws MutilsErrorException {
+	public IPushResult pushMany(PushModel model) throws MutilsErrorException {
 		model.setPushMany(true);
 		return push(model);
 	}
 
 	/**
-	 * 	 推送一个或多个由pushMany 控制
+	 * 推送一个或多个由pushMany 控制
 	 * 
 	 * @param model 推送的对象
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static IPushResult push(PushModel model) throws MutilsErrorException {
+	public IPushResult push(PushModel model) throws MutilsErrorException {
 		model.verificationField();// 检查
 		IGtPush push = initPush();
 		TransmissionTemplate template = new TransmissionTemplate();
-		template.setAppId(config.getAppid());
-		template.setAppkey(config.getAppkey());
+		template.setAppId(childConfig.getAppid());
+		template.setAppkey(childConfig.getAppkey());
 		template.setTransmissionType(model.getTransmissionType());
 		template.setTransmissionContent(model.getContent());
 
@@ -94,7 +101,7 @@ public class GexinPushFunctions extends FunctionRule {
 				message.setPushNetWorkType(model.getPushNetWorkType());
 
 				Target target = new Target();
-				target.setAppId(config.getAppid());
+				target.setAppId(childConfig.getAppid());
 				target.setClientId(clientids.get(0));
 				return push.pushMessageToSingle(message, target);
 			}
@@ -107,7 +114,7 @@ public class GexinPushFunctions extends FunctionRule {
 			List<Target> targets = new ArrayList<Target>();
 			for (String clientid : clientids) {
 				Target target = new Target();
-				target.setAppId(config.getAppid());
+				target.setAppId(childConfig.getAppid());
 				target.setClientId(clientid);
 				targets.add(target);
 			}
@@ -116,6 +123,14 @@ public class GexinPushFunctions extends FunctionRule {
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "推送失败");
 		}
+	}
+
+	public static GexinPushFunctions init(String key) throws MutilsErrorException {
+		GexinPushMultiConfig gexinPushMultiConfig = config.getAppInfo().get(key);
+		if (gexinPushMultiConfig == null) {
+			throw new MutilsErrorException("The gexinConfig loaded failed. Please check config.");
+		}
+		return new GexinPushFunctions(gexinPushMultiConfig);
 	}
 
 }

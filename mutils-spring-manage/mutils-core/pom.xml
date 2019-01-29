@@ -7,11 +7,14 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.8</version>
+		<version>0.2.9</version>
 	</parent>
 	<artifactId>mutils-core</artifactId>
 	<name>mutils-core</name>
 	<url>http://maven.apache.org</url>
+	<description>
+	mutils-core 作为mutils组件中的核心模块。 可以被maven项目单独引用，引入后可提供多种帮助类，如StringUtil、NumberUtil、DateUtil等等
+	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

@@ -1,6 +1,9 @@
 package org.mutils.wechat.wechatpay.core.model;
 
+import java.math.BigDecimal;
+
 import cn.minsin.core.annotation.NotNull;
+import cn.minsin.core.tools.NumberUtil;
 
 /**
  * 用户用于发起微信退款的容器
@@ -30,10 +33,10 @@ public class RefundModel extends BaseWeChatPayModel {
 	private String out_refund_no;
 	
 	@NotNull("订单总金额")
-	private int total_fee;
+	private BigDecimal total_fee;
 	
 	@NotNull("退款金额 不能大于总金额 且不能小于0")
-	private int refund_fee;
+	private BigDecimal refund_fee;
 	
 	@NotNull(value="退款结果通知url 当isSynchronizeRefund为false时自动填写",notNull=false)
 	private String notify_url =config.isSynchronizeRefund()?null:config.getRefundNotifyUrl();
@@ -61,19 +64,31 @@ public class RefundModel extends BaseWeChatPayModel {
 		this.out_refund_no = out_refund_no;
 	}
 
-	public int getTotal_fee() {
+	public BigDecimal getTotal_fee() {
+		if(total_fee!=null) {
+			return NumberUtil.toYuan(total_fee);
+		}
 		return total_fee;
 	}
 
-	public void setTotal_fee(int total_fee) {
+	public void setTotal_fee(BigDecimal total_fee) {
+		if(total_fee!=null) {
+			total_fee =NumberUtil.toCent(total_fee);
+		}
 		this.total_fee = total_fee;
 	}
 
-	public int getRefund_fee() {
+	public BigDecimal getRefund_fee() {
+		if(refund_fee!=null) {
+			return NumberUtil.toYuan(refund_fee);
+		}
 		return refund_fee;
 	}
 
-	public void setRefund_fee(int refund_fee) {
+	public void setRefund_fee(BigDecimal refund_fee) {
+		if(refund_fee!=null) {
+			refund_fee =NumberUtil.toCent(refund_fee);
+		}
 		this.refund_fee = refund_fee;
 	}
 

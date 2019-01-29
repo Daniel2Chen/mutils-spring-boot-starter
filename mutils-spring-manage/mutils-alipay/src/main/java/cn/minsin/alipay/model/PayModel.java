@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.tools.NumberUtil;
 
 /**
  * 支付宝支付所需参数
@@ -41,6 +42,9 @@ public class PayModel  extends ModelRule{
 		return total_amount;
 	}
 	public void setTotal_amount(BigDecimal total_amount) {
+		if(total_amount!=null) {
+			total_amount =NumberUtil.keepLenthDecimals(2, total_amount);
+		}
 		this.total_amount = total_amount;
 	}
 }

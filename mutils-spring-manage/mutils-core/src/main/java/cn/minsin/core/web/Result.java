@@ -13,14 +13,15 @@ import cn.minsin.core.exception.MutilsException;
 /**
  * 构建者模式的Result Eg：Result.builderMissParamter().data('name',"张三")
  * 
- * @author mintonzhang 
+ * @author mintonzhang
  * @since 0.1.0
  */
 public class Result implements Serializable {
 
 	private static final long serialVersionUID = -8603085056620027210L;
 
-	protected Result() {}
+	protected Result() {
+	}
 
 	protected Result(ResultOptions options, String... msg) {
 		validateOption(options);
@@ -38,7 +39,7 @@ public class Result implements Serializable {
 
 	private Object data;
 
-	private HashMap<String, Object> multidata = new HashMap<>();
+	private HashMap<String, Object> multidata;
 
 	public HashMap<String, Object> getMultidata() {
 		return multidata;
@@ -74,6 +75,9 @@ public class Result implements Serializable {
 	}
 
 	public Result data(String key, Object value) {
+		if (multidata == null) {
+			multidata = new HashMap<>();
+		}
 		multidata.put(key, value);
 		return this;
 	}
@@ -129,19 +133,27 @@ public class Result implements Serializable {
 	/**
 	 * 构建失败消息
 	 * 
-	 * @param message this default is '缺少必要参数'
+	 * @param message this default is '操作失败'
 	 */
 	public static Result builderFail(String... msg) {
 		return new Result(DefaultResultOptions.FAIL, msg);
 	}
 
 	/**
-	 * 构建后端用户过期
+	 * 构建用户过期
 	 * 
 	 * @param message this default is '用户已失效'
 	 */
 	public static Result builderOutTime(String... msg) {
 		return new Result(DefaultResultOptions.OUTTIME, msg);
+	}
+	/**
+	 * 构建错误
+	 * 
+	 * @param message this default is '服务器跑路了，请稍后重试'
+	 */
+	public static Result builderError(String... msg) {
+		return new Result(DefaultResultOptions.ERROR, msg);
 	}
 
 	private void validateOption(ResultOptions option) {

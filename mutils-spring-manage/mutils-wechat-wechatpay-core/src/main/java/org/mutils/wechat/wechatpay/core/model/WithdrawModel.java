@@ -1,6 +1,9 @@
 package org.mutils.wechat.wechatpay.core.model;
 
+import java.math.BigDecimal;
+
 import cn.minsin.core.annotation.NotNull;
+import cn.minsin.core.tools.NumberUtil;
 
 public class WithdrawModel extends BaseWeChatPayModel {
 
@@ -32,7 +35,7 @@ public class WithdrawModel extends BaseWeChatPayModel {
 	private String re_user_name;
 
 	@NotNull("企业付款金额，单位为分 必须大于0")
-	private int amount;
+	private BigDecimal amount;
 
 	@NotNull("企业付款备注，默认提现")
 	private String desc = "提现";
@@ -80,11 +83,17 @@ public class WithdrawModel extends BaseWeChatPayModel {
 		this.re_user_name = re_user_name;
 	}
 
-	public int getAmount() {
+	public BigDecimal getAmount() {
+		if(amount!=null) {
+			amount = NumberUtil.toYuan(amount);
+		}
 		return amount;
 	}
-
-	public void setAmount(int amount) {
+	
+	public void setAmount(BigDecimal amount) {
+		if(amount!=null) {
+			amount = NumberUtil.toCent(amount);
+		}
 		this.amount = amount;
 	}
 

@@ -7,12 +7,14 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.8</version>
+		<version>0.2.9</version>
 	</parent>
 	<artifactId>mutils-excel</artifactId>
 	<packaging>jar</packaging>
 	<name>mutils-excel</name>
-	<url>http://maven.apache.org</url>
+  	<description>
+		mutils组件中提供 Excel解析、导入等操作，该组件不可单独引用至maven依赖。详情请查看ExcelFunctions
+	</description>
 	<properties>
 		<poi.version>4.0.0</poi.version>
 	</properties>

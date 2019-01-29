@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.8</version>
+		<version>0.2.9</version>
 	</parent>
 	<artifactId>mutils-spring-boot-starter</artifactId>
 	<name>mutils-spring-boot-starter</name>
@@ -81,6 +81,10 @@
 		<dependency>
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-aliyun-sms</artifactId><!-- 阿里云短信	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-aliyun-oss</artifactId><!-- 阿里云OSS	-->
 		</dependency>
 		<dependency>
 			<groupId>cn.minsin</groupId>
