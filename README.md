@@ -1,3 +1,5 @@
+# [点我查看更新日志](https://github.com/mintonzhang/mutils-spring-boot-starter/blob/master/更新日志.md)
+
 mutils-spring-boot-starter 是一款基于JDK8,SpringBoot 2.0.0 构建的工具类.
 统一集成的功能如下：
  - 支付宝支付
