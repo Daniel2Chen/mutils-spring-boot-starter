@@ -55,8 +55,8 @@ public class AliyunOssConfig extends InitConfig {
 
 	@Override
 	protected void checkConfig() {
-		slog.info("Required for initialization accessKeyId, accessKeySecret, product,domain.");
-		if (StringUtil.isBlank(accessKeyId, accessKeySecret)||bucketnameAndSavedir.isEmpty()) {
+		slog.info("Required for initialization accessKeyId, accessKeySecret, endpoint,bucketnameAndSavedir.");
+		if (StringUtil.isBlank(accessKeyId, accessKeySecret,endpoint)||bucketnameAndSavedir.isEmpty()) {
 			throw new MutilsException("阿里云Oss初始化失败,请检查配置文件是否正确.");
 		}
 	}

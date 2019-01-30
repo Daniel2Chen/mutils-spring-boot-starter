@@ -1,8 +1,5 @@
 package cn.mutils.aliyun.oss;
 
-import java.net.URL;
-import java.util.Date;
-
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 
@@ -76,31 +73,11 @@ class AliyunOssBaseFunctions extends FunctionRule {
 	 * @return
 	 * @throws MutilsErrorException
 	 */
-	public static AliyunOssBaseFunctions init(String prefix) throws MutilsErrorException {
+	protected static  AliyunOssMultiConfig loadConfig(String prefix) throws MutilsErrorException {
 		AliyunOssMultiConfig aliyunOssMultiConfig = config.getBucketnameAndSavedir().get(prefix);
 		if (aliyunOssMultiConfig == null) {
 			throw new MutilsErrorException("The config key named '" + prefix + "' not found, Please check config.");
 		}
-		return new AliyunOssBaseFunctions(aliyunOssMultiConfig);
-	}
-	
-
-	/**
-	 * 获取文件访问路径
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public String getUrl(String key) {
-		OSS initClient = initClient();
-		try {
-			// 设置URL过期时间为10年 3600l* 1000*24*365*10
-			Date expiration = new Date(System.currentTimeMillis() + 3600L * 1000 * 24 * 365 * 10);
-			// 生成URL
-			URL url = initClient.generatePresignedUrl(childConfig.getBucketName(), key, expiration);
-			return url == null ? null : url.toString();
-		} finally {
-			initClient.shutdown();
-		}
+		return aliyunOssMultiConfig;
 	}
 }

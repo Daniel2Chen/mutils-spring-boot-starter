@@ -23,28 +23,42 @@ public class AliyunOssDownloadFunctions extends AliyunOssBaseFunctions {
 		super(config);
 	}
 
-	public InputStream downloadFromOss(String fileKey) throws MutilsErrorException {
+	/**
+	 * 下载文件 
+	 * @param fileName 文件名 调用{@link AliyunOssUploadFunctions} 获取此fileName
+	 * @return 文件流
+	 */
+	public InputStream downloadFromOss(String fileName){
 		OSS initClient = initClient();
 		try {
-			OSSObject object = initClient.getObject(childConfig.getBucketName(), fileKey);
+			OSSObject object = initClient.getObject(childConfig.getBucketName(), fileName);
 			return object.getObjectContent();
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "A file from aliyun oss  named '" + fileKey + "' download failed.");
 		} finally {
 			initClient.shutdown();
 		}
 
 	}
-
-	public void downloadFromOss(String fileKey, File file) throws MutilsErrorException {
+	/**
+	 * 下载文件 
+	 * @param fileName 文件名 调用{@link AliyunOssUploadFunctions} 获取此fileName
+	 * @param file 存放oss下载出的文件
+	 */
+	public void downloadFromOss(String fileName, File file){
 		OSS initClient = initClient();
 		try {
-			initClient.getObject(new GetObjectRequest(childConfig.getBucketName(), fileKey), file);
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "A file from aliyun oss  named '" + fileKey + "' download failed.");
+			initClient.getObject(new GetObjectRequest(childConfig.getBucketName(), fileName), file);
 		} finally {
 			initClient.shutdown();
 		}
+	}
+	/**
+	 * 初始化配置文件
+	 * @param prefix
+	 * @return
+	 * @throws MutilsErrorException
+	 */
+	public static AliyunOssDownloadFunctions init(String prefix) throws MutilsErrorException {
+		return new AliyunOssDownloadFunctions(loadConfig(prefix));
 	}
 
 }

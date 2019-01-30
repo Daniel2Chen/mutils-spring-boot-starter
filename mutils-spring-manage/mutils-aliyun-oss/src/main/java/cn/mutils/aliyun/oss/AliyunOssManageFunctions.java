@@ -1,12 +1,18 @@
 package cn.mutils.aliyun.oss;
 
+import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
+import com.aliyun.oss.ClientException;
+import com.aliyun.oss.HttpMethod;
 import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.aliyun.oss.model.ListObjectsRequest;
 import com.aliyun.oss.model.ObjectListing;
 
+import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.childconfig.AliyunOssMultiConfig;
 import cn.mutils.aliyun.oss.model.AliyunOssFileFilterModel;
 
@@ -23,16 +29,19 @@ public class AliyunOssManageFunctions extends AliyunOssBaseFunctions {
 	}
 
 	/**
-	 * 查询文件是否存在
+	 * 查询文件是否存在 
 	 * 
-	 * @param key
+	 * @param fileName 文件名 调用{@link AliyunOssUploadFunctions} 获取此fileName
 	 * @return
+	 * @throws MutilsErrorException 
+	 * @throws ClientException 
+	 * @throws OSSException 
 	 */
-	public boolean isExists(String key) {
+	public boolean isExists(String fileName) throws OSSException, ClientException {
 
 		OSS initClient = initClient();
 		try {
-			return initClient.doesObjectExist(childConfig.getBucketName(), key);
+			return initClient.doesObjectExist(childConfig.getBucketName(), fileName);
 		} finally {
 			initClient.shutdown();
 		}
@@ -41,14 +50,16 @@ public class AliyunOssManageFunctions extends AliyunOssBaseFunctions {
 	/**
 	 * 删除单个文件
 	 * 
-	 * @param key
+	 * @param fileName 文件名 调用{@link AliyunOssUploadFunctions} 获取此fileName
 	 * @return
+	 * @throws MutilsErrorException 
+	 * @throws ClientException 
+	 * @throws OSSException 
 	 */
-	public boolean deleteSingle(String key) {
+	public void deleteSingle(String fileName) throws OSSException, ClientException {
 		OSS initClient = initClient();
 		try {
-			initClient.deleteObject(childConfig.getBucketName(), key);
-			return true;
+			initClient.deleteObject(childConfig.getBucketName(), fileName);
 		} finally {
 			initClient.shutdown();
 		}
@@ -57,15 +68,16 @@ public class AliyunOssManageFunctions extends AliyunOssBaseFunctions {
 	/**
 	 * 删除多个文件
 	 * 
-	 * @param keys
+	 * @param keys 文件名 调用{@link AliyunOssUploadFunctions} 获取此fileName
 	 * @return
+	 * @throws MutilsErrorException 
+	 * @throws ClientException 
+	 * @throws OSSException 
 	 */
-	public boolean deleteMany(List<String> keys) {
+	public void deleteMany(List<String> keys) throws OSSException, ClientException {
 		OSS initClient = initClient();
 		try {
-			initClient.deleteObjects(
-					new DeleteObjectsRequest(childConfig.getBucketName()).withKeys(keys).withQuiet(true));
-			return true;
+			initClient.deleteObjects(new DeleteObjectsRequest(childConfig.getBucketName()).withKeys(keys).withQuiet(true));
 		} finally {
 			initClient.shutdown();
 		}
@@ -100,5 +112,42 @@ public class AliyunOssManageFunctions extends AliyunOssBaseFunctions {
 		} finally {
 			initClient.shutdown();
 		}
+	}
+
+	/**
+	 * 获取文件访问路径
+	 * 
+	 * @param fileName 文件名 调用{@link AliyunOssUploadFunctions} 获取此fileName
+	 * @param timeout 有效访问时间 单位(毫秒) 最低不能少于10分钟
+	 * @param method 请求方式 默认get
+	 * @return
+	 * @throws MutilsErrorException 
+	 */
+	public String getUrl(String fileName,long timeout,HttpMethod method) {
+		if(timeout<600000) {
+			timeout = 604800000;
+		}
+		if(method==null) {
+			method = HttpMethod.GET;
+		}
+		OSS initClient = initClient();
+		try {
+			// 设置URL过期时间
+			Date expiration = new Date(System.currentTimeMillis()+timeout);
+			// 生成URL
+			URL url = initClient.generatePresignedUrl(childConfig.getBucketName(), fileName, expiration,method);
+			return url == null ? null : url.toString();
+		} finally {
+			initClient.shutdown();
+		}
+	}
+	/**
+	 * 初始化配置文件
+	 * @param prefix 配置文件中的前缀
+	 * @return
+	 * @throws MutilsErrorException
+	 */
+	public static AliyunOssManageFunctions init(String prefix) throws MutilsErrorException {
+		return new AliyunOssManageFunctions(loadConfig(prefix));
 	}
 }
