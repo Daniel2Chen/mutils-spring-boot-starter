@@ -24,13 +24,13 @@ public class ParseXmlUtil {
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public static Map<String, String> doXMLParse(String strxml) throws Exception {
+	public static Map<String, String> doXMLParse(String strxml) throws JDOMException, IOException {
 		if (null == strxml || "".equals(strxml)) {
 			return null;
 		}
 
 		Map m = new HashMap();
-		InputStream in = String2Inputstream(strxml);
+		InputStream in =  new ByteArrayInputStream(strxml.getBytes());
 		SAXBuilder builder = new SAXBuilder();
 		Document doc = builder.build(in);
 		Element root = doc.getRootElement();
@@ -49,7 +49,6 @@ public class ParseXmlUtil {
 
 			m.put(k, v);
 		}
-
 		// 关闭流
 		in.close();
 
@@ -79,12 +78,7 @@ public class ParseXmlUtil {
 				sb.append("</" + name + ">");
 			}
 		}
-
 		return sb.toString();
-	}
-
-	public static InputStream String2Inputstream(String str) {
-		return new ByteArrayInputStream(str.getBytes());
 	}
 
 }

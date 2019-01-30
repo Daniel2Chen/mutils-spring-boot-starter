@@ -11,6 +11,9 @@
 	</parent>
 	<artifactId>mutils-aliyun-oss</artifactId>
 	<name>mutils-aliyun-oss</name>
+	<description>
+	mutils组件中提供阿里云对象储存(OSS)等操作，该组件不可单独引用至maven依赖。详情请查看AliyunOssUploadFunctions、AliyunOssDownloadFunctions、AliyunOssManageFunctions
+	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<oss.version>3.4.0</oss.version>

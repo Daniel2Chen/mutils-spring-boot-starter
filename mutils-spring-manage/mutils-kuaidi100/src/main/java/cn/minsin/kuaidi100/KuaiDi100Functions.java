@@ -3,10 +3,12 @@
  */
 package cn.minsin.kuaidi100;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -14,7 +16,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.KuaiDi100Config;
 import cn.minsin.core.init.core.InitConfig;
 import cn.minsin.core.rule.FunctionRule;
@@ -37,8 +38,10 @@ public class KuaiDi100Functions extends FunctionRule {
 	 * @param logisticsCode   物流公司code
 	 * @param logisticsNumber 物流单号
 	 * @return 2018年7月20日
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public static String getLogistics(String logisticsCode, String logisticsNumber) throws MutilsErrorException {
+	public static String getLogistics(String logisticsCode, String logisticsNumber) throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = null;
 		CloseableHttpResponse response = null;
 		try {
@@ -55,8 +58,6 @@ public class KuaiDi100Functions extends FunctionRule {
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 			System.out.println("物流json是:" + jsonStr);
 			return jsonStr;
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "快递100查询物流失败");
 		}finally {
 			IOUtil.close(response,httpclient);
 		}

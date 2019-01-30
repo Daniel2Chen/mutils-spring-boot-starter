@@ -7,11 +7,14 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.9</version>
+		<version>0.3.0</version>
 	</parent>
 	<artifactId>mutils-wechat-miniprogram</artifactId>
 	<name>mutils-wechat-miniprogram</name>
-	<url>http://maven.apache.org</url>
+	<description>
+		mutils组件中,提供微信jsapi(公众号)+微信支付模块。此模块不可单独引用，如果要使用该模块，必须要引入 mutils-wechat-wechatpay-core
+		官方文档：https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3
+	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<bouncycastle.version>1.59</bouncycastle.version>

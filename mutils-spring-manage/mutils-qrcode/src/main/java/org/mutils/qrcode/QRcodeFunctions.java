@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -23,79 +24,76 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
+import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
-import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.rule.FunctionRule;
 import cn.minsin.core.tools.IOUtil;
 
 /**
  * 二维码相关功能
+ * 
  * @author mintonzhang
  * @date 2019年1月22日
  * @since 0.2.8
  */
 public class QRcodeFunctions extends FunctionRule {
 
-
 	/**
-	 *  生成二维码图片
+	 * 生成二维码图片
+	 * 
 	 * @param model 创建实体类
 	 * @return
-	 * @throws MutilsErrorException
+	 * @throws WriterException
+	 * @throws IOException
 	 */
-	public static boolean createQRCode(QrcodeModel model) throws MutilsErrorException {
+	public static boolean createQRCode(QrcodeModel model) throws WriterException, IOException {
 		model.verificationField();
-		try {
-			int width = model.getWidth(), height = model.getHeight();
-			int level = model.getLevel();
+		int width = model.getWidth(), height = model.getHeight();
+		int level = model.getLevel();
 
-			MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-			// 用于设置QR二维码参数
-			Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
-			// 设置QR二维码的纠错级别（H为最高级别）具体级别信息
-			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-			// 设置编码方式
-			hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-			if (level >= 0 && level <= 5) {
-				hints.put(EncodeHintType.MARGIN, level); // 设置白边
-			}
-			// 参数顺序分别为：编码内容，编码类型，生成图片宽度，生成图片高度，设置参数
-			BitMatrix bitMatrix = multiFormatWriter.encode(model.getContent(), BarcodeFormat.QR_CODE, width, height,
-					hints);
-			if (level == -1) {
-				bitMatrix = deleteWhite(bitMatrix);
-			}
-			int w = bitMatrix.getWidth();
-			int h = bitMatrix.getHeight();
-			BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-			// 开始利用二维码数据创建Bitmap图片，分别设为黑（0xFFFFFFFF）白（0xFF000000）两色
-			for (int x = 0; x < w; x++) {
-				for (int y = 0; y < h; y++) {
-					image.setRGB(x, y, bitMatrix.get(x, y) ? MatrixToImageConfig.BLACK : MatrixToImageConfig.WHITE);
-				}
-			}
-			encode(image, model);
-			System.err.println("done");
-			return true;
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "二维码创建失败");
+		MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+		// 用于设置QR二维码参数
+		Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
+		// 设置QR二维码的纠错级别（H为最高级别）具体级别信息
+		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+		// 设置编码方式
+		hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+		if (level >= 0 && level <= 5) {
+			hints.put(EncodeHintType.MARGIN, level); // 设置白边
 		}
+		// 参数顺序分别为：编码内容，编码类型，生成图片宽度，生成图片高度，设置参数
+		BitMatrix bitMatrix = multiFormatWriter.encode(model.getContent(), BarcodeFormat.QR_CODE, width, height, hints);
+		if (level == -1) {
+			bitMatrix = deleteWhite(bitMatrix);
+		}
+		int w = bitMatrix.getWidth();
+		int h = bitMatrix.getHeight();
+		BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+		// 开始利用二维码数据创建Bitmap图片，分别设为黑（0xFFFFFFFF）白（0xFF000000）两色
+		for (int x = 0; x < w; x++) {
+			for (int y = 0; y < h; y++) {
+				image.setRGB(x, y, bitMatrix.get(x, y) ? MatrixToImageConfig.BLACK : MatrixToImageConfig.WHITE);
+			}
+		}
+		encode(image, model);
+		return true;
 	}
-
 
 	/**
 	 * 创建logo
+	 * 
 	 * @param image
 	 * @param model
-	 * @throws MutilsErrorException
+	 * @throws IOException
 	 */
-	protected static void encode(BufferedImage image, QrcodeModel model) throws MutilsErrorException {
+	protected static void encode(BufferedImage image, QrcodeModel model) throws IOException {
 		OutputStream baos = model.getOutputStream();
 		String format = model.getFormat();
 		try {
@@ -107,7 +105,6 @@ public class QRcodeFunctions extends FunctionRule {
 				ImageIO.write(image, format, baos);// 流输出
 				return;
 			}
-
 			logoImageModel.verificationField();
 
 			int height = logoImageModel.getHeight();
@@ -140,8 +137,6 @@ public class QRcodeFunctions extends FunctionRule {
 			logo.flush();
 			image.flush();
 			ImageIO.write(image, format, baos); // 不用MatrixToImageWriter
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "创建二维码失败");
 		} finally {
 			IOUtil.close(baos);
 		}
@@ -152,25 +147,17 @@ public class QRcodeFunctions extends FunctionRule {
 	 * 
 	 * @param input 二维码文件流
 	 * @return
-	 * @throws MutilsErrorException 
+	 * @throws NotFoundException
+	 * @throws IOException
 	 */
-	public static String decode(InputStream input) throws MutilsErrorException {
-		BufferedImage image = null;
-		Result result = null;
-		try {
-			image = ImageIO.read(input);
-			if (image == null) {
-				System.out.println("the decode image may be not exit.");
-			}
-			LuminanceSource source = new BufferedImageLuminanceSource(image);
-			BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-			Map<DecodeHintType, Object> hints = new HashMap<DecodeHintType, Object>();
-			hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
-			result = new MultiFormatReader().decode(bitmap, hints);
-			return result.getText();
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "解析二维码失败");
-		}
+	public static String decode(InputStream input) throws NotFoundException, IOException {
+		BufferedImage image = ImageIO.read(input);
+		LuminanceSource source = new BufferedImageLuminanceSource(image);
+		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+		Map<DecodeHintType, Object> hints = new HashMap<DecodeHintType, Object>();
+		hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
+		Result result = new MultiFormatReader().decode(bitmap, hints);
+		return result.getText();
 	}
 
 	/**

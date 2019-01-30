@@ -62,7 +62,7 @@ public class OrderModel extends ModelRule {
 	private Integer money_rider_charge = 0;
 	@NotNull("商品必须到店才开始准备或是排队购买的情况下，在商家处等待所需时间（秒）")
 	private Integer time_waiting_at_seller;
-	@NotNull("渠道支付配送费（分)")
+	@NotNull("渠道支付配送费(分)")
 	private Integer delivery_fee_from_seller;
 
 	public String getOrder_original_id() {
@@ -95,7 +95,7 @@ public class OrderModel extends ModelRule {
 
 	public void setOrder_price(BigDecimal order_price) {
 		if(order_price!=null) {
-			order_price = NumberUtil.keepLenthDecimals(2, order_price).multiply(new BigDecimal(100));
+			order_price = NumberUtil.toCent(order_price);
 		}
 		this.order_price = order_price;
 	}

@@ -38,7 +38,10 @@ public class AliyunQueryModel extends ModelRule {
 		return defaultConnectTimeout;
 	}
 
-	public void setDefaultConnectTimeout(Long defaultConnectTimeout) {
+	public void setDefaultConnectTimeout(long defaultConnectTimeout) {
+		if(defaultConnectTimeout<500) {
+			defaultConnectTimeout =1000;
+		}
 		this.defaultConnectTimeout = defaultConnectTimeout;
 	}
 
@@ -46,7 +49,10 @@ public class AliyunQueryModel extends ModelRule {
 		return defaultReadTimeout;
 	}
 
-	public void setDefaultReadTimeout(Long defaultReadTimeout) {
+	public void setDefaultReadTimeout(long defaultReadTimeout) {
+		if(defaultReadTimeout<500) {
+			defaultReadTimeout =1000;
+		}
 		this.defaultReadTimeout = defaultReadTimeout;
 	}
 

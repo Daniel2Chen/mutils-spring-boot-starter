@@ -91,38 +91,34 @@ public class GexinPushFunctions extends FunctionRule {
 		if (clientids.isEmpty()) {
 			throw new MutilsErrorException("clientid不能为空");
 		}
-		try {
-			boolean pushMany = model.isPushMany();
-			if (!pushMany) {
-				SingleMessage message = new SingleMessage();
-				message.setOffline(true);
-				message.setOfflineExpireTime(model.getTimeout());
-				message.setData(template);
-				message.setPushNetWorkType(model.getPushNetWorkType());
-
-				Target target = new Target();
-				target.setAppId(childConfig.getAppid());
-				target.setClientId(clientids.get(0));
-				return push.pushMessageToSingle(message, target);
-			}
-			ListMessage message = new ListMessage();
+		boolean pushMany = model.isPushMany();
+		if (!pushMany) {
+			SingleMessage message = new SingleMessage();
 			message.setOffline(true);
 			message.setOfflineExpireTime(model.getTimeout());
 			message.setData(template);
 			message.setPushNetWorkType(model.getPushNetWorkType());
 
-			List<Target> targets = new ArrayList<Target>();
-			for (String clientid : clientids) {
-				Target target = new Target();
-				target.setAppId(childConfig.getAppid());
-				target.setClientId(clientid);
-				targets.add(target);
-			}
-			String contentId = push.getContentId(message);
-			return push.pushMessageToList(contentId, targets);
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "推送失败");
+			Target target = new Target();
+			target.setAppId(childConfig.getAppid());
+			target.setClientId(clientids.get(0));
+			return push.pushMessageToSingle(message, target);
 		}
+		ListMessage message = new ListMessage();
+		message.setOffline(true);
+		message.setOfflineExpireTime(model.getTimeout());
+		message.setData(template);
+		message.setPushNetWorkType(model.getPushNetWorkType());
+
+		List<Target> targets = new ArrayList<Target>();
+		for (String clientid : clientids) {
+			Target target = new Target();
+			target.setAppId(childConfig.getAppid());
+			target.setClientId(clientid);
+			targets.add(target);
+		}
+		String contentId = push.getContentId(message);
+		return push.pushMessageToList(contentId, targets);
 	}
 
 	public static GexinPushFunctions init(String key) throws MutilsErrorException {

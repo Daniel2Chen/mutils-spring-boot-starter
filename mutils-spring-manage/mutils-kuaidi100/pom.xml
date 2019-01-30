@@ -7,11 +7,14 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.9</version>
+		<version>0.3.0</version>
 	</parent>
 	<artifactId>mutils-kuaidi100</artifactId>
 	<name>mutils-kuaidi100</name>
-	<url>http://maven.apache.org</url>
+	<description>
+		mutils组件中,提供快递操作的模块。此模块不可单独引用。
+		官方文档：https://www.kuaidi100.com/openapi/applyapi.shtml
+	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

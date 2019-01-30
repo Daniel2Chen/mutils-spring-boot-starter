@@ -1,7 +1,6 @@
 package cn.minsin;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -27,6 +26,7 @@ import cn.minsin.core.init.FileConfig;
 import cn.minsin.core.init.core.InitConfig;
 import cn.minsin.core.rule.FunctionRule;
 import cn.minsin.core.tools.DateUtil;
+import cn.minsin.core.tools.FileUtil;
 import cn.minsin.core.tools.IOUtil;
 import cn.minsin.core.web.Result;
 
@@ -34,18 +34,6 @@ public class FileFunctions extends FunctionRule {
 	
 	private final static FileConfig config = InitConfig.loadConfig(FileConfig.class);
 
-
-	/**
-	 * path中不能出现\
-	 * 
-	 * @param path 2018年9月8日
-	 */
-	public static void checkPath(String path) {
-		File file = new File(path);
-		if (!file.exists()) {
-			file.mkdirs();
-		}
-	}
 
 	/**
 	 * 保存单个文件
@@ -142,60 +130,6 @@ public class FileFunctions extends FunctionRule {
 		return sumSize > limitSize ? true : false;
 	}
 
-	/**
-	 * 
-	 * @param f    源目录
-	 * @param nf   目标目录
-	 * @param flag 是否覆盖原文件夹 true代表把a文件夹整个复制过去，false只复制子文件夹及文件。
-	 * @throws MutilsErrorException
-	 */
-	public static void copy(File f, File nf, boolean flag) throws MutilsErrorException {
-		try {
-			// 判断是否存在
-			if (f.exists()) {
-				// 判断是否是目录
-				if (f.isDirectory()) {
-					if (flag) {
-						// 制定路径，以便原样输出
-						nf = new File(nf + "/" + f.getName());
-						// 判断文件夹是否存在，不存在就创建
-						if (!nf.exists()) {
-							nf.mkdirs();
-						}
-					}
-					flag = true;
-					// 获取文件夹下所有的文件及子文件夹
-					File[] l = f.listFiles();
-					// 判断是否为null
-					if (null != l) {
-						for (File ll : l) {
-							// 循环递归调用
-							copy(ll, nf, flag);
-						}
-					}
-				} else {
-					System.out.println("正在复制：" + f.getAbsolutePath());
-					System.out.println("到：" + nf.getAbsolutePath() + "\\" + f.getName());
-					// 获取输入流
-					FileInputStream fis = new FileInputStream(f);
-					// 获取输出流
-					FileOutputStream fos = new FileOutputStream(nf + "/" + f.getName());
-
-					int i;
-					byte[] b = new byte[1024];
-					// 读取文件
-					while ((i = fis.read(b)) != -1) {
-						// 写入文件，复制
-						fos.write(b, 0, i);
-					}
-					IOUtil.close(fos,fis);
-				}
-			}
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "文件复制失败");
-		}
-	}
-
 	protected static String localSave(MultipartFile file) throws MutilsErrorException {
 		try {
 			String fileName = file.getOriginalFilename();
@@ -203,7 +137,7 @@ public class FileFunctions extends FunctionRule {
 			String savePath = DateUtil.date2String(new Date(), "yyyyMMdd/");
 			String path = config.getSaveDisk() + savePath;
 			// 定义上传路径
-			checkPath(path);
+			FileUtil.checkPath(path);
 			int count = 0;
 			while (true) {
 				String fileUrl = path + gName;
@@ -229,28 +163,5 @@ public class FileFunctions extends FunctionRule {
 			throw new MutilsErrorException(e, "文件保存失败. file save faild");
 		}
 
-	}
-
-	/**
-	 * 	获取文件网页访问路径
-	 * 
-	 * @param path    文件名和保存地址 /20190101/test.jpg
-	 * @param def_img 默认图片 同path一样 填写
-	 * @return
-	 */
-	public static String getRequestUrl(String path, String def_img) {
-		
-		try {
-			File file = new File(config.getSaveDisk() + path);
-			if(!file.exists()) {
-				File def = new File(config.getSaveDisk() + def_img);
-				if(!def.exists()) {
-					return "";
-				}
-				path = def_img;
-			}
-		
-		} catch (Exception e) {}
-		return config.fullPrefix()+ path;
 	}
 }

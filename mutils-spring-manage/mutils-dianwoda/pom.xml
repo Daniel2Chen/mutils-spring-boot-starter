@@ -5,13 +5,13 @@
   <parent>
     <groupId>cn.minsin</groupId>
     <artifactId>mutils-spring-manage</artifactId>
-    <version>0.2.9</version>
+    <version>0.3.0</version>
   </parent>
   <artifactId>mutils-dianwoda</artifactId>
   <name>mutils-dianwoda</name>
-  <url>http://maven.apache.org</url>
   	<description>
 	mutils组件中提供点我达(跑腿服务)进行在线派单、查询骑手等操作，该组件不可单独引用至maven依赖。详情请查看DianWoDaFunctions
+	官方文档：https://open.dianwoda.com/open-docs/
 	</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

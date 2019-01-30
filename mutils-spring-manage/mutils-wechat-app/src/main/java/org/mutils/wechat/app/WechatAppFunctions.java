@@ -24,10 +24,9 @@ public class WechatAppFunctions extends WeChatPayFunctions {
 	 * 
 	 * @param model 下单时的包装对象
 	 * @return APP能发起的请求的包装内容
-	 * @throws MutilsErrorException
+	 * @throws Exception 
 	 */
-	public static Map<String, String> createAppPayParamter(AppOrderPayModel model) throws MutilsErrorException {
-		try {
+	public static Map<String, String> createAppPayParamter(AppOrderPayModel model) throws Exception{
 			Map<String, String> doXMLParse = createUnifiedOrder(model);
 			checkMap(doXMLParse);
 			SortedMap<String, String> sortMap = new TreeMap<>();
@@ -43,9 +42,6 @@ public class WechatAppFunctions extends WeChatPayFunctions {
 			sortMap.put("prepayid", prepayid);
 			sortMap.put("sign", createSign(sortMap));
 			return sortMap;
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "发起APP支付失败");
-		}
 	}
 	
 	/**

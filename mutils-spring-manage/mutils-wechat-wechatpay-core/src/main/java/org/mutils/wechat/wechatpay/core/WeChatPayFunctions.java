@@ -8,11 +8,13 @@ import java.util.SortedMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.ParseException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.jdom.JDOMException;
 import org.mutils.wechat.wechatpay.core.model.BaseWeChatPayModel;
 import org.mutils.wechat.wechatpay.core.model.NotifyModel;
 import org.mutils.wechat.wechatpay.core.model.RefundModel;
@@ -62,7 +64,7 @@ public class WeChatPayFunctions extends FunctionRule {
 			log.info("withdraw json is {}", jsonStr);
 			return ParseXmlUtil.doXMLParse(jsonStr);
 		} catch (Exception e) {
-			throw new MutilsErrorException(e, "发起退款失败");
+			throw new MutilsErrorException(e, "发起转账失败");
 		} finally {
 			IOUtil.close(httpclient, response);
 		}
@@ -102,10 +104,12 @@ public class WeChatPayFunctions extends FunctionRule {
 	 * 
 	 * @param model 预下单的对象
 	 * @return
+	 * @throws ParseException 
 	 * @throws MutilsErrorException
 	 * @throws IOException
+	 * @throws JDOMException 
 	 */
-	protected static Map<String, String> createUnifiedOrder(BaseWeChatPayModel model) throws Exception {
+	protected static Map<String, String> createUnifiedOrder(BaseWeChatPayModel model) throws ParseException, IOException, MutilsErrorException, JDOMException {
 		CloseableHttpClient httpclient = HttpClientUtil.getInstance();// 先初始化;
 		CloseableHttpResponse response = null;
 
@@ -153,7 +157,7 @@ public class WeChatPayFunctions extends FunctionRule {
 	 * @param req
 	 * @throws MutilsErrorException
 	 */
-	public static NotifyModel parseNotify( HttpServletRequest req) throws MutilsErrorException {
+	public static NotifyModel parseNotify(HttpServletRequest req) throws MutilsErrorException {
 		BufferedReader br =null;
 		InputStreamReader inputStreamReader =null;
 		try {

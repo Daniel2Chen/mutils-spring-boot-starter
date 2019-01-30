@@ -7,11 +7,14 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.9</version>
+		<version>0.3.0</version>
 	</parent>
 	<artifactId>mutils-yiketong</artifactId>
 	<name>mutils-yiketong</name>
-	<url>http://maven.apache.org</url>
+	<description>
+		mutils组件中,提供虚拟号码转发的操作的一个模块。此模块不可单独引用
+		官方文档： http://www.1ketong.com/artical_1.html
+	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<httpclient.version>4.5.5</httpclient.version>
