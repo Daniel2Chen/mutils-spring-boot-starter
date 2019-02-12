@@ -2,7 +2,6 @@ package org.mutils.wechat.miniprogram.model;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.ModelRule;
-import cn.minsin.core.web.VO;
 
 public class MiniProgramCodeModel extends ModelRule {
 	
@@ -11,13 +10,14 @@ public class MiniProgramCodeModel extends ModelRule {
 	 */
 	private static final long serialVersionUID = 3462772033020881939L;
 
-	@NotNull("最大32个可见字符，只支持数字，大小写英文以及部分特殊字符")
-	private VO scene;
+	
+	@NotNull("最大32个可见字符，只支持数字，大小写英文以及部分特殊字符(!#$&'()*+,/:;=?@-._~)")
+	private String scene;
 	
 	@NotNull("接口调用凭证")
 	private transient String access_token;
 	
-	@NotNull("必须是已经发布的小程序存在的页面（否则报错)不能携带参数（参数请放在scene字段里）")
+	@NotNull("根路径前不要填加 /,必须是已经发布的小程序存在的页面(否则报错)不能携带参数（参数请放在scene字段里）")
 	private String page;
 	
 	@NotNull("二维码的宽度，单位 px，最小 280px，最大 1280px")
@@ -32,12 +32,12 @@ public class MiniProgramCodeModel extends ModelRule {
 	@NotNull("是否需要透明底色，为 true 时，生成透明底色的小程序")
 	private Boolean is_hyaline =false;
 
-	public VO getScene() {
+	public String getScene() {
 		return scene;
 	}
 
-	public void setScene(VO scene) {
-		this.scene = scene;
+	public void setScene(String scene) {
+		this.scene = scene.toString();
 	}
 
 	public String getAccess_token() {

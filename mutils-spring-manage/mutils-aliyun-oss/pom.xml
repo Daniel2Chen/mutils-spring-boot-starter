@@ -7,12 +7,13 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.2.9</version>
+		<version>0.3.1</version>
 	</parent>
 	<artifactId>mutils-aliyun-oss</artifactId>
 	<name>mutils-aliyun-oss</name>
 	<description>
 	mutils组件中提供阿里云对象储存(OSS)等操作，该组件不可单独引用至maven依赖。详情请查看AliyunOssUploadFunctions、AliyunOssDownloadFunctions、AliyunOssManageFunctions
+	官方文档：https://help.aliyun.com/document_detail/32008.html
 	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

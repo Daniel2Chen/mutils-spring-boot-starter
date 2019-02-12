@@ -17,6 +17,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -202,12 +203,13 @@ public class WechatMiniProgramFunctions extends WeChatPayFunctions {
 		CloseableHttpClient httpClient = HttpClientUtil.getInstance();
 		CloseableHttpResponse response =null;
 		try {
-			HttpPost httpPost = HttpClientUtil.getPostMethod("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + model.getAccess_token()); // 接口
+	        HttpPost httpPost = new HttpPost("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + model.getAccess_token());
 			httpPost.addHeader(HTTP.CONTENT_TYPE, "application/json");
 			StringEntity entity = new StringEntity(model.toString());
 			entity.setContentType("image/png");
+			entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,"UTF-8"));
 			httpPost.setEntity(entity);
-			 response = httpClient.execute(httpPost);
+			response = httpClient.execute(httpPost);
 			return response.getEntity().getContent();
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "获取小程序码二维码失败");

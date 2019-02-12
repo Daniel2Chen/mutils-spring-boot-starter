@@ -7,13 +7,13 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.3.0</version>
+		<version>0.3.1</version>
 	</parent>
 	<artifactId>mutils-file</artifactId>
 	<packaging>jar</packaging>
 	<name>mutils-file</name>
   	<description>
-		mutils组件中提供文件上传、上传至等操作，该组件不可单独引用。详情请查看ExcelFunctions
+		mutils组件中提供文件上传、上传至等操作，该组件不可单独引用。详情请查看FileFunctions
 	</description>
 	<properties>
 		<poi.version>4.0.0</poi.version>

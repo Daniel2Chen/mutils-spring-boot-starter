@@ -7,12 +7,12 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.3.0</version>
+		<version>0.3.1</version>
 	</parent>
 	<artifactId>mutils-gexin-push</artifactId>
 	<name>mutils-gexin-push</name>
 	<description>
-		mutils组件中提供推送消息到app端，该组件不可单独引用至maven依赖。详情请查看ExcelFunctions
+		mutils组件中提供推送消息到app端，该组件不可单独引用至maven依赖。详情请查看GexinPushFunctions
 		官方文档：http://docs.getui.com/
 	</description>
 	<properties>
