@@ -58,7 +58,7 @@ public abstract class InitConfig {
 	@SuppressWarnings("unchecked")
 	public static <T extends InitConfig> T loadConfig(Class<T> configClazz){
 		if(configClazz==null||!loadedConfig.containsKey(configClazz)) {
-			throw new MutilsException("Cant't find Configuation of "+configClazz.getName()+" ,Maybe The configuration file is not initialized or empty, please check the configuration file or select functions.");
+			throw new MutilsException("Cant't find Configuation of '"+configClazz.getName()+"' ,Maybe The configuration file is not initialized or empty, Please check the configuration file or select functions.");
 		}
 		return (T) loadedConfig.get(configClazz);
 	}
