@@ -8,14 +8,15 @@ import org.mutils.wechat.wechatpay.core.util.SignUtil;
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.WechatPayCoreConfig;
-import cn.minsin.core.init.core.InitConfig;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractModelRule;
+import cn.minsin.core.tools.ModelUtil;
 import cn.minsin.core.tools.StringUtil;
 
 
-public abstract class BaseWeChatPayModel extends ModelRule {
+public abstract class BaseWeChatPayModel extends AbstractModelRule {
 
-	protected final static WechatPayCoreConfig config = InitConfig.loadConfig(WechatPayCoreConfig.class);
+	protected final static WechatPayCoreConfig config = AbstractConfig.loadConfig(WechatPayCoreConfig.class);
 	
 	/**
 	 * 
@@ -39,13 +40,13 @@ public abstract class BaseWeChatPayModel extends ModelRule {
 	 * @throws MutilsErrorException 
 	 */
 	public String toXml(String partnerKey) throws MutilsErrorException {
-		SortedMap<String, String> treeMap = toTreeMap();
+		SortedMap<String, String> treeMap = ModelUtil.toTreeMap(this);
 		String sign = SignUtil.createSign(treeMap, partnerKey);
 		this.setSign(sign);
 		StringBuffer sb = new StringBuffer("<xml>");
-		for (Field field : getAllFields()) {
+		for (Field field : ModelUtil.getAllFields(this)) {
 			try {
-				if(verificationField(field)) continue;
+				if(ModelUtil.verificationField(field)) continue;
 				field.setAccessible(true);
 				Object object = field.get(this);
 				if (!StringUtil.isBlank(object)) {

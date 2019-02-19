@@ -10,6 +10,7 @@ import cn.minsin.core.init.ExcelConfig;
 import cn.minsin.core.init.FileConfig;
 import cn.minsin.core.init.GexinPushConfig;
 import cn.minsin.core.init.KuaiDi100Config;
+import cn.minsin.core.init.MeituanPeisongConfig;
 import cn.minsin.core.init.UnionPayConfig;
 import cn.minsin.core.init.WechatAppConfig;
 import cn.minsin.core.init.WechatJsapiConfig;
@@ -94,15 +95,26 @@ public class MutilsProperties {
 	 * 	阿里云Oss储存
 	 */
 	private AliyunOssConfig aliyunOss = new AliyunOssConfig();
+	/**
+	 * 	美团配送
+	 */
+	private MeituanPeisongConfig meituanPeisong= new MeituanPeisongConfig();
 	
 	/**
-	 * 描述文件:
-	 * 请查看对应config的配置文件
-	 * 
+	 * mutils功能组件系列相关介绍：Ctrl+t 找到对应的config文件。比如alipay 那么对应的config就是alipayConfig
+	 * 在属性中，如果那项属性有默认值，一般是不用填写的。具体请看其属性注释
 	 */
 	private String readMe;
 	
 	
+	public MeituanPeisongConfig getMeituanPeisong() {
+		return meituanPeisong;
+	}
+
+	public void setMeituanPeisong(MeituanPeisongConfig meituanPeisong) {
+		this.meituanPeisong = meituanPeisong;
+	}
+
 	public AliyunOssConfig getAliyunOss() {
 		return aliyunOss;
 	}

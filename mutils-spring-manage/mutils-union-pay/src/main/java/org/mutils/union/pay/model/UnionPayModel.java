@@ -6,14 +6,15 @@ import java.util.SortedMap;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
+import cn.minsin.core.tools.ModelUtil;
 
 /**
  * 	银联下单对象
  * @author mintonzhang
  * @date 2019年1月16日
  */
-public class UnionPayModel extends ModelRule {
+public class UnionPayModel extends AbstractModelRule {
 
 	/**
 	 * 
@@ -202,9 +203,8 @@ public class UnionPayModel extends ModelRule {
 		this.backUrl = backUrl;
 	}
 
-	@Override
-	public SortedMap<String, String> toTreeMap() throws MutilsErrorException {
-		return super.toTreeMap();
+	public SortedMap<String, String> toTreeMap() throws MutilsErrorException{
+		return 	ModelUtil.toTreeMap(this);
 	}
 
 }

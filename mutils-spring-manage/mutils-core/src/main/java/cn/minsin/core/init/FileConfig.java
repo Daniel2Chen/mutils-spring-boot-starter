@@ -1,26 +1,43 @@
 package cn.minsin.core.init;
 
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.tools.StringUtil;
 
-public class FileConfig extends InitConfig {
+/**
+ * 	文件上传配置文件
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
+public class FileConfig extends AbstractConfig {
 
 
-	//	服务地址 远程保存地址
+	/**
+	 * 	服务地址 远程保存地址
+	 */
 	private String[] serverList;
 
-	// 	是否使用本地化保存 如果为true saveDisk,serverUrl 不能为空 如果为false serverList 不能为空
-		
+	/**
+	 * 	是否使用本地化保存 如果为true saveDisk,serverUrl 不能为空 如果为false serverList 不能为空
+	 * 	默认true
+	 */
 	private boolean isLocal = true;
 
-	// 	文件所在磁盘
+	/**
+	 * 	文件所在磁盘
+	 */
 	private String saveDisk;
 
-	// 	项目访问地址 如果有项目名需要写上项目名,必须以/结尾
+	/**
+	 * 	项目访问地址 如果有项目名需要写上项目名,必须以/结尾
+	 * 	默认：http://127.0.0.1:8080/
+	 */
 	private String serverUrl = "http://127.0.0.1:8080/";
 	
-	//	静态资源映射的前缀 必须要和addResourceHandler中添加的映射文件一样
+	/**
+	 * 	静态资源映射的前缀 必须要和addResourceHandler中添加的映射文件一样
+	 */
 	private String localMapping;
 	
 

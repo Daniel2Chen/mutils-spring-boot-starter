@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.io.File;
 
 import cn.minsin.core.annotation.NotNull;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
-public class LogoModel extends ModelRule {
+public class LogoModel extends AbstractModelRule {
 	
 	/**
 	 * 

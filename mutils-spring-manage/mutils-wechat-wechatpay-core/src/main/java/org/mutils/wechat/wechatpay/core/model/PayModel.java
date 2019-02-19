@@ -87,15 +87,12 @@ public class PayModel extends BaseWeChatPayModel {
 	}
 
 	public BigDecimal getTotal_fee() {
-		if(total_fee!=null) {
-			return NumberUtil.toYuan(total_fee);
-		}
 		return total_fee;
 	}
 
 	public void setTotal_fee(BigDecimal total_fee) {
 		if(total_fee!=null) {
-			total_fee = NumberUtil.toCent(total_fee);
+			total_fee = NumberUtil.yuanToFen(total_fee);
 		}
 		this.total_fee = total_fee;
 	}

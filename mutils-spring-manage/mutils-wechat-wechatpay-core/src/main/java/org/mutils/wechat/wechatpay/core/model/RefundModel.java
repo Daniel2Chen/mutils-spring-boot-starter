@@ -65,29 +65,23 @@ public class RefundModel extends BaseWeChatPayModel {
 	}
 
 	public BigDecimal getTotal_fee() {
-		if(total_fee!=null) {
-			return NumberUtil.toYuan(total_fee);
-		}
 		return total_fee;
 	}
 
 	public void setTotal_fee(BigDecimal total_fee) {
 		if(total_fee!=null) {
-			total_fee =NumberUtil.toCent(total_fee);
+			total_fee =NumberUtil.yuanToFen(total_fee);
 		}
 		this.total_fee = total_fee;
 	}
 
 	public BigDecimal getRefund_fee() {
-		if(refund_fee!=null) {
-			return NumberUtil.toYuan(refund_fee);
-		}
 		return refund_fee;
 	}
 
 	public void setRefund_fee(BigDecimal refund_fee) {
 		if(refund_fee!=null) {
-			refund_fee =NumberUtil.toCent(refund_fee);
+			refund_fee =NumberUtil.yuanToFen(refund_fee);
 		}
 		this.refund_fee = refund_fee;
 	}

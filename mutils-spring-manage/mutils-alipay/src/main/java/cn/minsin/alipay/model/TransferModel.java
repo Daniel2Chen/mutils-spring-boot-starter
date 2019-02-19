@@ -3,7 +3,7 @@ package cn.minsin.alipay.model;
 import java.math.BigDecimal;
 
 import cn.minsin.core.annotation.NotNull;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.NumberUtil;
 
 /**
@@ -11,7 +11,7 @@ import cn.minsin.core.tools.NumberUtil;
  * @author mintonzhang
  * @date 2019年1月10日
  */
-public class TransferModel extends ModelRule {
+public class TransferModel extends AbstractModelRule {
 
 	/**
 	* 
@@ -21,10 +21,10 @@ public class TransferModel extends ModelRule {
 	@NotNull("接入方生成的订单号")
 	private String out_biz_no;
 
-	@NotNull("收款方账户类型")
-	private String payee_type;
+	@NotNull("收款方账户类型。可取值： 1、ALIPAY_USERID：支付宝账号对应的支付宝唯一用户号。以2088开头的16位纯数字组成。 2、ALIPAY_LOGONID：支付宝登录号，支持邮箱和手机号格式。")
+	private String payee_type="ALIPAY_LOGONID";
 
-	@NotNull("收款方支付宝账号")
+	@NotNull("收款方账户。与payee_type配合使用。付款方和收款方不能是同一个账户。")
 	private String payee_account;
 
 	@NotNull("转账金额 大于0 且最多两位小数")

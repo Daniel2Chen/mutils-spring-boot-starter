@@ -1,13 +1,13 @@
 package cn.minsin.yiketong.model;
 
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
 /**
- * 返回结果集
+ * 	返回结果集
  * @author mintonzhang
  * @date 2019年1月10日
  */
-public class ResultModel extends ModelRule {
+public class ResultModel extends AbstractModelRule {
 
 	/**
 	 * 

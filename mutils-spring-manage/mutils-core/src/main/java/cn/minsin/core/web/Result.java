@@ -11,8 +11,8 @@ import com.alibaba.fastjson.JSON;
 import cn.minsin.core.exception.MutilsException;
 
 /**
- * 构建者模式的Result Eg：Result.builderMissParamter().data('name',"张三")
- * 
+ * 	构建者模式的Result 
+ * Eg：Result.builderMissParamter().data('name',"张三")
  * @author mintonzhang
  * @since 0.1.0
  */
@@ -76,7 +76,7 @@ public class Result implements Serializable {
 
 	public Result data(String key, Object value) {
 		if (multidata == null) {
-			multidata = new HashMap<>();
+			multidata = new HashMap<>(10);
 		}
 		multidata.put(key, value);
 		return this;

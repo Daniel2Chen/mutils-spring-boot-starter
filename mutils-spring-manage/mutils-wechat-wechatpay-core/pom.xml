@@ -5,7 +5,7 @@
   <parent>
     <groupId>cn.minsin</groupId>
     <artifactId>mutils-spring-manage</artifactId>
-		<version>0.3.1</version>
+	<version>0.3.4</version>
   </parent>
   <artifactId>mutils-wechat-wechatpay-core</artifactId>
   <name>mutils-wechat-wechatpay-core</name>
@@ -23,20 +23,17 @@
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-core</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<!-- 微信支付 -->
-		<!-- https://mvnrepository.com/artifact/com.github.wxpay/wxpay-sdk -->
 		<dependency>
 			<groupId>com.github.wxpay</groupId>
 			<artifactId>wxpay-sdk</artifactId>
 			<version>${wechat.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jdom/jdom -->
 		<dependency>
 			<groupId>org.jdom</groupId>
 			<artifactId>jdom</artifactId>

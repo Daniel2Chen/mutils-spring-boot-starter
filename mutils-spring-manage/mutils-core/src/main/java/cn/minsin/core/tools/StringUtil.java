@@ -9,6 +9,12 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * 	字符串帮助类 可参考 {@link StringUtils}
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
 public class StringUtil extends StringUtils {
 
 	// js提交到后台可能出现的错误情况,但提交上的值并不是null或""
@@ -78,8 +84,9 @@ public class StringUtil extends StringUtils {
 		str = filterSpace(str);
 		if (filterKey != null && filterKey.length > 0 && str != null) {
 			for (String string : filterKey) {
-				if (string.equals(str))
+				if (string.equals(str)) {
 					return null;
+				}
 			}
 		}
 		return str;
@@ -94,8 +101,9 @@ public class StringUtil extends StringUtils {
 	public static String filterSpace(String str) {
 		str = StringUtils.isBlank(str) ? null : str.trim();
 		for (String key : keys) {
-			if (key.equals(str))
+			if (key.equals(str)) {
 				return null;
+			}
 		}
 		return str;
 	}
@@ -138,30 +146,6 @@ public class StringUtil extends StringUtils {
 	}
 
 	/**
-	 * 如果字符串中有中文的分号 替换为英文的分号
-	 * 
-	 * @param str
-	 * @return 2018年9月30日
-	 */
-	public static String replaceSemicolonToEnglish(String str) {
-		if (StringUtil.isBlank(str))
-			return null;
-		return str.replace("；", ";");
-	}
-
-	/**
-	 * 如果字符串中有中文的冒号 替换为英文的冒号
-	 * 
-	 * @param str
-	 * @return 2018年9月30日
-	 */
-	public static String replaceColonToEnglish(String str) {
-		if (StringUtil.isBlank(str))
-			return null;
-		return str.replace("：", ":");
-	}
-
-	/**
 	 * 判断字符串是否超长
 	 *
 	 * @param str       待定字符串
@@ -183,8 +167,9 @@ public class StringUtil extends StringUtils {
 	 * @return
 	 */
 	public static String relaceUnderline(String str) {
-		if (StringUtil.isBlank(str))
+		if (StringUtil.isBlank(str)) {
 			return "";
+		}
 		String[] split = str.split("_");
 		for (int i = 0; i < split.length; i++) {
 			split[i] = firstCharacterToUpper(split[i]);
@@ -224,10 +209,10 @@ public class StringUtil extends StringUtils {
 	 */
 	public static String removeFormat(String str) {
 		str = filterAllSpace(str);
-		if (str == null)
-			return null;
-		return str.replace("\r", "").replace("\n", "").replace("\t", "");
+		return str == null?null: str.replace("\r", "").replace("\n", "").replace("\t", "");
 	}
+
+	static Pattern p = Pattern.compile("[\u4E00-\u9FA5|\\！|\\，|\\。|\\（|\\）|\\《|\\》|\\“|\\”|\\？|\\：|\\；|\\【|\\】]");
 
 	/**
 	 * 字符串是否包含中文
@@ -236,9 +221,9 @@ public class StringUtil extends StringUtils {
 	 * @return true 包含中文字符 false 不包含中文字符
 	 */
 	public static boolean isContainChinese(String str) {
-		if (StringUtil.isBlank(str))
+		if (StringUtil.isBlank(str)) {
 			return false;
-		Pattern p = Pattern.compile("[\u4E00-\u9FA5|\\！|\\，|\\。|\\（|\\）|\\《|\\》|\\“|\\”|\\？|\\：|\\；|\\【|\\】]");
+		}
 		Matcher m = p.matcher(str);
 		return m.find();
 	}

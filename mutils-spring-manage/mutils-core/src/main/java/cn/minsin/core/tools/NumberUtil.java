@@ -2,10 +2,15 @@ package cn.minsin.core.tools;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+/**
+ * 	数值工具类  对{@link NumberUtils} 进行拓展
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
 public class NumberUtil extends NumberUtils {
 
 	/**
@@ -17,8 +22,9 @@ public class NumberUtil extends NumberUtils {
 	public static boolean isNumbers(String... str) {
 		try {
 			for (String string : str) {
-				if (!NumberUtils.isCreatable(string))
+				if (!NumberUtils.isCreatable(string)) {
 					return false;
+				}
 			}
 			return true;
 		} catch (Exception e) {
@@ -57,24 +63,13 @@ public class NumberUtil extends NumberUtils {
 	}
 	
 	/**
-	 * 转换成分
+	 * 	元转换成分
 	 * @param bigDecimal
 	 * @return
 	 */
-	public static BigDecimal toCent(BigDecimal bigDecimal) {
+	public static BigDecimal yuanToFen(BigDecimal bigDecimal) {
 		if(bigDecimal!=null) {
-			return keepLenthDecimals(2, bigDecimal).multiply(new BigDecimal(100));
-		}
-		return bigDecimal;
-	}
-	/**
-	 * 转换成分
-	 * @param bigDecimal
-	 * @return
-	 */
-	public static BigDecimal toYuan(BigDecimal bigDecimal) {
-		if(bigDecimal!=null) {
-			return bigDecimal.divide(new BigDecimal(100),2,RoundingMode.HALF_DOWN);
+			return keepLenthDecimals(2, bigDecimal).multiply(new BigDecimal(100)).setScale(0);
 		}
 		return bigDecimal;
 	}

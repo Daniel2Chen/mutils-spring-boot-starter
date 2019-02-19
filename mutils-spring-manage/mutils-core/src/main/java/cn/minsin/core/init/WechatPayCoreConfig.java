@@ -1,42 +1,70 @@
 package cn.minsin.core.init;
 
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.tools.StringUtil;
 
-public class WechatPayCoreConfig extends InitConfig {
+/**
+ *	 微信支付核心配置文件
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
+public class WechatPayCoreConfig extends AbstractConfig {
 	
-	// 	商户id
+	/**
+	 * 	商户id
+	 */
 	private String partnerId;
 
-	// 	商户秘钥
+	/**
+	 * 	商户秘钥
+	 */
 	private String partnerKey;
 
-	// 	退款请求地址
+	/**
+	 * 	退款请求地址
+	 */
 	private String refundUrl="https://api.mch.weixin.qq.com/secapi/pay/refund";
 
-	// 	付款通知地址
+	/**
+	 * 	付款通知地址
+	 */
 	private String notifyUrl;
 	
-	// 	退款异步通知地址
+	/**
+	 * 	退款异步通知地址
+	 */
 	private String refundNotifyUrl;
 
-	// 	退款证书地址
+	/**
+	 * 	退款证书地址
+	 */
 	private String certificatePath;
 
-	// 	统一下单地址
+	/**
+	 * 	统一下单地址
+	 */
 	private String unifiedOrderUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
-	// 	退款证书格式
+	/**
+	 * 	退款证书格式
+	 */
 	private String certificateFormat = "PKCS12";
 
-	// 	是否包含退款 如果为true 如果为true certificatePath、refundUrl、certificateFormat必填
+	/**
+	 * 	是否包含退款 如果为true 如果为true certificatePath、refundUrl、certificateFormat必填
+	 */
 	private boolean withRefund = false;
 	
-	//	提现地址
+	/**
+	 * 	提现地址
+	 */
 	private String withdrawUrl ="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
 	
-	//	是否同步 如果为false 那么 refundNotifyUrl不能为空
+	/**
+	 * 	是否同步 如果为false 那么 refundNotifyUrl不能为空
+	 */
 	private boolean isSynchronizeRefund =true;
 	
 

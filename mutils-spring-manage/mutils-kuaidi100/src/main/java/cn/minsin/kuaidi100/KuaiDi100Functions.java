@@ -17,20 +17,21 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import cn.minsin.core.init.KuaiDi100Config;
-import cn.minsin.core.init.core.InitConfig;
-import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractFunctionRule;
 import cn.minsin.core.tools.HttpClientUtil;
 import cn.minsin.core.tools.IOUtil;
+import cn.minsin.core.web.VO;
 import cn.minsin.kuaidi100.util.MD5Util;
 
 /**
  * 快递100物流查询
  * 
- * @author mintonzhang 2018年7月19日
+ * @author mintonzhang 
  */
-public class KuaiDi100Functions extends FunctionRule {
+public class KuaiDi100Functions extends AbstractFunctionRule {
 
-	private final static KuaiDi100Config config = InitConfig.loadConfig(KuaiDi100Config.class);
+	private final static KuaiDi100Config config = AbstractConfig.loadConfig(KuaiDi100Config.class);
 
 	/**
 	 * 查询物流单号
@@ -45,7 +46,7 @@ public class KuaiDi100Functions extends FunctionRule {
 		CloseableHttpClient httpclient = null;
 		CloseableHttpResponse response = null;
 		try {
-			String param = "{\"com\":\"" + logisticsNumber + "\",\"num\":\"" + logisticsCode + "\"}";
+			String param = VO.init("com", logisticsNumber).put("num", logisticsCode).toString();
 			String sign = MD5Util.encode(param + config.getKey() + config.getCustomer());
 			List<NameValuePair> params = new ArrayList<>();
 			params.add(new BasicNameValuePair("param", param));
@@ -53,11 +54,9 @@ public class KuaiDi100Functions extends FunctionRule {
 			params.add(new BasicNameValuePair("customer", config.getCustomer()));
 			httpclient = HttpClientUtil.getInstance();
 			HttpPost post = HttpClientUtil.getPostMethod(config.getUrl());
-			post.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
+			post.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 			 response = httpclient.execute(post);
-			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
-			System.out.println("物流json是:" + jsonStr);
-			return jsonStr;
+			return EntityUtils.toString(response.getEntity(), "UTF-8");
 		}finally {
 			IOUtil.close(response,httpclient);
 		}

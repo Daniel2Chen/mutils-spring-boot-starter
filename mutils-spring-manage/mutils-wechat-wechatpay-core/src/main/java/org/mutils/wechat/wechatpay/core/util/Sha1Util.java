@@ -26,7 +26,7 @@ public class Sha1Util {
 	}
 
 	// 创建签名SHA1
-	public static String createSHA1Sign(SortedMap<String, String> signParams) throws Exception {
+	public static String createSHA1Sign(SortedMap<String, String> signParams) {
 		StringBuffer sb = new StringBuffer();
 		Set<Entry<String, String>> es = signParams.entrySet();
 		Iterator<Entry<String, String>> it = es.iterator();

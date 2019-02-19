@@ -16,19 +16,19 @@ import com.gexin.rp.sdk.template.TransmissionTemplate;
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.GexinPushConfig;
 import cn.minsin.core.init.childconfig.GexinPushMultiConfig;
-import cn.minsin.core.init.core.InitConfig;
-import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractFunctionRule;
+import cn.minsin.core.tools.ModelUtil;
 
 /**
- * 推送功能列表
- * 
+ * 	个性推送功能列表
  * @author mintonzhang
  * @date 2019年1月16日
  * @since 0.2.3
  */
-public class GexinPushFunctions extends FunctionRule {
+public class GexinPushFunctions extends AbstractFunctionRule {
 
-	private final static GexinPushConfig config = InitConfig.loadConfig(GexinPushConfig.class);
+	private final static GexinPushConfig config = AbstractConfig.loadConfig(GexinPushConfig.class);
 
 	private GexinPushMultiConfig childConfig;
 
@@ -65,26 +65,31 @@ public class GexinPushFunctions extends FunctionRule {
 	}
 
 	/**
-	 * 推送一个或多个由pushMany 控制
-	 * 
+	 * 	推送一个或多个由pushMany 控制
+	 * 	1.修复推送消息无法显示标题头 since 0.3.2
 	 * @param model 推送的对象
 	 * @return
 	 * @throws MutilsErrorException
 	 */
 	public IPushResult push(PushModel model) throws MutilsErrorException {
-		model.verificationField();// 检查
+		ModelUtil.verificationField(model);
 		IGtPush push = initPush();
+		String content = model.getContent().toString();
 		TransmissionTemplate template = new TransmissionTemplate();
 		template.setAppId(childConfig.getAppid());
 		template.setAppkey(childConfig.getAppkey());
 		template.setTransmissionType(model.getTransmissionType());
-		template.setTransmissionContent(model.getContent());
+		template.setTransmissionContent(content);
 
 		APNPayload payload = new APNPayload();
 		payload.setContentAvailable(1);
 		payload.setSound(model.getSound());
-		payload.setCategory(model.getContent());
-		payload.setAlertMsg(new APNPayload.SimpleAlertMsg(model.getTitle()));
+		payload.setCategory(content);
+
+		APNPayload.DictionaryAlertMsg msg = new APNPayload.DictionaryAlertMsg();
+		msg.setSubtitle(model.getSubTitle());
+		msg.setTitle(model.getTitle());
+		payload.setAlertMsg(msg);
 		template.setAPNInfo(payload);
 
 		List<String> clientids = model.getClientids();
@@ -98,7 +103,6 @@ public class GexinPushFunctions extends FunctionRule {
 			message.setOfflineExpireTime(model.getTimeout());
 			message.setData(template);
 			message.setPushNetWorkType(model.getPushNetWorkType());
-
 			Target target = new Target();
 			target.setAppId(childConfig.getAppid());
 			target.setClientId(clientids.get(0));

@@ -1,8 +1,8 @@
 package org.mutils.wechat.wechatpay.core.model;
 
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
-public class NotifyModel extends ModelRule {
+public class NotifyModel extends AbstractModelRule {
 
 	/**
 	 * 

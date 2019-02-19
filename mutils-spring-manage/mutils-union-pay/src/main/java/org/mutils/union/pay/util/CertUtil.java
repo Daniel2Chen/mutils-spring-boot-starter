@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.minsin.core.init.UnionPayConfig;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.tools.StringUtil;
 
 /**
@@ -40,7 +40,7 @@ import cn.minsin.core.tools.StringUtil;
  */
 public class CertUtil{
 	
-	private final static UnionPayConfig config = InitConfig.loadConfig(UnionPayConfig.class);
+	private final static UnionPayConfig config = AbstractConfig.loadConfig(UnionPayConfig.class);
 
 	
 	

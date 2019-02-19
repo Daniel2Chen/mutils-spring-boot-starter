@@ -1,5 +1,6 @@
 package cn.minsin.alipay;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -23,58 +24,49 @@ import cn.minsin.alipay.model.RefundModel;
 import cn.minsin.alipay.model.TransferModel;
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.AlipayConfig;
-import cn.minsin.core.init.core.InitConfig;
-import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractFunctionRule;
+import cn.minsin.core.tools.ModelUtil;
 import cn.minsin.core.web.VO;
 
 /**
- * 	支付宝功能列表
+ * 支付宝功能列表
+ * 
  * @author mintonzhang
  * @date 2019年1月17日
  * @since 0.1.0
  */
-public class AlipayFunctions extends FunctionRule {
+public class AlipayFunctions extends AbstractFunctionRule {
 
-	private final static AlipayConfig config = InitConfig.loadConfig(AlipayConfig.class);
+	private final static AlipayConfig config = AbstractConfig.loadConfig(AlipayConfig.class);
 
 	/**
 	 * 发起支付宝网站支付
 	 * 
-	 * @param out_trade_no
-	 * @param price
 	 * @return
 	 * @throws MutilsErrorException
+	 * @throws AlipayApiException
 	 */
-	public static AlipayTradePrecreateResponse createWebAlipayParams(PayModel payModel) throws MutilsErrorException {
-
-		try {
-			AlipayTradePrecreateRequest alipayRequest = new AlipayTradePrecreateRequest();
-			alipayRequest.setBizContent(payModel.toString());
-			alipayRequest.setNotifyUrl(config.getNotifyUrl());// 设置回调地址
-			 return  initAlipayClient().execute(alipayRequest);
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "Create Alipay Web payment failure.");
-		}
+	public static AlipayTradePrecreateResponse createWebAlipayParams(PayModel payModel) throws AlipayApiException {
+		ModelUtil.verificationField(payModel);
+		AlipayTradePrecreateRequest alipayRequest = new AlipayTradePrecreateRequest();
+		alipayRequest.setBizContent(payModel.toString());
+		alipayRequest.setNotifyUrl(config.getNotifyUrl());
+		return initAlipayClient().execute(alipayRequest);
 	}
 
 	/**
 	 * 发起支付宝订单生成
 	 * 
-	 * @param out_trade_no
-	 * @param price
-	 * @return 2018年7月18日
-	 * @throws MutilsErrorException
+	 * @return
+	 * @throws AlipayApiException
 	 */
-	public static AlipayTradeAppPayResponse createAlipayParams(PayModel payModel) throws MutilsErrorException {
-		try {
-			// 进行保留两位小数
-			AlipayTradeAppPayRequest alipayRequest = new AlipayTradeAppPayRequest();
-			alipayRequest.setBizContent(payModel.toString());
-			alipayRequest.setNotifyUrl(config.getNotifyUrl());// 设置回调地址
-			 return initAlipayClient().sdkExecute(alipayRequest);
-		} catch (AlipayApiException e) {
-			throw new MutilsErrorException(e, "Create Alipay mobile payment failure.");
-		}
+	public static AlipayTradeAppPayResponse createAlipayParams(PayModel payModel) throws AlipayApiException {
+		ModelUtil.verificationField(payModel);
+		AlipayTradeAppPayRequest alipayRequest = new AlipayTradeAppPayRequest();
+		alipayRequest.setBizContent(payModel.toString());
+		alipayRequest.setNotifyUrl(config.getNotifyUrl());
+		return initAlipayClient().sdkExecute(alipayRequest);
 
 	}
 
@@ -83,35 +75,27 @@ public class AlipayFunctions extends FunctionRule {
 	 * 
 	 * @param model
 	 * @return 2018年12月6日
-	 * @throws MutilsErrorException
+	 * @throws AlipayApiException
 	 */
-	public static AlipayFundTransToaccountTransferResponse transfer(TransferModel model) throws MutilsErrorException {
-
-		try {
-			AlipayFundTransToaccountTransferRequest alipayRequest = new AlipayFundTransToaccountTransferRequest();
-			alipayRequest.setBizContent(model.toString());
-			return initAlipayClient().execute(alipayRequest);
-		} catch (AlipayApiException e) {
-			throw new MutilsErrorException(e, "Initiation of Alipay transfer failed.");
-		}
+	public static AlipayFundTransToaccountTransferResponse transfer(TransferModel model) throws AlipayApiException {
+		ModelUtil.verificationField(model);
+		AlipayFundTransToaccountTransferRequest alipayRequest = new AlipayFundTransToaccountTransferRequest();
+		alipayRequest.setBizContent(model.toString());
+		return initAlipayClient().execute(alipayRequest);
 	}
 
 	/**
-	 * 支付宝退款
-	 * 退款是需要验证public_key 请确认是否和sign_type匹配
+	 * 支付宝退款 退款是需要验证public_key 请确认是否和sign_type匹配
+	 * 
 	 * @param model
 	 * @return
-	 * @throws MutilsErrorException
+	 * @throws AlipayApiException
 	 */
-	public static AlipayTradeRefundResponse refund(RefundModel model) throws MutilsErrorException {
-
-		try {
-			AlipayTradeRefundRequest alipayRequest = new AlipayTradeRefundRequest();
-			alipayRequest.setBizContent(model.toString());
-			 return initAlipayClient().execute(alipayRequest);
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "Initiating Alipay refund failed.");
-		}
+	public static AlipayTradeRefundResponse refund(RefundModel model) throws AlipayApiException {
+		ModelUtil.verificationField(model);
+		AlipayTradeRefundRequest alipayRequest = new AlipayTradeRefundRequest();
+		alipayRequest.setBizContent(model.toString());
+		return initAlipayClient().execute(alipayRequest);
 	}
 
 	/**
@@ -121,36 +105,26 @@ public class AlipayFunctions extends FunctionRule {
 	 * 
 	 * @param req
 	 * @return
-	 * @throws MutilsErrorException
+	 * @throws UnsupportedEncodingException
 	 */
-	public static NotifyModel parseNotify(HttpServletRequest req) throws MutilsErrorException {
-		try {
-			req.setCharacterEncoding("utf-8");
-			VO init = VO.init();
-			Map<String, String[]> requestParams = req.getParameterMap();
-			for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
-				String name = (String) iter.next();
-				String[] values = (String[]) requestParams.get(name);
-				String valueStr = "";
-				for (int i = 0; i < values.length; i++) {
-					valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
-				}
-				init.put(name, valueStr);
+	public static NotifyModel parseNotify(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		VO init = VO.init();
+		Map<String, String[]> requestParams = req.getParameterMap();
+		for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
+			String name = (String) iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
 			}
-			return init.toObject(NotifyModel.class);
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "Parsing alipay callback failed.");
+			init.put(name, valueStr);
 		}
+		return init.toObject(NotifyModel.class);
 	}
 
 	protected static AlipayClient initAlipayClient() {
-		return new DefaultAlipayClient(
-				config.getServerUrl(),
-				config.getAppid(), 
-				config.getPrivateKey(),
-				config.getFormat(),
-				config.getCharset(), 
-				config.getPublicKey(), 
-				config.getSignType());
+		return new DefaultAlipayClient(config.getServerUrl(), config.getAppid(), config.getPrivateKey(),
+				config.getFormat(), config.getCharset(), config.getPublicKey(), config.getSignType());
 	}
 }

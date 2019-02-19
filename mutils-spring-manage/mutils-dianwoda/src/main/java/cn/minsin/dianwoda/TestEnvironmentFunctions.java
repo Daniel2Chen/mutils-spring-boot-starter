@@ -1,27 +1,32 @@
 package cn.minsin.dianwoda;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+
 import com.alibaba.fastjson.JSONObject;
 
-import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.rule.AbstractFunctionRule;
 import cn.minsin.core.web.VO;
 
 
 /**
- * 测试环境的专用接口
- * 
- * @author minsin
- *
+ * 	点我达测试环境的专用接口
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
  */
-public class TestEnvironmentFunctions  extends FunctionRule{
+public class TestEnvironmentFunctions  extends AbstractFunctionRule{
 
 	/**
 	 * 接受订单（测试接口仅测试环境有效）
 	 * 
 	 * @param order_original_id
 	 * @return
-	 * @throws Exception 
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public static JSONObject orderAcceptedTest(String order_original_id) throws Exception {
+	public static JSONObject orderAcceptedTest(String order_original_id) throws ClientProtocolException, IOException{
 		return DianWoDaFunctions.doSend("/api/v3/order-accepted-test.json",
 				VO.init().put("order_original_id", order_original_id));
 	}
@@ -31,9 +36,10 @@ public class TestEnvironmentFunctions  extends FunctionRule{
 	 * 
 	 * @param order_original_id
 	 * @return
-	 * @throws Exception 
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public static JSONObject orderArriveTest(String order_original_id) throws Exception {
+	public static JSONObject orderArriveTest(String order_original_id) throws ClientProtocolException, IOException {
 		return DianWoDaFunctions.doSend("/api/v3/order-arrive-test.json",
 				VO.init().put("order_original_id", order_original_id));
 	}
@@ -43,9 +49,10 @@ public class TestEnvironmentFunctions  extends FunctionRule{
 	 * 完成取货（测试接口仅测试环境有效）
 	 * @param order_original_id
 	 * @return
-	 * @throws Exception 
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public static JSONObject orderFetchTest(String order_original_id) throws Exception {
+	public static JSONObject orderFetchTest(String order_original_id) throws ClientProtocolException, IOException{
 		return DianWoDaFunctions.doSend("/api/v3/order-fetch-test.json",
 				VO.init().put("order_original_id", order_original_id));
 	}
@@ -54,9 +61,10 @@ public class TestEnvironmentFunctions  extends FunctionRule{
 	 * 完成配送（测试接口仅测试环境有效）
 	 * @param order_original_id
 	 * @return
-	 * @throws Exception 
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public static JSONObject orderFinishTest(String order_original_id) throws Exception {
+	public static JSONObject orderFinishTest(String order_original_id) throws ClientProtocolException, IOException {
 		return DianWoDaFunctions.doSend("/api/v3/order-finish-test.json",
 				VO.init().put("order_original_id", order_original_id));
 	}

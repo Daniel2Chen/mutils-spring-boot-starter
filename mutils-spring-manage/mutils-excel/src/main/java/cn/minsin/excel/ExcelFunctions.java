@@ -5,6 +5,7 @@ package cn.minsin.excel;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -29,8 +31,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.exception.MutilsException;
 import cn.minsin.core.init.ExcelConfig;
-import cn.minsin.core.init.core.InitConfig;
-import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractFunctionRule;
 import cn.minsin.core.tools.IOUtil;
 import cn.minsin.core.tools.StringUtil;
 import cn.minsin.excel.model.ExcelRowModel;
@@ -57,9 +59,9 @@ import cn.minsin.excel.model.ExcelRowModel;
  * @author mintonzhang
  * @2018年10月11日
  */
-public class ExcelFunctions extends FunctionRule {
+public class ExcelFunctions extends AbstractFunctionRule {
 
-	private final static ExcelConfig config = InitConfig.loadConfig(ExcelConfig.class);
+	private final static ExcelConfig config = AbstractConfig.loadConfig(ExcelConfig.class);
 
 	private ExcelVersion excelVersion;
 
@@ -100,16 +102,13 @@ public class ExcelFunctions extends FunctionRule {
 	 * @param in
 	 * @param excelVersion
 	 * @return 2018年10月11日
-	 * @throws Exception
+	 * @throws IOException 
+	 * @throws EncryptedDocumentException 
 	 */
-	public static ExcelFunctions builder(InputStream in) throws Exception {
-		try {
+	public static ExcelFunctions builder(InputStream in) throws EncryptedDocumentException, IOException{
 			Workbook workbook = WorkbookFactory.create(in);
 			return new ExcelFunctions(
 					workbook instanceof HSSFWorkbook ? ExcelVersion.VERSION_2003 : ExcelVersion.VERSION_2007, workbook);
-		} catch (Exception e) {
-			throw new MutilsException(e, "Excel读取失败！");
-		}
 	}
 
 	/**
@@ -175,28 +174,27 @@ public class ExcelFunctions extends FunctionRule {
 	 * D://upload/aaa
 	 * 
 	 * @param filename 无后缀的文件名 2018年10月11日
-	 * @throws Exception
+	 * @throws IOException 
 	 */
-	public void export(String filename) throws MutilsErrorException {
+	public void export(String filename) throws  IOException {
 		FileOutputStream fileOutputStream = null;
 		try {
 			fileOutputStream = new FileOutputStream(filename + excelVersion.getSuffix());
 			workbook.write(fileOutputStream);
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "Excel读取失败！");
-		} finally {
+		}finally {
 			IOUtil.close(workbook, fileOutputStream);
 		}
 	}
 
 	/**
-	 * aaa
-	 * 
-	 * @param filename 无后缀的文件名 2018年10月11日
-	 * @author mintonzhang@163.com
+	 * 	导出文件到浏览器
+	 * @param resp
+	 * @param fileName 无后缀的文件名 2018年10月11日
+	 * @throws IOException 
+	 * @throws EncryptedDocumentException 
 	 * @throws Exception
 	 */
-	public void export(HttpServletResponse resp, String fileName) throws MutilsErrorException {
+	public void export(HttpServletResponse resp, String fileName) throws EncryptedDocumentException, IOException {
 		try {
 			fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1") + excelVersion.getSuffix();
 			resp.setCharacterEncoding("utf-8");
@@ -353,17 +351,13 @@ public class ExcelFunctions extends FunctionRule {
 		return StringUtil.filterSpace(cellValue);
 	}
 
-	public static void error(HttpServletResponse resp, String message, Exception error) throws MutilsException {
-		try {
+	public static void error(HttpServletResponse resp, String message, Exception error) throws EncryptedDocumentException, IOException {
 			String errorTemplateUrl = config.getErrorTemplatePath();
 			String errorMessage = error == null ? "" : error.getMessage();
 			ExcelFunctions.builder(new FileInputStream(errorTemplateUrl)).sheet(config.getErrorTemplateSheetIndex())
 					.row(config.getErrorTemplateRowIndex())
 					.cell(config.getErrorTemplateCellIndex(), message + "\n\n" + errorMessage)
 					.export(resp, config.getErrorTemplateExportName());
-		} catch (Exception e) {
-			throw new MutilsException(e, "错误模板读取失败");
-		}
 	}
 
 	/**

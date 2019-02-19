@@ -6,6 +6,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
 import org.jdom.JDOMException;
 import org.mutils.wechat.app.model.AppOrderPayModel;
 import org.mutils.wechat.app.model.AppRefundModel;
@@ -58,8 +59,11 @@ public class WechatAppFunctions extends WeChatPayFunctions {
 	 * @param model
 	 * @return
 	 * @throws MutilsErrorException
+	 * @throws IOException 
+	 * @throws JDOMException 
+	 * @throws ClientProtocolException 
 	 */
-	public static RefundReturnModel createAppRefundParamter(AppRefundModel model) throws MutilsErrorException {
+	public static RefundReturnModel createAppRefundParamter(AppRefundModel model) throws MutilsErrorException, ClientProtocolException, JDOMException, IOException {
 		return createRefundRequest(model);
 	}
 }

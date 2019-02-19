@@ -3,9 +3,9 @@ package org.mutils.qrcode.model;
 import java.io.OutputStream;
 
 import cn.minsin.core.annotation.NotNull;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
-public class QrcodeModel extends ModelRule {
+public class QrcodeModel extends AbstractModelRule {
 
 	/**
 	 * 

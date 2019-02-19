@@ -4,7 +4,7 @@ import org.mutils.wechat.wechatpay.core.model.PayModel;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.init.WechatMiniProgramConfig;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 
 public class MiniProgramOrderPayModel extends PayModel {
 
@@ -16,7 +16,7 @@ public class MiniProgramOrderPayModel extends PayModel {
 
 	public MiniProgramOrderPayModel() {
 		super();
-		this.setAppid(InitConfig.loadConfig(WechatMiniProgramConfig.class).getAppid());
+		this.setAppid(AbstractConfig.loadConfig(WechatMiniProgramConfig.class).getAppid());
 		this.setTrade_type("JSAPI");
 	}
 	

@@ -3,7 +3,7 @@ package cn.minsin.spring.boot.autoconfigure;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 
 @Configuration
 @EnableConfigurationProperties(MutilsProperties.class)
@@ -16,7 +16,7 @@ public class MutilsAutoConfigure {
 		MutilsParamConfiguration(MutilsProperties properties) {
 			super();
 			this.properties = properties;
-			InitConfig.init(properties.getFunctions());
+			AbstractConfig.init(properties.getFunctions());
 		}
 		public MutilsProperties getProperties() {
 			return properties;

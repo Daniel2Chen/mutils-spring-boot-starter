@@ -2,13 +2,22 @@ package cn.minsin.core.tools;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 
+import org.apache.http.Consts;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.config.RegistryBuilder;
@@ -20,8 +29,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 /**
+ * 	httpClient帮助类
  * 	可以参考 {@link HttpClients} 这个帮助类
  * @author minsin
  */
@@ -63,8 +75,8 @@ public class HttpClientUtil {
 			return HttpClientBuilder.create().setConnectionManager(connManager).build();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return HttpClientBuilder.create().build();
 		}
-		return HttpClientBuilder.create().build();
 	}
 
 	/**
@@ -86,7 +98,7 @@ public class HttpClientUtil {
 	 * @return
 	 */
 	public static HttpPost getPostMethod(String url) {
-		HttpPost pmethod = new HttpPost(url); // 设置响应头信息
+		HttpPost pmethod = new HttpPost(url); 
 		pmethod.addHeader("Connection", "keep-alive");
 		pmethod.addHeader("Accept", "*/*");
 		pmethod.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
@@ -105,11 +117,61 @@ public class HttpClientUtil {
 	 */
 	public static HttpGet getGetMethod(String url) {
 		HttpGet pmethod = new HttpGet(url);
-		// 设置响应头信息
 		pmethod.addHeader("Connection", "keep-alive");
 		pmethod.addHeader("Cache-Control", "max-age=0");
 		pmethod.addHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) ");
 		pmethod.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/;q=0.8");
 		return pmethod;
 	}
+	
+
+    private static final int DEFAULT_TIMEOUT = 10000;
+
+    /**
+     * post 方法
+     *
+     * @param url
+     * @param params
+     * @return
+     * @throws IOException
+     */
+    public static String post(String url, Map<String, String> params) throws IOException {
+        if (params==null||params.isEmpty()) {
+            return "";
+        }
+
+        CloseableHttpClient httpClient = getInstance();
+        CloseableHttpResponse response = null;
+        String result = null;
+
+        try {
+            HttpPost httpPost = new HttpPost(url);
+            RequestConfig requestConfig = RequestConfig
+                    .custom()
+                    .setSocketTimeout(DEFAULT_TIMEOUT)
+                    .setConnectTimeout(DEFAULT_TIMEOUT)
+                    .build();//设置请求和传输超时时间
+
+            httpPost.setConfig(requestConfig);
+            httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+
+            List<BasicNameValuePair> basicNameValuePairs = new ArrayList<>();
+            for (Map.Entry<String, String> entity : params.entrySet()) {
+                basicNameValuePairs.add(new BasicNameValuePair(entity.getKey(), entity.getValue()));
+            }
+
+            UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(basicNameValuePairs, Consts.UTF_8);
+            httpPost.setEntity(urlEncodedFormEntity);
+
+            response = httpClient.execute(httpPost);
+
+            HttpEntity entity = response.getEntity();
+            result = EntityUtils.toString(entity, Consts.UTF_8);
+            return result == null ? "" : result.trim();
+
+        } finally {
+        	IOUtil.close(response,httpClient);
+        }
+
+    }
 }

@@ -1,13 +1,13 @@
 package org.mutils.wechat.wechatpay.core.model;
 
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 /**
  *      微信退款返回参数键实体类
  * @author mintonzhang
  * @date 2019年1月17日
  * @since 0.2.5
  */
-public class RefundReturnModel extends ModelRule {
+public class RefundReturnModel extends AbstractModelRule {
 
 	/**
 	 * 

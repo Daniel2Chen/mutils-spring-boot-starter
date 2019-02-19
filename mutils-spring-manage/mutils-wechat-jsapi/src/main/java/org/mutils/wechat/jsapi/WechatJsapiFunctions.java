@@ -1,17 +1,21 @@
 package org.mutils.wechat.jsapi;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.mutils.wechat.jsapi.model.AccessTokenModel;
+import org.jdom.JDOMException;
 import org.mutils.wechat.jsapi.model.JsapiOrderPayModel;
 import org.mutils.wechat.jsapi.model.JsapiRefundModel;
 import org.mutils.wechat.wechatpay.core.WeChatPayFunctions;
+import org.mutils.wechat.wechatpay.core.model.AccessTokenModel;
 import org.mutils.wechat.wechatpay.core.model.RefundReturnModel;
 import org.mutils.wechat.wechatpay.core.util.Sha1Util;
 
@@ -20,7 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.WechatJsapiConfig;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.tools.HttpClientUtil;
 import cn.minsin.core.tools.IOUtil;
 
@@ -32,7 +36,7 @@ import cn.minsin.core.tools.IOUtil;
  */
 public class WechatJsapiFunctions extends WeChatPayFunctions {
 	
-	private static final WechatJsapiConfig config =InitConfig.loadConfig(WechatJsapiConfig.class);
+	private static final WechatJsapiConfig config =AbstractConfig.loadConfig(WechatJsapiConfig.class);
 
 	/**
 	 * 发起退款申请
@@ -40,9 +44,12 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 	 * @param model
 	 * @return
 	 * @throws MutilsErrorException
+	 * @throws IOException 
+	 * @throws JDOMException 
+	 * @throws ClientProtocolException 
 	 */
 	public static RefundReturnModel createJsapiRefundParamter(JsapiRefundModel model)
-			throws MutilsErrorException {
+			throws MutilsErrorException, ClientProtocolException, JDOMException, IOException {
 		
 		return createRefundRequest(model);
 	}
@@ -54,12 +61,11 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 	 * @param debug  是否开启调试
 	 * @param 要使用的功能 默认 "openLocation", "getLocation", "chooseWXPay"
 	 * @return
-	 * @throws MutilsErrorException
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public static Map<String, Object> createInitJSConfig(String url, boolean debug, String... functions)
-			throws MutilsErrorException {
+	public static Map<String, Object> createInitJSConfig(String url, boolean debug, String... functions) throws ClientProtocolException, IOException{
 		
-		try {
 			if (functions == null||functions.length==0) {
 				functions = new String[] { "openLocation", "getLocation", "chooseWXPay" };
 			}
@@ -83,18 +89,15 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 			returnMap.put("jsApiList", functions);
 			returnMap.put("debug", debug);
 			return returnMap;
-		} catch (Exception e) {
-			throw new MutilsErrorException(e,"jsapi初始化失败");
-		}
 	}
 
 	/**
-	 * jsapi获取AccessToken
-	 * 用于实现登录
+	 * jsapi获取AccessToken用于实现登录
 	 * @return
-	 * @throws Exception
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public static AccessTokenModel getAccessToken() throws MutilsErrorException {
+	public static AccessTokenModel getAccessToken() throws ClientProtocolException, IOException{
 		
 		CloseableHttpClient instance = HttpClientUtil.getInstance();
 		CloseableHttpResponse response =null;
@@ -127,8 +130,6 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 			accessToken.setExpires_time(System.currentTimeMillis() / 1000);
 			accessToken.setJsapi_ticket(jsapi_ticke);
 			return accessToken;
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "获取AccessToken失败");
 		}finally {
 			IOUtil.close(instance,response);
 		}
@@ -139,11 +140,12 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 	 * 
 	 * @param model 下单时的包装对象
 	 * @return 公众号能发起的请求的包装内容
-	 * @throws MutilsErrorException
+	 * @throws JDOMException 
+	 * @throws IOException 
+	 * @throws ParseException 
 	 */
-	public static Map<String, String> createJsapiPayParamter(JsapiOrderPayModel model) throws MutilsErrorException {
+	public static Map<String, String> createJsapiPayParamter(JsapiOrderPayModel model) throws ParseException, IOException, MutilsErrorException, JDOMException {
 		
-		try {
 			Map<String, String> doXMLParse = createUnifiedOrder(model);
 			checkMap(doXMLParse);
 			SortedMap<String, String> sortMap = new TreeMap<>();
@@ -156,9 +158,6 @@ public class WechatJsapiFunctions extends WeChatPayFunctions {
 			sortMap.put("paySign", createSign(sortMap));
 			sortMap.put("prepay_id", doXMLParse.get("prepay_id"));
 			return sortMap;
-		} catch (Exception e) {
-			throw new MutilsErrorException(e, "发起JSAPI支付失败");
-		}
 
 	}
 }

@@ -1,16 +1,26 @@
 package cn.minsin.core.init;
 
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.tools.StringUtil;
 
-public class WechatMiniProgramConfig extends InitConfig {
+/**
+ * 	微信对小程序的配置文件
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
+public class WechatMiniProgramConfig extends AbstractConfig {
 	
 	
-	// 小程序appid
+	/**
+	 * 	小程序appid
+	 */
 	private String appid;
 	
-	// 小程序appSecret
+	/**
+	 * 	小程序appSecret
+	 */
 	private String appSecret;
 
 	public String getAppid() {

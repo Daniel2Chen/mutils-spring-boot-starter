@@ -84,15 +84,12 @@ public class WithdrawModel extends BaseWeChatPayModel {
 	}
 
 	public BigDecimal getAmount() {
-		if(amount!=null) {
-			amount = NumberUtil.toYuan(amount);
-		}
 		return amount;
 	}
 	
 	public void setAmount(BigDecimal amount) {
 		if(amount!=null) {
-			amount = NumberUtil.toCent(amount);
+			amount = NumberUtil.yuanToFen(amount);
 		}
 		this.amount = amount;
 	}

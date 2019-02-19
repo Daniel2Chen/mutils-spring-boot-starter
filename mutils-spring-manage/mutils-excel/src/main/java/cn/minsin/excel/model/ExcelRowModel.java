@@ -2,9 +2,9 @@ package cn.minsin.excel.model;
 
 import java.util.Map;
 
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
-public class ExcelRowModel extends ModelRule{
+public class ExcelRowModel extends AbstractModelRule{
 	
 	/**
 	 * 

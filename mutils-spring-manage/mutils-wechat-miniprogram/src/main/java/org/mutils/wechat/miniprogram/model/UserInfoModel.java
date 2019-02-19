@@ -1,8 +1,8 @@
 package org.mutils.wechat.miniprogram.model;
 
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
-public class UserInfoModel extends ModelRule {
+public class UserInfoModel extends AbstractModelRule {
 
 	/**
 	 * 

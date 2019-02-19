@@ -10,8 +10,14 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
+/**
+ * 	文件操作工具类
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
 public class FileUtil {
 
 	/**
@@ -102,7 +108,7 @@ public class FileUtil {
 		}
 		
 	}
-	public class FileModel extends ModelRule {
+	public class FileModel extends AbstractModelRule {
 
 		/**
 		 * 

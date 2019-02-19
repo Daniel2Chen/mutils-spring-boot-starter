@@ -3,7 +3,7 @@ package cn.minsin.dianwoda.model;
 import java.math.BigDecimal;
 
 import cn.minsin.core.annotation.NotNull;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.NumberUtil;
 
 /**
@@ -12,7 +12,7 @@ import cn.minsin.core.tools.NumberUtil;
  * @author minsin
  *
  */
-public class OrderModel extends ModelRule {
+public class OrderModel extends AbstractModelRule {
 
 	/**
 	 * 
@@ -95,7 +95,7 @@ public class OrderModel extends ModelRule {
 
 	public void setOrder_price(BigDecimal order_price) {
 		if(order_price!=null) {
-			order_price = NumberUtil.toCent(order_price);
+			order_price = NumberUtil.yuanToFen(order_price);
 		}
 		this.order_price = order_price;
 	}

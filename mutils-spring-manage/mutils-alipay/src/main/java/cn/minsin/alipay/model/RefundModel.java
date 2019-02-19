@@ -3,7 +3,7 @@ package cn.minsin.alipay.model;
 import java.math.BigDecimal;
 
 import cn.minsin.core.annotation.NotNull;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.NumberUtil;
 
 /**
@@ -11,7 +11,7 @@ import cn.minsin.core.tools.NumberUtil;
  * @author mintonzhang
  * @date 2019年1月10日
  */
-public class RefundModel extends ModelRule{
+public class RefundModel extends AbstractModelRule{
 
 	/**
 	 * 

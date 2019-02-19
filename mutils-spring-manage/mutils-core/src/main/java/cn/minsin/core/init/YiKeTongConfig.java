@@ -1,16 +1,28 @@
 package cn.minsin.core.init;
 
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.tools.StringUtil;
 
-public class YiKeTongConfig extends InitConfig {
+/**
+ *	 移客通配置文件
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
+public class YiKeTongConfig extends AbstractConfig {
 
-	//	 接入方的唯一key
+	/**
+	 * 	 接入方的唯一key
+	 */
 	private String corpKey;
-	// 	接入方秘钥
+	/**
+	 * 	接入方秘钥
+	 */
 	private String corpSecret;
-	// 	服务请求地址 默认是正式服地址
+	/**
+	 * 	服务请求地址 默认是正式服地址
+	 */
 	private String apiUrl = "http://api.1ketong.com:81/ykt-pool/";
 
 	public String getCorpKey() {

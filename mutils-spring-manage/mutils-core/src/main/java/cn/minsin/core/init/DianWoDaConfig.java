@@ -1,14 +1,22 @@
 package cn.minsin.core.init;
 
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.tools.StringUtil;
 
-public class DianWoDaConfig extends InitConfig {
+/**
+ * 	点我达配置文件
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
+public class DianWoDaConfig extends AbstractConfig {
 
 	
-	//正式服 http://api.dianwoda.com
-	//测试服 http://docking-normal-qa.dwbops.com 默认
+	/**
+	 * 	正式服 http://api.dianwoda.com
+	 * 	测试服 http://docking-normal-qa.dwbops.com 默认
+	 */
 	private String url="http://docking-normal-qa.dwbops.com";
 	
 	private String pk;

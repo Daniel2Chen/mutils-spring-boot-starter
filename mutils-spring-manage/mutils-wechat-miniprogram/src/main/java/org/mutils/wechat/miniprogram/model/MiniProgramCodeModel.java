@@ -1,9 +1,9 @@
 package org.mutils.wechat.miniprogram.model;
 
 import cn.minsin.core.annotation.NotNull;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
-public class MiniProgramCodeModel extends ModelRule {
+public class MiniProgramCodeModel extends AbstractModelRule {
 	
 	/**
 	 * 

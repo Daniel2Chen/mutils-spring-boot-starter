@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.3.1</version>
+		<version>0.3.4</version>
 	</parent>
 	<artifactId>mutils-spring-boot-starter</artifactId>
 	<name>mutils-spring-boot-starter</name>
@@ -88,6 +88,10 @@
 		<dependency>
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-qrcode</artifactId><!-- 二维码 注意：二维码没有配置项 所以在function中不需要填写 也会自动引用	-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-meituan-peisong</artifactId><!-- 美团配送-->
 		</dependency>
 	</dependencies>
 </project>

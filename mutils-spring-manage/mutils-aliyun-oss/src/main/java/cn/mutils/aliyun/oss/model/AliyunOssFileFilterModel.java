@@ -2,25 +2,25 @@ package cn.mutils.aliyun.oss.model;
 
 import com.aliyun.oss.model.ListObjectsRequest;
 
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.StringUtil;
 
-public class AliyunOssFileFilterModel extends ModelRule {
+public class AliyunOssFileFilterModel extends AbstractModelRule {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4368484070526541535L;
 
-	//限定返回的文件必须以prefix作为前缀。
+	//	限定返回的文件必须以prefix作为前缀。
 	private String prefix;
-	//对文件名称进行分组的一个字符。所有名称包含指定的前缀且第一次出现delimiter字符之间的文件作为一组元素（commonPrefixes）。	
+	//	对文件名称进行分组的一个字符。所有名称包含指定的前缀且第一次出现delimiter字符之间的文件作为一组元素（commonPrefixes）。	
 	private String delimiter;
-	//列举指定marker之后的文件。	
+	//	列举指定marker之后的文件。	
 	private String marker;
-	//限定此次列举文件的最大个数。默认值为100，最大值为1000。	
+	//	限定此次列举文件的最大个数。默认值为100，最大值为1000。	
 	private Integer maxKeys=100;
-	//请求响应体中文件名称采用的编码方式，目前仅支持url。	
+	//	请求响应体中文件名称采用的编码方式，目前仅支持url。	
 	private String encodingType;
 
 	public String getPrefix() {

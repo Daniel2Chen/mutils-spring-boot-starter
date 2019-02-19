@@ -17,48 +17,44 @@ import org.mutils.union.pay.util.SDKConstants;
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.exception.MutilsException;
 import cn.minsin.core.init.UnionPayConfig;
-import cn.minsin.core.init.core.InitConfig;
-import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractFunctionRule;
 import cn.minsin.core.tools.StringUtil;
 
 /**
- * 	银联支付功能列表
+ * 银联支付功能列表
+ * 
  * @author mintonzhang
  * @date 2019年1月16日
  * @since 0.2.3
  */
-public class UnionPayFunctions extends FunctionRule {
+public class UnionPayFunctions extends AbstractFunctionRule {
 
-	private final static UnionPayConfig config = InitConfig.loadConfig(UnionPayConfig.class);
-	
+	private final static UnionPayConfig config = AbstractConfig.loadConfig(UnionPayConfig.class);
+
 	/**
-	 * 	银联支付返回一个form表单
+	 * 银联支付返回一个form表单
 	 * 
 	 * @param model 下单对象
 	 * @return
 	 * @throws MutilsErrorException
 	 */
 	public static String unionPay(UnionPayModel model) throws MutilsErrorException {
-		SortedMap<String, String> requestData;
-		try {
-			requestData = model.toTreeMap();
-			Map<String, String> submitFromData = AcpService.sign(requestData); // 报文中certId,signature的值是在signData方法中获取并自动赋值的，只要证书配置正确即可。
+		SortedMap<String, String> requestData = model.toTreeMap();
+		Map<String, String> submitFromData = AcpService.sign(requestData); // 报文中certId,signature的值是在signData方法中获取并自动赋值的，只要证书配置正确即可。
 
-			String requestFrontUrl = config.getFrontRequestUrl(); // 获取请求银联的前台地址：对应属性文件acp_sdk.properties文件中的acpsdk.frontTransUrl
-			String form = AcpService.createAutoFormHtml(requestFrontUrl, submitFromData); // 生成自动跳转的Html表单
-			log.info("打印请求HTML，此为请求报文，为联调排查问题的依据：{}", form);
-			// 将生成的html写到浏览器中完成自动跳转打开银联支付页面；这里调用signData之后，将html写到浏览器跳转到银联页面之前均不能对html中的表单项的名称和值进行修改，如果修改会导致验签不通过
-			// resp.getWriter().write(html);
-			return form;
-		} catch (MutilsErrorException e) {
-			throw new MutilsErrorException(e, "银联统一支付下单失败");
-		}
+		String requestFrontUrl = config.getFrontRequestUrl(); // 获取请求银联的前台地址：对应属性文件acp_sdk.properties文件中的acpsdk.frontTransUrl
+		String form = AcpService.createAutoFormHtml(requestFrontUrl, submitFromData); // 生成自动跳转的Html表单
+		LOGGER.info("打印请求HTML，此为请求报文，为联调排查问题的依据：{}", form);
+		// 将生成的html写到浏览器中完成自动跳转打开银联支付页面；这里调用signData之后，将html写到浏览器跳转到银联页面之前均不能对html中的表单项的名称和值进行修改，如果修改会导致验签不通过
+		// resp.getWriter().write(html);
+		return form;
 
 	}
 
 	/**
-	 * 	银联回调解析 
-	 * //response.getWriter().print("ok");//返回给银联服务器http 200 状态码
+	 * 银联回调解析 //response.getWriter().print("ok");//返回给银联服务器http 200 状态码
+	 * 
 	 * @param request 银联回调
 	 * @return
 	 * @throws MutilsErrorException

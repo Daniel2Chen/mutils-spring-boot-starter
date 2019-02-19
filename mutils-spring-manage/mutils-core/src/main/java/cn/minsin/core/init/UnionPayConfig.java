@@ -1,14 +1,14 @@
 package cn.minsin.core.init;
 
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 
 /**
- * union pay 配置文件
+ * 	银联支付配置文件
  * @author mintonzhang
- * @date 2019年1月16日
+ * @date 2019年2月14日
  * @since 0.2.3
  */
-public class UnionPayConfig extends InitConfig {
+public class UnionPayConfig extends AbstractConfig {
 
 
 	/** 前台请求URL. */

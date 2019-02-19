@@ -3,7 +3,7 @@ package org.mutils.wechat.app.model;
 import org.mutils.wechat.wechatpay.core.model.RefundModel;
 
 import cn.minsin.core.init.WechatAppConfig;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 
 public class AppRefundModel extends RefundModel {
 
@@ -14,6 +14,6 @@ public class AppRefundModel extends RefundModel {
 
 	
 	public AppRefundModel() {
-		this.setAppid(InitConfig.loadConfig(WechatAppConfig.class).getAppid());
+		this.setAppid(AbstractConfig.loadConfig(WechatAppConfig.class).getAppid());
 	}
 }

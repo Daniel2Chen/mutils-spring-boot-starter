@@ -6,17 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 import cn.minsin.core.annotation.NotNull;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.StringUtil;
 
 /**
- * 推送model
- * 
+ *	推送model
  * @author mintonzhang
  * @date 2019年1月16日
  * @since 0.2.3
  */
-public class PushModel extends ModelRule {
+public class PushModel extends AbstractModelRule {
 
 	/**
 	 * 
@@ -26,10 +25,13 @@ public class PushModel extends ModelRule {
 	@NotNull("推送用户唯一标识 当 pushMany为false时只读取第一个")
 	private Set<String> clientids = new HashSet<>();
 
-	@NotNull("推送标题头")
+	@NotNull("提示消息头下方文字")
+	private String subTitle;
+	
+	@NotNull("提示消息头")
 	private String title;
 
-	@NotNull("推送内容")
+	@NotNull("推送内容 一般情况下是json字符串")
 	private String content;
 
 	@NotNull("透传消息设置，1为强制启动应用，客户端接收到消息后就会立即启动应用；2为等待应用启动  默认2")
@@ -61,18 +63,25 @@ public class PushModel extends ModelRule {
 
 	public void setClientids(List<String> clientids) {
 		for (String string : clientids) {
-			if (StringUtil.isBlank(string))
-				continue;
-			this.clientids.add(string);
+			if (StringUtil.isNotBlank(string)) {
+				this.clientids.add(string);
+			}
 		}
 	}
 
 	public void setClientids(String... clientids) {
 		for (String string : clientids) {
-			if (StringUtil.isBlank(string))
-				continue;
-			this.clientids.add(string);
+			if (StringUtil.isNotBlank(string)) {
+				this.clientids.add(string);
+			}
 		}
+	}
+	public String getSubTitle() {
+		return subTitle;
+	}
+
+	public void setSubTitle(String subTitle) {
+		this.subTitle = subTitle;
 	}
 
 	public void setClientids(String clientid) {

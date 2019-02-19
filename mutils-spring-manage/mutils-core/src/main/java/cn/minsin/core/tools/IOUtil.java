@@ -10,8 +10,7 @@ import com.alibaba.fastjson.util.IOUtils;
 import cn.minsin.core.exception.MutilsErrorException;
 
 /**
- * 文件流相关工具类
- * 
+ * 	文件流相关工具类  可参考{@link IOUtils}
  * @author mintonzhang
  * @date 2019年1月15日
  */

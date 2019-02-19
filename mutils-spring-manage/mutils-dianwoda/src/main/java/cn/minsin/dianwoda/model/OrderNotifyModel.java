@@ -1,14 +1,14 @@
 package cn.minsin.dianwoda.model;
 
 import cn.minsin.core.annotation.NotNull;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
 /**
  * 点我达回调通知的实体类
  * @author minsin
  *
  */
-public class OrderNotifyModel extends ModelRule {
+public class OrderNotifyModel extends AbstractModelRule {
 
 	/**
 	 * 

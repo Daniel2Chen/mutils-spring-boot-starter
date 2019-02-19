@@ -1,6 +1,6 @@
 package cn.minsin.alipay.model;
 
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
 
 /**
  * 支付成功时 回调接口至返回的对象
@@ -9,7 +9,7 @@ import cn.minsin.core.rule.ModelRule;
  * @date 2019年1月16日
  * @since 0.2.4
  */
-public class NotifyModel extends ModelRule {
+public class NotifyModel extends AbstractModelRule {
 
 	/**
 	 * 

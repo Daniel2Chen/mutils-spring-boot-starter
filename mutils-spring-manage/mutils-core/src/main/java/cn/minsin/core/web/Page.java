@@ -11,7 +11,9 @@ import java.util.List;
  * <b style="color:red">layer数据表格的格式验证</b><br>
  * <b style="color:red">在controller层接收请使用page和limit进行接收页码和行数</b>
  * @author mintonzhang
- * 2018年9月10日
+ * @date 2019年2月14日
+ * @since 0.1.0
+ * @param <E> 泛型
  */
 public class Page<E> implements Serializable {
 

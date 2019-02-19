@@ -1,10 +1,16 @@
 package cn.minsin.core.init;
 
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.tools.StringUtil;
 
-public class KuaiDi100Config extends InitConfig {
+/**
+ * 	快递100配置文件
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
+public class KuaiDi100Config extends AbstractConfig {
 
 	private String customer;
 

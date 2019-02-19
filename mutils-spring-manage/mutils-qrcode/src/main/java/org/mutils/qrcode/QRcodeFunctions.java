@@ -33,8 +33,9 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
-import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.rule.AbstractFunctionRule;
 import cn.minsin.core.tools.IOUtil;
+import cn.minsin.core.tools.ModelUtil;
 
 /**
  * 二维码相关功能
@@ -43,7 +44,7 @@ import cn.minsin.core.tools.IOUtil;
  * @date 2019年1月22日
  * @since 0.2.8
  */
-public class QRcodeFunctions extends FunctionRule {
+public class QRcodeFunctions extends AbstractFunctionRule {
 
 	/**
 	 * 生成二维码图片
@@ -54,7 +55,7 @@ public class QRcodeFunctions extends FunctionRule {
 	 * @throws IOException
 	 */
 	public static boolean createQRCode(QrcodeModel model) throws WriterException, IOException {
-		model.verificationField();
+		ModelUtil.verificationField(model);
 		int width = model.getWidth(), height = model.getHeight();
 		int level = model.getLevel();
 
@@ -105,7 +106,7 @@ public class QRcodeFunctions extends FunctionRule {
 				ImageIO.write(image, format, baos);// 流输出
 				return;
 			}
-			logoImageModel.verificationField();
+			ModelUtil.verificationField(logoImageModel);
 
 			int height = logoImageModel.getHeight();
 			int width = logoImageModel.getWidth();

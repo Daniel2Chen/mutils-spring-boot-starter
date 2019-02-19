@@ -1,8 +1,8 @@
 package cn.minsin.alipay.model;
 
 import cn.minsin.alipay.AlipayFunctions;
-import cn.minsin.alipay.enum_type.HuaBeiSellerPercent;
-import cn.minsin.alipay.enum_type.HuaBeiStaging;
+import cn.minsin.alipay.enums.HuaBeiSellerPercent;
+import cn.minsin.alipay.enums.HuaBeiStaging;
 import cn.minsin.core.annotation.NotNull;
 
 /**

@@ -6,12 +6,12 @@ import com.aliyun.oss.OSSClientBuilder;
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.AliyunOssConfig;
 import cn.minsin.core.init.childconfig.AliyunOssMultiConfig;
-import cn.minsin.core.init.core.InitConfig;
-import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractFunctionRule;
 
-class AliyunOssBaseFunctions extends FunctionRule {
+class AliyunOssBaseFunctions extends AbstractFunctionRule {
 
-	private static final AliyunOssConfig config = InitConfig.loadConfig(AliyunOssConfig.class);
+	private static final AliyunOssConfig config = AbstractConfig.loadConfig(AliyunOssConfig.class);
 
 	protected AliyunOssMultiConfig childConfig;
 

@@ -15,8 +15,8 @@ import com.aliyuncs.profile.IClientProfile;
 
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.AliyunSmsConfig;
-import cn.minsin.core.init.core.InitConfig;
-import cn.minsin.core.rule.FunctionRule;
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractFunctionRule;
 
 /**
  * 阿里云短信
@@ -25,9 +25,9 @@ import cn.minsin.core.rule.FunctionRule;
  * @date 2019年1月17日
  * @since 0.2.5
  */
-public class AliyunSmsFunctions extends FunctionRule {
+public class AliyunSmsFunctions extends AbstractFunctionRule {
 
-	private static final AliyunSmsConfig config = InitConfig.loadConfig(AliyunSmsConfig.class);
+	private static final AliyunSmsConfig config = AbstractConfig.loadConfig(AliyunSmsConfig.class);
 
 	/**
 	 * 发送短信给单个用户
@@ -41,7 +41,7 @@ public class AliyunSmsFunctions extends FunctionRule {
 	public static SendSmsResponse sendSingleSms(AliyunSendSmsModel model)
 			throws ServerException, ClientException, MutilsErrorException {
 
-		return initClient(model.getDefaultConnectTimeout(), model.getDefaultReadTimeout()).getAcsResponse(model.toSendSmsRequest());
+		return initClient().getAcsResponse(model.toSendSmsRequest());
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class AliyunSmsFunctions extends FunctionRule {
 	public static SendBatchSmsResponse sendBatchSms(AliyunSendSmsModel model)
 			throws ServerException, ClientException, MutilsErrorException {
 
-		return initClient(model.getDefaultConnectTimeout(), model.getDefaultReadTimeout()).getAcsResponse(model.toSendBatchSmsRequest());
+		return initClient().getAcsResponse(model.toSendBatchSmsRequest());
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class AliyunSmsFunctions extends FunctionRule {
 	 */
 	public static QuerySendDetailsResponse querySendDetails(AliyunQueryModel model)
 			throws ServerException, ClientException {
-		return initClient(model.getDefaultConnectTimeout(), model.getDefaultReadTimeout()).getAcsResponse(model.toQuerySendDetailsRequest());
+		return initClient().getAcsResponse(model.toQuerySendDetailsRequest());
 	}
 
 	/**
@@ -77,10 +77,10 @@ public class AliyunSmsFunctions extends FunctionRule {
 	 * @param defaultReadTimeout 读取超时时间
 	 * @return
 	 */
-	protected static IAcsClient initClient(long defaultConnectTimeout, long defaultReadTimeout) {
+	protected static IAcsClient initClient() {
 		// 可自助调整超时时间
-		System.setProperty("sun.net.client.defaultConnectTimeout", String.valueOf(defaultConnectTimeout));
-		System.setProperty("sun.net.client.defaultReadTimeout", String.valueOf(defaultReadTimeout));
+		System.setProperty("sun.net.client.defaultConnectTimeout", String.valueOf(config.getConnectTimeout()));
+		System.setProperty("sun.net.client.defaultReadTimeout", String.valueOf(config.getReadTimeout()));
 
 		// 初始化acsClient,暂不支持region化
 		IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getAccessKeyId(),

@@ -11,8 +11,8 @@ import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.childconfig.AliyunOssMultiConfig;
 
 /**
- * 阿里云OSS 文件下载
- * 官方文档 https://helpcdn.aliyun.com/document_detail/32014.html
+ * 	阿里云OSS 文件下载
+ * 	官方文档 https://helpcdn.aliyun.com/document_detail/32014.html
  * @author mintonzhang
  * @date 2019年1月29日
  * @since 0.2.9

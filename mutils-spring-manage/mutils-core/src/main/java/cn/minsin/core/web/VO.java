@@ -11,9 +11,10 @@ import com.alibaba.fastjson.JSON;
 import cn.minsin.core.exception.MutilsException;
 
 /**
- * 动态构建Vo对象 替代的实体类中的VO
- * 
- * @author mintonzhang 2018年10月12日
+ * 	动态构建Vo对象 替代的实体类中的VO
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
  */
 public class VO extends HashMap<String, Object> implements Serializable {
 
@@ -33,6 +34,7 @@ public class VO extends HashMap<String, Object> implements Serializable {
 		return new VO().put(key, value);
 	}
 
+	@Override
 	public VO put(String key, Object value) {
 		super.put(key,value);
 		return this;
@@ -53,12 +55,11 @@ public class VO extends HashMap<String, Object> implements Serializable {
 	}
 
 	/**
-	 * 转换成指定对象
-	 * 
+	 * 	转换成指定对象 必须实现序列化
 	 * @param clazz
 	 * @return 指定Class
 	 */
-	public <T> T toObject(Class<T> clazz) {
+	public <T extends Serializable> T toObject(Class<T> clazz) {
 		try {
 			return JSON.parseObject(toString(), clazz);
 		} catch (Exception e) {

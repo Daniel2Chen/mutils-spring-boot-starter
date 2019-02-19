@@ -1,21 +1,36 @@
 package cn.minsin.core.init;
 
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.InitConfig;
+import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.tools.StringUtil;
 
-public class WechatJsapiConfig extends InitConfig {
 
-	// 	公众号appid
+/**
+ * 	微信对jsapi(公众号))的配置文件
+ * @author mintonzhang
+ * @date 2019年2月14日
+ * @since 0.1.0
+ */
+public class WechatJsapiConfig extends AbstractConfig {
+
+	/**
+	 * 		公众号appid
+	 */
 	private String appid;
 
-	// 	公众号appSecret
+	/**
+	 * 	公众号appSecret
+	 */
 	private String appSecret;
 
-	// 	获取access_token的接口地址（GET） 限200（次/天）
+	/**
+	 * 	获取access_token的接口地址（GET） 限200（次/天）
+	 */
 	private String accessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 
-	// 	获取jsapi_ticket_url的接口地址（GET） 限200（次/天）
+	/**
+	 * 	获取jsapi_ticket_url的接口地址（GET） 限200（次/天）
+	 */
 	private String jsapiTicketUrl = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
 
 	public String getAccessTokenUrl() {

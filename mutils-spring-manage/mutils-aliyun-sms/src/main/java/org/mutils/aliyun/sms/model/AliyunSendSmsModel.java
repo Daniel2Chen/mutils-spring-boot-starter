@@ -9,10 +9,11 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.rule.ModelRule;
+import cn.minsin.core.rule.AbstractModelRule;
+import cn.minsin.core.tools.ModelUtil;
 import cn.minsin.core.web.VO;
 
-public class AliyunSendSmsModel extends ModelRule {
+public class AliyunSendSmsModel extends AbstractModelRule {
 
 	/**
 	 * 
@@ -105,7 +106,7 @@ public class AliyunSendSmsModel extends ModelRule {
 	}
 
 	public SendBatchSmsRequest toSendBatchSmsRequest() throws MutilsErrorException {
-		this.verificationField();
+		ModelUtil.verificationField(this);
 		SendBatchSmsRequest sendBatchSmsRequest = new SendBatchSmsRequest();
 		sendBatchSmsRequest.setPhoneNumberJson(JSON.toJSONString(phones));
 		sendBatchSmsRequest.setTemplateCode(templateCode);
@@ -115,7 +116,7 @@ public class AliyunSendSmsModel extends ModelRule {
 	}
 
 	public SendSmsRequest toSendSmsRequest() throws MutilsErrorException {
-		this.verificationField();
+		ModelUtil.verificationField(this);
 		SendSmsRequest sendSmsRequest = new SendSmsRequest();
 		sendSmsRequest.setTemplateCode(templateCode);
 		sendSmsRequest.setTemplateParam(templateParam.get(0).toString());
