@@ -27,16 +27,4 @@ mutils-spring-boot-starter 是一款基于JDK8,SpringBoot 2.0.0 构建的工具�
 	
 	当然,这绝对不是一件简单的事情。我们希望有更多的人加入，让这套mutils框架更加的完善、更加的便捷、更加的实用！
 	
-Version 0.2.0 更新内容:<br/><br/>
-
-1.将微信支付拆分为 微信-小程序、微信-app、微信-jsapi 分别提供对应模块特有功能。微信支付将集成在他们公共对应的Functions中<br/>
-例：
-微信-app：WechatAppFunctions.createAppPayParamter(model);//发起支付
-微信-小程序：WechatMiniProgramFunctions.createMiniProgramPayParamter(model)//发起支付
-可利用maven进行动态选择
-
-2.文件上传新增远程上传：
-	详细请看mutils说明文档
-
-	
 	
