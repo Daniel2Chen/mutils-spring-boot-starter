@@ -52,7 +52,7 @@ import cn.minsin.core.exception.MutilsException;
 					String artifactId = mutilsFunctions.getArtifactId();
 					config.checkConfig();
 					LOADED_CONFIG.put(class1, config);
-					slog.info("{} initialized successfully.", artifactId);
+					slog.info("'{}' initialized successfully.", artifactId);
 				}
 			}
 		}

@@ -31,7 +31,7 @@ public class OrderByCoordinatesModel extends AbstractMeituanSendModel {
     private Integer deliveryServiceCode;
 
     @NotNull(key = "pick_up_type", value = "货物取货类型，目前只支持1, 1：客户配送至站点  2：美团自取")
-    private int pickUpType = 1;
+    private Integer pickUpType = 1;
 
     @NotNull(key = "receiver_name",value="收件人名称，最长不超过256个字符")
     private String receiverName;

@@ -1,5 +1,8 @@
 package cn.mutils.meituan.peisong.model.receive;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+
 public class ReceiveRiderLocationModel extends AbstractMeituanReceiveModel {
 
 	/**
@@ -17,7 +20,12 @@ public class ReceiveRiderLocationModel extends AbstractMeituanReceiveModel {
 		this.data = data;
 	}
 
-	public static class Location {
+	public static class Location implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1289402520524926448L;
+
 		/**
 		 * 纬度
 		 */
@@ -28,18 +36,22 @@ public class ReceiveRiderLocationModel extends AbstractMeituanReceiveModel {
 		 */
 		private Integer lng;
 
-		public Double getLat() {
-			return (double) (lat / 1000000);
+		public BigDecimal getLat() {
+			if (lat != null) {
+				return new BigDecimal(lat).divide(new BigDecimal(1000000));
+			}
+			return null;
 		}
-
 		public void setLat(Integer lat) {
 			this.lat = lat;
 		}
+		public BigDecimal getLng() {
+			if (lng != null) {
+				return new BigDecimal(lng).divide(new BigDecimal(1000000));
+			}
+			return null;
 
-		public Double getLng() {
-			return (double) (lng / 1000000);
 		}
-
 		public void setLng(Integer lng) {
 			this.lng = lng;
 		}

@@ -18,7 +18,7 @@ public class OrderInfoModel extends AbstractModelRule {
 	/**
 	 * 配送活动标识
 	 */
-	private long delivery_id;
+	private Long delivery_id;
 	/**
 	 * 目的地id
 	 */
@@ -36,11 +36,11 @@ public class OrderInfoModel extends AbstractModelRule {
 	 */
 	private String road_area;
 
-	public long getDelivery_id() {
+	public Long getDelivery_id() {
 		return delivery_id;
 	}
 
-	public void setDelivery_id(long delivery_id) {
+	public void setDelivery_id(Long delivery_id) {
 		this.delivery_id = delivery_id;
 	}
 
@@ -69,6 +69,9 @@ public class OrderInfoModel extends AbstractModelRule {
 	}
 
 	public Integer getDelivery_distance() {
+		if(delivery_distance==null||delivery_distance==-1) {
+			return 0;
+		}
 		return delivery_distance;
 	}
 
@@ -77,6 +80,9 @@ public class OrderInfoModel extends AbstractModelRule {
 	}
 
 	public Double getDelivery_fee() {
+		if(delivery_fee==null||delivery_fee==-1) {
+			return 0D;
+		}
 		return delivery_fee;
 	}
 

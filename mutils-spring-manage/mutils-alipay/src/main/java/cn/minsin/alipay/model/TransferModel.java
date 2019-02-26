@@ -30,13 +30,13 @@ public class TransferModel extends AbstractModelRule {
 	@NotNull("转账金额 大于0 且最多两位小数")
 	private BigDecimal amount;
 
-	@NotNull("转账名称")
+	@NotNull(value="转账名称",notNull=false)
 	private String payer_show_name;
 
-	@NotNull("提现用户的真实姓名")
+	@NotNull(value="提现用户的真实姓名",notNull=false)
 	private String payee_real_name;
 
-	@NotNull("转账备注")
+	@NotNull(value="转账备注",notNull=false)
 	private String remark;
 
 	public String getOut_biz_no() {
