@@ -120,11 +120,6 @@ public class CalendarUtil {
 		return calendar.getTime();
 	}
 
-	public static void main(String[] args) {
-		Date quarterTime = getQuarterTime(14, false);
-		System.out.println(DateUtil.date2String(quarterTime));
-	}
-
 	/**
 	 * 根据指定日期，向后或向前推算出对应的日期 比如：2019-2-15日 向后推7天或向前推7天 是哪天
 	 * 
@@ -186,6 +181,38 @@ public class CalendarUtil {
 		int i = calendar.get(Calendar.DAY_OF_WEEK);
 		return isChineseWeekend ? i - 1 : i;
 	}
+	
+	/**
+	 * 获取一天的开始时间
+	 * @param date
+	 * @return
+	 */
+	public static Date getBeginOfDay(Date date) {
+		if(date==null) {
+			return null;
+		}
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY,0);
+		calendar.set(Calendar.MINUTE,0);
+		calendar.set(Calendar.SECOND,0);
+		return calendar.getTime();
+	}
+	/**
+	 *	 获取一天的结束
+	 * @param date
+	 * @return
+	 */
+	public static Date getEndOfDay(Date date) {
+		if(date==null) {
+			return null;
+		}
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY,23);
+		calendar.set(Calendar.MINUTE,59);
+		calendar.set(Calendar.SECOND,59);
+		return calendar.getTime();
+	}
+	
 
 	/**
 	 * 检查日期，如果日期为空，默认当前时间
