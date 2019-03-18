@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.3.5</version>
+		<version>0.3.6</version>
 	</parent>
 	<artifactId>mutils-spring-boot-starter</artifactId>
 	<name>mutils-spring-boot-starter</name>
@@ -92,6 +92,10 @@
 		<dependency>
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-meituan-peisong</artifactId><!-- 美团配送-->
+		</dependency>
+		<dependency>
+			<groupId>cn.minsin</groupId>
+			<artifactId>mutils-jsp-taglib</artifactId><!--jsp标签库-->
 		</dependency>
 	</dependencies>
 </project>

@@ -161,7 +161,7 @@ public class WeChatPayFunctions extends AbstractFunctionRule {
 	 * @throws JDOMException 
 	 * @throws MutilsErrorException
 	 */
-	public static NotifyModel parseNotify(HttpServletRequest req) throws IOException, JDOMException  {
+	public static NotifyModel parseNotify(HttpServletRequest req) throws IOException, JDOMException, MutilsErrorException  {
 		BufferedReader br =null;
 		InputStreamReader inputStreamReader =null;
 		try {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>ms</short-name>
+  <uri>http://minsin.cn/taglibs</uri>
+  
+  <tag>
+      <name>option</name>
+       <tag-class>cn.mutils.jsp.taglib</tag-class>
+      	<body-content>empty</body-content>
+      	<attribute>
+      		<name>chooseId</name>
+      		<required>false</required>
+      		<rtexprvalue>true</rtexprvalue>
+      	</attribute>
+      	<attribute>
+      		<name>list</name>
+      		<required>true</required>
+      		<rtexprvalue>true</rtexprvalue>
+      	</attribute>
+      	<attribute>
+      		<name>valueAttr</name>
+      		<required>true</required>
+      	</attribute>
+      	<attribute>
+      		<name>textAttr</name>
+      		<required>true</required>
+      	</attribute>
+  </tag>
+	
+ </taglib>

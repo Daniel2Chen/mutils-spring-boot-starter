@@ -3,6 +3,7 @@ package cn.minsin.core.init;
 import cn.minsin.core.exception.MutilsException;
 import cn.minsin.core.init.childconfig.MeituanMultiConfig;
 import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.core.ConfigEnvironment;
 import cn.minsin.core.tools.StringUtil;
 
 /**
@@ -13,10 +14,6 @@ import cn.minsin.core.tools.StringUtil;
  * @since 0.3.4
  */
 public class MeituanPeisongConfig extends AbstractConfig {
-
-	public enum Environment {
-		Test, Formal;
-	}
 
 	/**
 	 * 服务器地址
@@ -31,7 +28,7 @@ public class MeituanPeisongConfig extends AbstractConfig {
 	/**
 	 * 需要使用的环境 默认测试环境 所选环境的config必须配置
 	 */
-	private Environment environment = Environment.Test;
+	private ConfigEnvironment environment = ConfigEnvironment.TEST;
 
 	/**
 	 * 测试环境
@@ -43,11 +40,11 @@ public class MeituanPeisongConfig extends AbstractConfig {
 	 */
 	private MeituanMultiConfig formalConfig = new MeituanMultiConfig();
 
-	public Environment getEnvironment() {
+	public ConfigEnvironment getEnvironment() {
 		return environment;
 	}
 
-	public void setEnvironment(Environment environment) {
+	public void setEnvironment(ConfigEnvironment environment) {
 		this.environment = environment;
 	}
 
@@ -84,7 +81,7 @@ public class MeituanPeisongConfig extends AbstractConfig {
 	}
 
 	public MeituanMultiConfig getConfig() {
-		return environment == Environment.Test ? testConfig : formalConfig;
+		return environment == ConfigEnvironment.TEST ? testConfig : formalConfig;
 	}
 
 	@Override

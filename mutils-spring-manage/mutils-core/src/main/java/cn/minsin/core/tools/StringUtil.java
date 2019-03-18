@@ -91,6 +91,22 @@ public class StringUtil extends StringUtils {
 		}
 		return str;
 	}
+	/**
+	 * 	关键字去空格及过滤 如果出现关键字将替换为空
+	 * 
+	 * @param str
+	 * @param filterKey
+	 * @return 2018年7月27日
+	 */
+	public static String filterSearchKeyAndReplace(String str, String... filterKey) {
+		str = filterSpace(str);
+		if (!ArrayUtil.isEmpty(filterKey)) {
+			for (String string : filterKey) {
+				str= str.replace(string,"");
+			}
+		}
+		return isBlankWithDefault(str,null);
+	}
 
 	/**
 	 * 去除两端空格
@@ -226,5 +242,20 @@ public class StringUtil extends StringUtils {
 		}
 		Matcher m = p.matcher(str);
 		return m.find();
+	}
+	
+	/**
+	 * 	判断是否为中文
+	 * @param str 原字符串
+	 * @param keywords 需要过滤的字符(即包含此字符将视为中文)
+	 * @return
+	 */
+	public static boolean isChinese(String str,String... keywords) {
+		 str = filterSearchKeyAndReplace(str,keywords);
+		 if(isBlank(str)) {
+			 return false;
+		 }
+         String reg = "[\\u4e00-\\u9fa5]+";
+         return str.matches(reg);
 	}
 }
