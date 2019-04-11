@@ -1,7 +1,5 @@
 package org.mutils.qrcode.model;
 
-import java.io.OutputStream;
-
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.AbstractModelRule;
 
@@ -28,22 +26,19 @@ public class QrcodeModel extends AbstractModelRule {
 	
 	@NotNull("二维码白边等级  -1表示没有白边  0 1 2 3 4  白边要依次增多 默认1")
 	private int level =1;
-	
-	@NotNull("输出对象  可以是HttpServletResponse中的OutPutStream对象 http中设置输出的文件名及类型需要在加载完输出流后设置,也可以是FileOutPutStream对象")
-	private OutputStream outputStream;
-
-	
-	public OutputStream getOutputStream() {
-		return outputStream;
-	}
-
-	public void setOutputStream(OutputStream outputStream) {
-		this.outputStream = outputStream;
-	}
 
 	public LogoModel getLogoImageModel() {
 		return logoImageModel;
 	}
+	public String getFormat() {
+		return format;
+	}
+
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
 
 	public void setLogoImageModel(LogoModel logoImageModel) {
 		this.logoImageModel = logoImageModel;
@@ -80,15 +75,6 @@ public class QrcodeModel extends AbstractModelRule {
 
 	public void setHeight(Integer height) {
 		this.height = height;
-	}
-
-
-	public String getFormat() {
-		return format;
-	}
-
-	public void setFormat(String format) {
-		this.format = format;
 	}
 
 }

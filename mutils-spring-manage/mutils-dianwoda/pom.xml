@@ -5,7 +5,7 @@
   <parent>
     <groupId>cn.minsin</groupId>
     <artifactId>mutils-spring-manage</artifactId>
-    <version>0.3.6</version>
+    <version>0.3.7</version>
   </parent>
   <artifactId>mutils-dianwoda</artifactId>
   <name>mutils-dianwoda</name>

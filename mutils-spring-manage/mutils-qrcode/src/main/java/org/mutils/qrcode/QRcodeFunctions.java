@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +36,6 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import cn.minsin.core.rule.AbstractFunctionRule;
-import cn.minsin.core.tools.IOUtil;
 import cn.minsin.core.tools.ModelUtil;
 
 /**
@@ -54,7 +55,27 @@ public class QRcodeFunctions extends AbstractFunctionRule {
 	 * @throws WriterException
 	 * @throws IOException
 	 */
-	public static boolean createQRCode(QrcodeModel model) throws WriterException, IOException {
+	public static InputStream createQRCodeToInputStream(QrcodeModel model) throws WriterException, IOException {
+		BufferedImage createImage = createImage(model);
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		ImageIO.write(createImage, model.getFormat(), os);
+		return new ByteArrayInputStream(os.toByteArray());
+	}
+
+	/**
+	 * 获取二维码的输出流
+	 * @param model 生成对象
+	 * @param os 输出对象
+	 * @throws WriterException
+	 * @throws IOException
+	 */
+	public static boolean createQRCodeToOutputStream(QrcodeModel model,OutputStream os) throws WriterException, IOException {
+		BufferedImage createImage = createImage(model);
+		ImageIO.write(createImage, model.getFormat(), os);
+		return true;
+	}
+
+	protected static BufferedImage createImage(QrcodeModel model) throws WriterException, IOException {
 		ModelUtil.verificationField(model);
 		int width = model.getWidth(), height = model.getHeight();
 		int level = model.getLevel();
@@ -83,8 +104,7 @@ public class QRcodeFunctions extends AbstractFunctionRule {
 				image.setRGB(x, y, bitMatrix.get(x, y) ? MatrixToImageConfig.BLACK : MatrixToImageConfig.WHITE);
 			}
 		}
-		encode(image, model);
-		return true;
+		return encode(image, model);
 	}
 
 	/**
@@ -94,18 +114,10 @@ public class QRcodeFunctions extends AbstractFunctionRule {
 	 * @param model
 	 * @throws IOException
 	 */
-	protected static void encode(BufferedImage image, QrcodeModel model) throws IOException {
-		OutputStream baos = model.getOutputStream();
-		String format = model.getFormat();
-		try {
-			LogoModel logoImageModel = model.getLogoImageModel();
-
-			// 不生成图片
-			if (logoImageModel == null) { // 不需要添加logo
-				baos.flush();
-				ImageIO.write(image, format, baos);// 流输出
-				return;
-			}
+	protected static BufferedImage encode(BufferedImage image, QrcodeModel model) throws IOException {
+		LogoModel logoImageModel = model.getLogoImageModel();
+		// 不生成图片
+		if (logoImageModel != null) { // 不需要添加logo
 			ModelUtil.verificationField(logoImageModel);
 
 			int height = logoImageModel.getHeight();
@@ -136,11 +148,9 @@ public class QRcodeFunctions extends AbstractFunctionRule {
 			}
 			g2.dispose();
 			logo.flush();
-			image.flush();
-			ImageIO.write(image, format, baos); // 不用MatrixToImageWriter
-		} finally {
-			IOUtil.close(baos);
 		}
+		image.flush();
+		return image;
 	}
 
 	/**

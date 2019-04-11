@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.3.6</version>
+		<version>0.3.7</version>
 	</parent>
 	<artifactId>mutils-jsp-taglib</artifactId>
 	<name>mutils-jsp-taglib</name>
@@ -34,12 +34,4 @@
 			<artifactId>jstl</artifactId>
 		</dependency>
 	</dependencies>
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resource</directory>
-	         	<targetPath>META-INF/</targetPath>
-			</resource>
-		</resources>
-	</build>
 </project>
