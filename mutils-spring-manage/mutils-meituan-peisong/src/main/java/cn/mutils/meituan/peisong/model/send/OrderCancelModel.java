@@ -19,16 +19,16 @@ public class OrderCancelModel extends AbstractMeituanSendModel{
 	private String mtPeisongId;
 
 	@NotNull(key="cancel_reason_id",value="取消原因类别，默认为接入方原因")
-	private CancelOrderReason cancelOrderReasonId =CancelOrderReason.DELIVER_REASON;
+	private int cancelOrderReasonId =CancelOrderReason.DELIVER_REASON.getCode();
 	
 	@NotNull(key="cancel_reason",value="详细取消原因，最长不超过256个字符")
 	private String cancelReason;
 
-	public long getDeliveryId() {
+	public Long getDeliveryId() {
 		return deliveryId;
 	}
 
-	public void setDeliveryId(long deliveryId) {
+	public void setDeliveryId(Long deliveryId) {
 		this.deliveryId = deliveryId;
 	}
 
@@ -40,11 +40,11 @@ public class OrderCancelModel extends AbstractMeituanSendModel{
 		this.mtPeisongId = mtPeisongId;
 	}
 
-	public CancelOrderReason getCancelOrderReasonId() {
+	public int getCancelOrderReasonId() {
 		return cancelOrderReasonId;
 	}
 
-	public void setCancelOrderReasonId(CancelOrderReason cancelOrderReasonId) {
+	public void setCancelOrderReasonId(int cancelOrderReasonId) {
 		this.cancelOrderReasonId = cancelOrderReasonId;
 	}
 
@@ -54,11 +54,5 @@ public class OrderCancelModel extends AbstractMeituanSendModel{
 
 	public void setCancelReason(String cancelReason) {
 		this.cancelReason = cancelReason;
-	}
-
-	@Override
-	public String toString() {
-		return "CancelOrderRequest [deliveryId=" + deliveryId + ", mtPeisongId=" + mtPeisongId
-				+ ", cancelOrderReasonId=" + cancelOrderReasonId + ", cancelReason=" + cancelReason + "]";
 	}
 }

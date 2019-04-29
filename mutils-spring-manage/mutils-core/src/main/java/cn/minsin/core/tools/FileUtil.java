@@ -84,6 +84,36 @@ public class FileUtil {
 		}
 	}
 	
+	
+	/**
+	 * 删除整个文件夹 包含文件
+	 * @param dirFile
+	 * @return
+	 */
+	public static boolean deleteFile(File dirFile) {
+	    // 如果dir对应的文件不存在，则退出
+	    if (!dirFile.exists()) {
+	        return false;
+	    }
+	    if (dirFile.isFile()) {
+	        return dirFile.delete();
+	    } else {
+	        for (File file : dirFile.listFiles()) {
+	            deleteFile(file);
+	        }
+	    }
+	    return dirFile.delete();
+	}
+	
+	/**
+	 * 删除整个文件夹 包含文件
+	 * @param dirFile
+	 * @return
+	 */
+	public static boolean deleteFile(String path) {
+		return deleteFile(new File(path));
+	}
+	
 	/**
 	 * 	获取图片文件流的宽高 如果没有获取到 将只会返回原文件流 
 	 * @param in 文件输入流

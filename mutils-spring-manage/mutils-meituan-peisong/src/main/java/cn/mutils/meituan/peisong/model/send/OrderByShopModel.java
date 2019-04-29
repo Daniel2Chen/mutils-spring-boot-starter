@@ -71,8 +71,7 @@ public class OrderByShopModel extends AbstractMeituanSendModel {
     private BigDecimal goodsLength;
 
     @NotNull(key = "goods_weight",
-            value = "货物重量，单位为kg，精确到小数点后两位，范围为0-50",
-            notNull = false)
+            value = "货物重量，单位为kg，精确到小数点后两位，范围为0-50")
     private BigDecimal goodsWeight;
 
     @NotNull(key = "goods_detail",

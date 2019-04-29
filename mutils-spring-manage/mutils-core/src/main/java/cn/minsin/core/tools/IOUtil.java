@@ -28,6 +28,24 @@ public class IOUtil extends IOUtils {
 			}
 		}
 	}
+	
+	/**
+	 * 关闭流
+	 * 
+	 * @param ios
+	 */
+	public static void close(AutoCloseable... ios) {
+		if (ios != null) {
+			for (AutoCloseable x : ios) {
+				if(x!=null) {
+					try {
+						x.close();
+					} catch (Exception e) {
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * 	将文件流转成字节缓存在内存中，可以让流多次使用。使用{@link ByteArrayInputStream} 创建新的输入流

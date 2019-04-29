@@ -1,14 +1,14 @@
 package cn.mutils.jsp.taglib;
 
-import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.tools.StringUtil;
+import java.lang.reflect.Field;
+import java.util.Collection;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Collection;
+
+import cn.minsin.core.exception.MutilsException;
+import cn.minsin.core.tools.StringUtil;
 
 public class OptionTag  extends SimpleTagSupport{
 	
@@ -56,7 +56,7 @@ public class OptionTag  extends SimpleTagSupport{
 	}
 
 	@Override
-	public void doTag() throws JspException, IOException {
+	public void doTag() throws JspException {
 		try {
 			JspWriter writer = getJspContext().getOut();
 			StringBuffer bf = new StringBuffer("<option value=''>请选择</option>");

@@ -3,9 +3,10 @@
  */
 package cn.minsin.core.web;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.minsin.core.rule.AbstractModelRule;
 
 /**
  * <b style="color:red">layer数据表格的格式验证</b><br>
@@ -15,7 +16,7 @@ import java.util.List;
  * @since 0.1.0
  * @param <E> 泛型
  */
-public class Page<E> implements Serializable {
+public class Page<E> extends AbstractModelRule{
 
 	/**
 	 * 
@@ -166,10 +167,4 @@ public class Page<E> implements Serializable {
 			return new ArrayList<>();
 		}
 	}
-
-	@Override
-	public String toString() {
-		return "Page [code=" + code + ", msg=" + msg + ", count=" + count + ", data=" + data + "]";
-	}
-
 }

@@ -1,5 +1,8 @@
 package cn.minsin.core.tools;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -213,7 +216,20 @@ public class CalendarUtil {
 		return calendar.getTime();
 	}
 	
-
+	/**
+	 * 创建日期
+	 * @param year
+	 * @param month
+	 * @param dayOfMonth
+	 * @return
+	 */
+	public static Date createDate(int year, int month, int dayOfMonth) {
+		LocalDate of = LocalDate.of(year, month, dayOfMonth);
+		ZoneId zone = ZoneId.systemDefault();
+		Instant instant = of.atStartOfDay().atZone(zone).toInstant();
+		return Date.from(instant);
+	}
+	
 	/**
 	 * 检查日期，如果日期为空，默认当前时间
 	 * 
@@ -222,4 +238,5 @@ public class CalendarUtil {
 	private static void checkDate(Date date) {
 		calendar.setTime(date == null ? new Date() : date);
 	}
+	
 }

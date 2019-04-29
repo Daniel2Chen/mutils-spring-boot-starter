@@ -1,6 +1,7 @@
 package cn.minsin.alipay;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
@@ -26,8 +28,8 @@ import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.init.AlipayConfig;
 import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.rule.AbstractFunctionRule;
+import cn.minsin.core.tools.MapUtil;
 import cn.minsin.core.tools.ModelUtil;
-import cn.minsin.core.web.VO;
 
 /**
  * 支付宝功能列表
@@ -107,9 +109,9 @@ public class AlipayFunctions extends AbstractFunctionRule {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	public static NotifyModel parseNotify(HttpServletRequest req) throws UnsupportedEncodingException {
+	public static NotifyModel parseNotify(HttpServletRequest req,boolean checkSign) throws UnsupportedEncodingException {
 		req.setCharacterEncoding("utf-8");
-		VO init = VO.init();
+		Map<String, String> retMap = new HashMap<String, String>();
 		Map<String, String[]> requestParams = req.getParameterMap();
 		for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
 			String name = (String) iter.next();
@@ -118,9 +120,28 @@ public class AlipayFunctions extends AbstractFunctionRule {
 			for (int i = 0; i < values.length; i++) {
 				valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
 			}
-			init.put(name, valueStr);
+			retMap.put(name, valueStr);
 		}
-		return init.toObject(NotifyModel.class);
+		if(checkSign) {
+			if(!checkSign(retMap)) {
+				return null;
+			}
+		}
+		return MapUtil.mapToObject(retMap, NotifyModel.class);
+	}
+	
+	/**
+	 * 验证签名
+	 * @param params
+	 * @return
+	 */
+	public static boolean checkSign(Map<String, String> params) {
+		try {
+			return AlipaySignature.rsaCheckV1(params, config.getPublicKey(), config.getCharset(), config.getSignType());
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	protected static AlipayClient initAlipayClient() {
