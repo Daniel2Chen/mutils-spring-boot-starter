@@ -32,15 +32,31 @@
     	<module>mutils-data-mongodb</module>
     	<module>mutils-pinyin</module>
   </modules>
-
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>mintonzhang</name>
+			<email>mintonzhang@163.com</email>
+			<organization>mutils</organization>
+		</developer>
+	</developers>
+	<scm>
+		<url>https://github.com/mintonzhang/mutils-spring-boot-starter</url>
+		<connection>https://github.com/mintonzhang/mutils-spring-boot-starter.git</connection>
+		<developerConnection>https://github.com/mintonzhang</developerConnection>
+	</scm>
 	<properties>
 		<mutils.version>0.0.3.RELEASE</mutils.version>
-		<commons-lang3.version>3.5</commons-lang3.version>
 		<spring-boot.version>2.0.0.RELEASE</spring-boot.version>
 		<fastjson.version>1.2.54</fastjson.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<httpclient.version>4.5.5</httpclient.version>
 	</properties>
 	<dependencyManagement>
 
@@ -159,45 +175,14 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>${commons-lang3.version}</version>
-			</dependency>
-
-			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson.version}</version>
 			</dependency>
 
-			<dependency>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpclient</artifactId>
-				<version>${httpclient.version}</version>
-			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	<developers>
-		<developer>
-			<name>mintonzhang</name>
-			<email>mintonzhang@163.com</email>
-			<organization>mutils</organization>
-		</developer>
-	</developers>
-	<scm>
-		<url>https://github.com/mintonzhang/mutils-spring-boot-starter</url>
-		<connection>https://github.com/mintonzhang/mutils-spring-boot-starter.git</connection>
-		<developerConnection>https://github.com/mintonzhang</developerConnection>
-	</scm>
-
+	
 	<distributionManagement>
 		<snapshotRepository>
 			<id>oss</id>
