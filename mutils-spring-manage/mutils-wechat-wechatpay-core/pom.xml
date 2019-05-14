@@ -5,7 +5,7 @@
   <parent>
     <groupId>cn.minsin</groupId>
     <artifactId>mutils-spring-manage</artifactId>
-	<version>0.0.1.SNAPSHOT</version>
+	<version>0.0.3.RELEASE</version>
   </parent>
   <artifactId>mutils-wechat-wechatpay-core</artifactId>
   <name>mutils-wechat-wechatpay-core</name>

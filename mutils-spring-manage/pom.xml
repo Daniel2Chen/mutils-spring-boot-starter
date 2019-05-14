@@ -6,7 +6,7 @@
 	<name>mutils-spring-manage</name>
 	<description>A mini utils for java.</description>
 	<url>https://github.com/mintonzhang/mutils-spring-boot-starter</url>
-	<version>0.0.1.SNAPSHOT</version>
+	<version>0.0.3.RELEASE</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mutils-core</module>
@@ -29,10 +29,12 @@
     	<module>mutils-aliyun-oss</module>
     	<module>mutils-meituan-peisong</module>
     	<module>mutils-jsp-taglib</module>
+    	<module>mutils-data-mongodb</module>
+    	<module>mutils-pinyin</module>
   </modules>
 
 	<properties>
-		<mutils.version>0.0.1.SNAPSHOT</mutils.version>
+		<mutils.version>0.0.3.RELEASE</mutils.version>
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<spring-boot.version>2.0.0.RELEASE</spring-boot.version>
 		<fastjson.version>1.2.54</fastjson.version>

@@ -9,22 +9,20 @@
 		<artifactId>mutils-spring-manage</artifactId>
 <version>0.0.3.RELEASE</version>
 	</parent>
-	<artifactId>mutils-meituan-peisong</artifactId>
-	<name>mutils-meituan-peisong</name>
-	<description>
-  	美团配送
-  	官方地址：https://page.peisong.meituan.com/open/doc#section1-1
-  </description>
-
+	<artifactId>mutils-data-mongodb</artifactId>
+	<name>mutils-data-mongodb</name>
 	<dependencies>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

@@ -17,6 +17,7 @@ public @interface NotNull {
 	  * @return 
 	  */
 	 String key() default "";
+	 
 	 boolean notNull() default  true;
 	 
 

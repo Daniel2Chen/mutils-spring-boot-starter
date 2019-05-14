@@ -6,9 +6,9 @@ import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsRequest;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.AbstractModelRule;
-import cn.minsin.core.tools.DateUtil;
-import cn.minsin.core.tools.DateUtil.DateFormatEnum;
 import cn.minsin.core.tools.ModelUtil;
+import cn.minsin.core.tools.date.DateUtil;
+import cn.minsin.core.tools.date.DefaultDateFormat;
 
 public class AliyunQueryModel extends AbstractModelRule {
 
@@ -67,7 +67,7 @@ public class AliyunQueryModel extends AbstractModelRule {
 		querySendDetailsRequest.setCurrentPage(currentPage);
 		querySendDetailsRequest.setPageSize(pageSize);
 		querySendDetailsRequest.setPhoneNumber(phoneNumber);
-		querySendDetailsRequest.setSendDate(DateUtil.date2String(sendDate, DateFormatEnum.yyyyMMdd));
+		querySendDetailsRequest.setSendDate(DateUtil.date2String(sendDate, DefaultDateFormat.yyyyMMdd));
 		return querySendDetailsRequest;
 	}
 

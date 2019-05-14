@@ -14,7 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.tools.HttpClientUtil;
-import cn.minsin.core.tools.IOUtil;
+import cn.minsin.core.tools.ListUtil;
 
 /**
  * 中国地域信息 浙江省、四川省等等
@@ -22,21 +22,30 @@ import cn.minsin.core.tools.IOUtil;
  * @author mintonzhang
  * @date 2019年4月5日
  * @since 0.3.7
- */
+ */	
 public class ChinaAreaUtil {
-	protected static Logger slog = LoggerFactory.getLogger(ChinaAreaUtil.class);
 	
-	private AreaInit init;
+	protected static Logger slog = LoggerFactory.getLogger(ChinaAreaUtil.class);
+
+	private static String remoteUrl = "http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/";
+
+	private static String defaultProvinceCode = "100000";
+
+	private static String province = "${code}_province.json";
+
+	private static String city = "${code}_city.json";
+
+	private static String district = "${code}_district.json";
+
+	private static String placeholder = "${code}";
 
 	private CloseableHttpClient client;
 
-	private ChinaAreaUtil(AreaInit init) {
-		this.init = init == null ? new AreaInit() : init;
+	private ChinaAreaUtil() {
 		this.client = HttpClientUtil.getInstance();
 	}
-
 	public static ChinaAreaUtil init() {
-		return new ChinaAreaUtil(null);
+		return new ChinaAreaUtil();
 	}
 
 	/**
@@ -46,19 +55,14 @@ public class ChinaAreaUtil {
 	 * @throws MutilsErrorException
 	 */
 	public List<AreaModel> initProvince() throws MutilsErrorException {
-		CloseableHttpResponse response = null;
-		try {
-			HttpGet getMethod = HttpClientUtil.getGetMethod(init.getRemoteUrl()
-					+ init.getProvince().replace(init.getPlaceholder(), init.getDefaultProvinceCode()));
-			response = client.execute(getMethod);
+		HttpGet getMethod = HttpClientUtil.getGetMethod(remoteUrl + province.replace(placeholder, defaultProvinceCode));
+		try (CloseableHttpResponse response = client.execute(getMethod)) {
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 			JSONObject parseObject = JSON.parseObject(jsonStr);
 			Object object = parseObject.get("rows");
 			return JSON.parseArray(object.toString(), AreaModel.class);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e);
-		} finally {
-			IOUtil.close(response);
 		}
 	}
 
@@ -70,42 +74,33 @@ public class ChinaAreaUtil {
 	 * @throws MutilsErrorException
 	 */
 	public List<AreaModel> initCity(String provinceCode) throws MutilsErrorException {
-		CloseableHttpResponse response = null;
-		try {
-			HttpGet getMethod = HttpClientUtil
-					.getGetMethod(init.getRemoteUrl() + init.getCity().replace(init.getPlaceholder(), provinceCode));
-			response = client.execute(getMethod);
+		HttpGet getMethod = HttpClientUtil.getGetMethod(remoteUrl + city.replace(placeholder, provinceCode));
+		try (CloseableHttpResponse response = client.execute(getMethod)) {
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 			JSONObject parseObject = JSON.parseObject(jsonStr);
 			Object object = parseObject.get("rows");
 			return JSON.parseArray(object.toString(), AreaModel.class);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e);
-		} finally {
-			IOUtil.close(response);
 		}
 	}
 
 	/**
-	 *	获取县市区
+	 * 获取县市区
+	 * 
 	 * @param cityCode
 	 * @return
 	 * @throws MutilsErrorException
 	 */
 	public List<AreaModel> initDistrict(String cityCode) throws MutilsErrorException {
-		CloseableHttpResponse response = null;
-		try {
-			HttpGet getMethod = HttpClientUtil
-					.getGetMethod(init.getRemoteUrl() + init.getDistrict().replace(init.getPlaceholder(), cityCode));
-			response = client.execute(getMethod);
+		HttpGet getMethod = HttpClientUtil.getGetMethod(remoteUrl + district.replace(placeholder, cityCode));
+		try (CloseableHttpResponse response = client.execute(getMethod);) {
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 			JSONObject parseObject = JSON.parseObject(jsonStr);
 			Object object = parseObject.get("rows");
 			return JSON.parseArray(object.toString(), AreaModel.class);
 		} catch (Exception e) {
 			throw new MutilsErrorException(e);
-		} finally {
-			IOUtil.close(response);
 		}
 	}
 
@@ -118,12 +113,18 @@ public class ChinaAreaUtil {
 	public List<AreaModel> initProvinceWithChildren() throws MutilsErrorException {
 		List<AreaModel> initProvince = initProvince();
 		for (AreaModel province : initProvince) {
-
 			List<AreaModel> initCity = this.initCity(province.getAdcode());
 			for (AreaModel city : initCity) {
 				try {
 					List<AreaModel> initDistrict = this.initDistrict(city.getAdcode());
-					city.setChildren(initDistrict);
+					for (AreaModel temp : initDistrict) {
+						if (temp.getParent().equals(city.getName())) {
+							city.setChild(temp);
+						}
+					}
+					if (ListUtil.isEmpty(city.getChildren())) {
+						slog.error("adcode为：{},name为{}，没有Children.", city.getAdcode(), city.getName());
+					}
 				} catch (Exception e) {
 					slog.error("adcode为：{},name为{}，丢失数据,已跳过.", city.getAdcode(), city.getName());
 				}
@@ -132,5 +133,4 @@ public class ChinaAreaUtil {
 		}
 		return initProvince;
 	}
-
 }

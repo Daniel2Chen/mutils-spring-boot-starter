@@ -9,29 +9,24 @@
 		<artifactId>mutils-spring-manage</artifactId>
 <version>0.0.3.RELEASE</version>
 	</parent>
-	<artifactId>mutils-jsp-taglib</artifactId>
-	<name>mutils-jsp-taglib</name>
+	<artifactId>mutils-pinyin</artifactId>
+	<name>mutils-pinyin</name>
 	<description>
-		mutils组件中,提供对jsp支持的一个模块。此模块可单独引用。
-  	</description>
+  	借助pinyin4j将汉字转拼音的相关帮助类，进行了二次封装.
+  </description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tag.version>2.3.3</tag.version>
+		<pinyin.version>2.5.1</pinyin.version>
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>com.belerweb</groupId>
+			<artifactId>pinyin4j</artifactId>
+			<version>${pinyin.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-core</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>${tag.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
 		</dependency>
 	</dependencies>
 </project>

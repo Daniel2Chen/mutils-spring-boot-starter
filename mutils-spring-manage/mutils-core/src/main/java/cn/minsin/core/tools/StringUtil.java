@@ -10,7 +10,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 	字符串帮助类 可参考 {@link StringUtils}
+ * 字符串帮助类 可参考 {@link StringUtils}
+ * 
  * @author mintonzhang
  * @date 2019年2月14日
  * @since 0.1.0
@@ -31,7 +32,7 @@ public class StringUtil extends StringUtils {
 			for (Object object : param) {
 				if (object == null || isBlank(object.toString())) {
 					return true;
-				} else if(object instanceof Collection || object instanceof Map){
+				} else if (object instanceof Collection || object instanceof Map) {
 					// 如果是集合或者map
 					Method declaredMethod = object.getClass().getDeclaredMethod("isEmpty");
 					Object invoke = declaredMethod.invoke(object);
@@ -55,7 +56,7 @@ public class StringUtil extends StringUtils {
 	 * @return
 	 */
 	public static String isBlankWithDefault(String cs, String def) {
-		return isBlank(cs) ? def :cs;
+		return isBlank(cs) ? def : cs;
 	}
 
 	/**
@@ -78,7 +79,6 @@ public class StringUtil extends StringUtils {
 	 * 
 	 * @param str
 	 * @param filterKey
-	 * @return 2018年7月27日
 	 */
 	public static String filterSearchKey(String str, String... filterKey) {
 		str = filterSpace(str);
@@ -91,21 +91,21 @@ public class StringUtil extends StringUtils {
 		}
 		return str;
 	}
+
 	/**
-	 * 	关键字去空格及过滤 如果出现关键字将替换为空
+	 * 关键字去空格及过滤 如果出现关键字将替换为空
 	 * 
 	 * @param str
 	 * @param filterKey
-	 * @return 2018年7月27日
 	 */
 	public static String filterSearchKeyAndReplace(String str, String... filterKey) {
 		str = filterSpace(str);
 		if (!ArrayUtil.isEmpty(filterKey)) {
 			for (String string : filterKey) {
-				str= str.replace(string,"");
+				str = str.replace(string, "");
 			}
 		}
-		return isBlankWithDefault(str,null);
+		return isBlankWithDefault(str, null);
 	}
 
 	/**
@@ -128,7 +128,6 @@ public class StringUtil extends StringUtils {
 	 * 去除所有空格
 	 * 
 	 * @param str
-	 * @return 2018年9月21日
 	 */
 	public static String filterAllSpace(String str) {
 		return filterSpace(str) == null ? null : str.replace(" ", "");
@@ -139,7 +138,6 @@ public class StringUtil extends StringUtils {
 	 *
 	 * @param key
 	 * @param type -1 为%key 0为 %key% 1为key% 其他默认为0
-	 * @return 2018年7月27日
 	 */
 	public static String likeSearch(String key, int type, String... filterKey) {
 		key = filterSearchKey(key, filterKey);
@@ -214,7 +212,7 @@ public class StringUtil extends StringUtils {
 	 * @return
 	 */
 	public static String firstCharacterToUpper(String srcStr) {
-		return srcStr.substring(0, 1).toUpperCase() + srcStr.substring(1);
+		return isBlank(srcStr) ? null : srcStr.substring(0, 1).toUpperCase() + srcStr.substring(1);
 	}
 
 	/**
@@ -225,7 +223,7 @@ public class StringUtil extends StringUtils {
 	 */
 	public static String removeFormat(String str) {
 		str = filterAllSpace(str);
-		return str == null?null: str.replace("\r", "").replace("\n", "").replace("\t", "");
+		return str == null ? null : str.replace("\r", "").replace("\n", "").replace("\t", "");
 	}
 
 	static Pattern p = Pattern.compile("[\u4E00-\u9FA5|\\！|\\，|\\。|\\（|\\）|\\《|\\》|\\“|\\”|\\？|\\：|\\；|\\【|\\】]");
@@ -243,19 +241,29 @@ public class StringUtil extends StringUtils {
 		Matcher m = p.matcher(str);
 		return m.find();
 	}
-	
+
 	/**
-	 * 	判断是否为中文
-	 * @param str 原字符串
+	 * 判断是否为中文
+	 * 
+	 * @param str      原字符串
 	 * @param keywords 需要过滤的字符(即包含此字符将视为中文)
 	 * @return
 	 */
-	public static boolean isChinese(String str,String... keywords) {
-		 str = filterSearchKeyAndReplace(str,keywords);
-		 if(isBlank(str)) {
-			 return false;
-		 }
-         String reg = "[\\u4e00-\\u9fa5]+";
-         return str.matches(reg);
+	public static boolean isChinese(String str, String... keywords) {
+		str = filterSearchKeyAndReplace(str, keywords);
+		if (isBlank(str)) {
+			return false;
+		}
+		String reg = "[\\u4e00-\\u9fa5]+";
+		return str.matches(reg);
+	}
+	
+	/**
+	 * 提取字符串中的中文 
+	 * @param source 
+	 * @return 如果为空返回null
+	 */
+	public static String pickUpChinese(String source) {
+		return StringUtil.replaceAll(source, "[^\u4e00-\u9fa5]+", "");
 	}
 }

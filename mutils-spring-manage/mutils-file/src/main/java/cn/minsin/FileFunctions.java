@@ -24,9 +24,9 @@ import com.alibaba.fastjson.JSON;
 import cn.minsin.core.init.FileConfig;
 import cn.minsin.core.init.core.AbstractConfig;
 import cn.minsin.core.rule.AbstractFunctionRule;
-import cn.minsin.core.tools.DateUtil;
 import cn.minsin.core.tools.FileUtil;
 import cn.minsin.core.tools.IOUtil;
+import cn.minsin.core.tools.date.DateUtil;
 import cn.minsin.core.web.Result;
 
 public class FileFunctions extends AbstractFunctionRule {
@@ -132,7 +132,7 @@ public class FileFunctions extends AbstractFunctionRule {
 	protected static String localSave(MultipartFile file) throws IOException {
 		String fileName = file.getOriginalFilename();
 		String gName = fileName;
-		String savePath = DateUtil.date2String(new Date(), "yyyyMMdd/");
+		String savePath = DateUtil.date2String(new Date(), ()->"yyyyMMdd/");
 		String path = config.getSaveDisk() + savePath;
 		// 定义上传路径
 		FileUtil.checkPath(path);
