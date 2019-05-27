@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import cn.minsin.core.annotation.Ignore;
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.exception.MutilsException;
@@ -107,7 +108,11 @@ public class ModelUtil {
 	 */
 	public static boolean verificationField(Field field) {
 		int modifiers = field.getModifiers();
-		if (Modifier.isStatic(modifiers) || !Modifier.isPrivate(modifiers) || Modifier.isFinal(modifiers)) {
+		Ignore ignore = field.getAnnotation(Ignore.class);
+		if (Modifier.isStatic(modifiers) 
+				|| Modifier.isTransient(modifiers)
+				|| Modifier.isFinal(modifiers)
+				|| ignore != null) {
 			return true;
 		}
 		return false;

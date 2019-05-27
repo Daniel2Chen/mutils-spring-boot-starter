@@ -2,6 +2,7 @@ package cn.minsin.core.tools;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -50,27 +51,106 @@ public class NumberUtil extends NumberUtils {
 	}
 	
 	/**
-	 * 	保留指定小数长度的数据
+	 * 保留指定小数长度的数据
+	 * 
 	 * @param length
 	 * @param old
 	 * @return
 	 */
-	public static BigDecimal keepLenthDecimals(int length,BigDecimal old) {
-		if(length<0||old==null) {
+	public static BigDecimal decimalsXLength(int length, BigDecimal old) {
+		if (length < 0 || old == null) {
 			return old;
 		}
 		return old.setScale(length, BigDecimal.ROUND_HALF_UP);
 	}
 	
 	/**
-	 * 	元转换成分
-	 * @param bigDecimal
+	 * a+b and Keep 'decimal' decimals
+	 * 
+	 * @param <T>     must extend {@code Number}
+	 * @param a
+	 * @param b
+	 * @param decimal
 	 * @return
 	 */
-	public static BigDecimal yuanToFen(BigDecimal bigDecimal) {
-		if(bigDecimal!=null) {
-			return keepLenthDecimals(2, bigDecimal).multiply(new BigDecimal(100)).setScale(0);
+	public static <T extends Number> BigDecimal add(T a, T b, int decimal) {
+		if (a != null && b != null) {
+			return decimalsXLength(2, BigDecimal.valueOf(a.doubleValue()))
+					.add(BigDecimal.valueOf(b.doubleValue()))
+					.setScale(decimal);
 		}
-		return bigDecimal;
+		return BigDecimal.valueOf(0);
+	}
+
+	/**
+	 * like a-b and Keep 'decimal' decimals
+	 * 
+	 * @param <T>     must extend {@code Number}
+	 * @param a
+	 * @param b
+	 * @param decimal
+	 * @return
+	 */
+	public static <T extends Number> BigDecimal subtract(T a, T b, int decimal) {
+		if (a != null && b != null) {
+			return decimalsXLength(2, BigDecimal.valueOf(a.doubleValue()))
+					.subtract(BigDecimal.valueOf(b.doubleValue()))
+					.setScale(decimal);
+		}
+		return BigDecimal.valueOf(0);
+	}
+
+	/**
+	 * a/b and Keep 'decimal' decimals
+	 * 
+	 * @param <T>     must extend {@code Number}
+	 * @param a
+	 * @param b
+	 * @param decimal
+	 * @return
+	 */
+	public static <T extends Number> BigDecimal divide(T a, T b, int decimal) {
+		if (a != null && b != null) {
+			return decimalsXLength(2, BigDecimal.valueOf(a.doubleValue()))
+					.divide(BigDecimal.valueOf(b.doubleValue()), decimal, RoundingMode.HALF_UP)
+					.setScale(decimal);
+		}
+		return BigDecimal.valueOf(0);
+	}
+
+	/**
+	 * a*b and Keep 'decimal' decimals
+	 * 
+	 * @param <T>     must extend {@code Number}
+	 * @param a
+	 * @param b
+	 * @param decimal
+	 * @return
+	 */
+	public static <T extends Number> BigDecimal multiply(T a, T b, int decimal) {
+		if (a != null && b != null) {
+			return decimalsXLength(2, BigDecimal.valueOf(a.doubleValue()))
+					.multiply(BigDecimal.valueOf(b.doubleValue()))
+					.setScale(decimal);
+		}
+		return BigDecimal.valueOf(0);
+	}
+
+	/**
+	 * a%b and Keep 'decimal' decimals
+	 * 
+	 * @param <T>     must extend {@code Number}
+	 * @param a
+	 * @param b
+	 * @param decimal
+	 * @return
+	 */
+	public static <T extends Number> BigDecimal remainder(T a, T b, int decimal) {
+		if (a != null && b != null) {
+			return decimalsXLength(2, BigDecimal.valueOf(a.doubleValue()))
+					.remainder(BigDecimal.valueOf(b.doubleValue()))
+					.setScale(decimal);
+		}
+		return BigDecimal.valueOf(0);
 	}
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.minsin.annotation;
+package cn.minsin.core.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

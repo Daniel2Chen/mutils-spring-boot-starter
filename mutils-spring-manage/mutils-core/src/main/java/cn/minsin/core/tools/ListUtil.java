@@ -113,7 +113,7 @@ public class ListUtil {
 	 * @param list
 	 * @return
 	 */
-	public static <T> boolean isEmpty(final List<T> list) {
+	public static boolean isEmpty(final List<?> list) {
 
 		return list == null || list.isEmpty() ? true : false;
 	}
@@ -124,12 +124,21 @@ public class ListUtil {
 	 * @param list
 	 * @return
 	 */
-	public static boolean isEmpty(List<?>... list) {
+	public static boolean isEmpty(final List<?>... list) {
 		for (List<?> list2 : list) {
 			if (!isEmpty(list2)) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	public static boolean isNotEmpty(final List<?> list) {
+
+		return !isEmpty(list);
+	}
+
+	public static boolean isNotEmpty(final List<?>... list) {
+		return !isEmpty(list);
 	}
 }
