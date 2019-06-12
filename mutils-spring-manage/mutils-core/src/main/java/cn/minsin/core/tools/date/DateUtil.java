@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -28,7 +27,7 @@ public class DateUtil extends DateUtils {
 	}
 
 	public static String date2String(Date date, DateFormat format) {
-		return DateFormatUtils.format(date, format.getFormat(), TimeZone.getTimeZone("GMT+8"));
+		return DateFormatUtils.format(date, format.getFormat());
 	}
 
 	public static String date2String(Date date, DateFormat format, String defaultValue) {
@@ -44,7 +43,7 @@ public class DateUtil extends DateUtils {
 	}
 
 	public static String long2DateStr(long source, DateFormat format) {
-		return DateFormatUtils.format(new Date(source), format.getFormat(), TimeZone.getTimeZone("GMT+8"));
+		return DateFormatUtils.format(new Date(source), format.getFormat());
 	}
 
 	public static String long2DateStr(long source, DateFormat format, String defaultValue) {
@@ -156,9 +155,5 @@ public class DateUtil extends DateUtils {
 		ZoneId zone = ZoneId.systemDefault();
 		Instant instant = of.atStartOfDay().atZone(zone).toInstant();
 		return Date.from(instant);
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(long2DateStr(1557417599000L,DefaultDateFormat.yyyy_MM_dd_HH_mm_ss));
 	}
 }
