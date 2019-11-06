@@ -1,16 +1,11 @@
 package cn.minsin.core.tools;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
-
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.rule.AbstractModelRule;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 /**
  * 	文件操作工具类
@@ -19,7 +14,9 @@ import cn.minsin.core.rule.AbstractModelRule;
  * @since 0.1.0
  */
 public class FileUtil {
-
+    protected FileUtil() {
+        // allow Subclass
+    }
 	/**
 	 * 	检查文件路径 如果不存在就创建
 	 * 

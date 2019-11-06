@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>cn.minsin</groupId>
-		<artifactId>mutils-spring-manage</artifactId>
-<version>0.0.3.RELEASE</version>
-	</parent>
-	<artifactId>mutils-kuaidi100</artifactId>
-	<name>mutils-kuaidi100</name>
-	<description>
-		mutils组件中,提供快递操作的模块。此模块不可单独引用。
-		官方文档：https://www.kuaidi100.com/openapi/applyapi.shtml
-	</description>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-core</artifactId>
-		</dependency>
-	</dependencies>
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.minsin</groupId>
+        <artifactId>mutils-spring-manage</artifactId>
+        <version>0.0.6.RELEASE</version>
+    </parent>
+    <artifactId>mutils-kuaidi100</artifactId>
+    <name>mutils-kuaidi100</name>
+    <description>
+        mutils组件中,提供快递操作的模块。此模块不可单独引用。
+        官方文档：https://www.kuaidi100.com/openapi/applyapi.shtml
+    </description>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>cn.minsin</groupId>
+            <artifactId>mutils-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 </project>

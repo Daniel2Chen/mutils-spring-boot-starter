@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-<version>0.0.3.RELEASE</version>
+<version>0.0.6.RELEASE</version>
 	</parent>
 	<artifactId>mutils-wechat-miniprogram</artifactId>
 	<name>mutils-wechat-miniprogram</name>
@@ -20,10 +20,6 @@
 		<bouncycastle.version>1.59</bouncycastle.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-core</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-wechat-wechatpay-core</artifactId>

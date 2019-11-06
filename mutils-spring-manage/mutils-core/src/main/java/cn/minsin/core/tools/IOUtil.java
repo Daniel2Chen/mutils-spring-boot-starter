@@ -1,13 +1,14 @@
 package cn.minsin.core.tools;
 
+import cn.minsin.core.exception.MutilsErrorException;
+import com.alibaba.fastjson.util.IOUtils;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.InputStream;
-
-import com.alibaba.fastjson.util.IOUtils;
-
-import cn.minsin.core.exception.MutilsErrorException;
+import java.net.HttpURLConnection;
+import java.net.URLConnection;
 
 /**
  * 	文件流相关工具类  可参考{@link IOUtils}
@@ -46,6 +47,12 @@ public class IOUtil extends IOUtils {
 			}
 		}
 	}
+
+    public static void close(final URLConnection conn) {
+        if (conn instanceof HttpURLConnection) {
+            ((HttpURLConnection) conn).disconnect();
+        }
+    }
 
 	/**
 	 * 	将文件流转成字节缓存在内存中，可以让流多次使用。使用{@link ByteArrayInputStream} 创建新的输入流

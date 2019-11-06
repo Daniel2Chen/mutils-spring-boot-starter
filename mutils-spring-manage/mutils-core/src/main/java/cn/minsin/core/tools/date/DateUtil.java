@@ -1,5 +1,8 @@
 package cn.minsin.core.tools.date;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
+
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -7,18 +10,18 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
-
 /**
  * 不同时间类型之间的转换
  * {@link DateFormat} 函数式接口,以下使用到的地方均可使用
- * {@link DefaultDateFormatEnum} 默认时间格式化枚举
+ * {@link DefaultDateFormat } 默认时间格式化枚举
  *
  * @author mintonzhang@163.com
  * @date 2018年6月8日
  */
 public class DateUtil extends DateUtils {
+    protected DateUtil(){
+        //Allow subClass
+    }
 
 	private static Calendar calendar = Calendar.getInstance();
 
@@ -110,7 +113,7 @@ public class DateUtil extends DateUtils {
 	/**
 	 * 获取一天的开始时间
 	 * 
-	 * @param date
+	 * @param dateStr
 	 * @return
 	 */
 	public static Date getBeginOfDay(String dateStr, DateFormat dateEnum) {
@@ -128,7 +131,7 @@ public class DateUtil extends DateUtils {
 	/**
 	 * 获取一天的结束 可使用lamuda表达式 eg: getEndOfDay(new Date(),()->"yyyy-MM-dd");
 	 * 
-	 * @param date
+	 * @param dateStr
 	 * @return
 	 */
 	public static Date getEndOfDay(String dateStr, DateFormat dateEnum) {

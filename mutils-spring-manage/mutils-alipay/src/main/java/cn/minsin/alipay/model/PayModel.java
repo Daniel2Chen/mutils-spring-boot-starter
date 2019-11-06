@@ -1,10 +1,10 @@
 package cn.minsin.alipay.model;
 
-import java.math.BigDecimal;
-
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.NumberUtil;
+
+import java.math.BigDecimal;
 
 /**
  * 支付宝支付所需参数
@@ -43,7 +43,7 @@ public class PayModel  extends AbstractModelRule{
 	}
 	public void setTotal_amount(BigDecimal total_amount) {
 		if(total_amount!=null) {
-			total_amount =NumberUtil.keepLenthDecimals(2, total_amount);
+			total_amount =NumberUtil.decimalsXLength(2, total_amount);
 		}
 		this.total_amount = total_amount;
 	}

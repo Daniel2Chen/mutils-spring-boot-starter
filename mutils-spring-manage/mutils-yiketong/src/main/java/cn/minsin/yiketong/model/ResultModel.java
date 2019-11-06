@@ -1,6 +1,8 @@
 package cn.minsin.yiketong.model;
 
 import cn.minsin.core.rule.AbstractModelRule;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 返回结果集解析
@@ -8,6 +10,8 @@ import cn.minsin.core.rule.AbstractModelRule;
  * @author mintonzhang
  * @date 2019年1月10日
  */
+@Getter
+@Setter
 public class ResultModel extends AbstractModelRule {
 
 	/**
@@ -20,30 +24,6 @@ public class ResultModel extends AbstractModelRule {
 	private String message;
 
 	private ResultDetailModel data;
-
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public ResultDetailModel getData() {
-		return data;
-	}
-
-	public void setData(ResultDetailModel data) {
-		this.data = data;
-	}
 
 	public boolean isSuccess() {
 		if (data == null) {

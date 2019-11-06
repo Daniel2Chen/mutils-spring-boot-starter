@@ -1,5 +1,7 @@
 package cn.minsin.yiketong.util;
 
+import cn.minsin.core.constant.CharSetConstant;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,11 +14,11 @@ public class SignUtil {
      * @return
      */
     public static String encode(String data) {
-		StringBuffer buf = new StringBuffer("");
+		StringBuffer buf = new StringBuffer();
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			try {
-				md.update(data.getBytes("UTF-8"));
+				md.update(data.getBytes(CharSetConstant.UTF_8));
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

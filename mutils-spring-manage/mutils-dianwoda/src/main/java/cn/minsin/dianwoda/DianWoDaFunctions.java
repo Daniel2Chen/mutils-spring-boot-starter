@@ -1,10 +1,15 @@
 package cn.minsin.dianwoda;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractFunctionRule;
+import cn.minsin.core.tools.HttpClientUtil;
+import cn.minsin.core.tools.IOUtil;
+import cn.minsin.core.tools.MapUtil;
+import cn.minsin.dianwoda.config.DianWoDaProperties;
+import cn.minsin.dianwoda.model.OrderModel;
+import cn.minsin.dianwoda.util.SignUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -15,21 +20,19 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-
-import cn.minsin.core.init.DianWoDaConfig;
-import cn.minsin.core.init.core.AbstractConfig;
-import cn.minsin.core.rule.AbstractFunctionRule;
-import cn.minsin.core.tools.HttpClientUtil;
-import cn.minsin.core.tools.IOUtil;
-import cn.minsin.core.tools.MapUtil;
-import cn.minsin.dianwoda.model.OrderModel;
-import cn.minsin.dianwoda.util.SignUtil;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class DianWoDaFunctions extends AbstractFunctionRule {
 
-	private final static DianWoDaConfig config = AbstractConfig.loadConfig(DianWoDaConfig.class);
+	private final static DianWoDaProperties properties;
+
+	static {
+        properties = AbstractConfig.loadConfig(DianWoDaProperties.class);
+        checkProperties(properties,DianWoDaProperties.class);
+    }
 
 	/**
 	 * 派发订单 /api/v3/order-send.json
@@ -46,7 +49,7 @@ public class DianWoDaFunctions extends AbstractFunctionRule {
 	/**
 	 * 模拟发送http请求
 	 * 
-	 * @param api            业务api接口
+	 * @param url            业务api接口
 	 * @param businessParams 业务参数
 	 * @return 响应结果
 	 * @throws IOException
@@ -58,15 +61,15 @@ public class DianWoDaFunctions extends AbstractFunctionRule {
 		CloseableHttpResponse response = null;
 		try {
 			/* 生成签名 */
-			String sign = SignUtil.sign(businessParams, config.getSercret());
+			String sign = SignUtil.sign(businessParams, properties.getSercret());
 
-			businessParams.put("pk", config.getPk());
-			businessParams.put("v", config.getVersion());
-			businessParams.put("format", config.getFormat());
+			businessParams.put("pk", properties.getPk());
+			businessParams.put("v", properties.getVersion());
+			businessParams.put("format", properties.getFormat());
 			businessParams.put("sig", sign);
-			businessParams.put("timestamp", config.getTimestamp());
+			businessParams.put("timestamp", properties.getTimestamp());
 
-			HttpPost post = new HttpPost(config.getUrl() + url);
+			HttpPost post = new HttpPost(properties.getUrl() + url);
 			List<NameValuePair> list = new LinkedList<>();
 			businessParams.keySet().forEach(k -> {
 				list.add(new BasicNameValuePair(k, businessParams.get(k).toString()));

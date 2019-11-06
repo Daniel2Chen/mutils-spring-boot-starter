@@ -1,15 +1,14 @@
 package cn.minsin.core.tools;
 
+import cn.minsin.core.exception.MutilsErrorException;
+import com.alibaba.fastjson.util.IOUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import com.alibaba.fastjson.util.IOUtils;
-
-import cn.minsin.core.exception.MutilsErrorException;
 
 /**
  * zip工具类
@@ -19,6 +18,10 @@ import cn.minsin.core.exception.MutilsErrorException;
  * @since 0.2.0
  */
 public class ZipUtil {
+
+    protected ZipUtil() {
+        // allow Subclass
+    }
 
 	private static final int BUFFER_SIZE = 2 * 1024;
 
@@ -30,15 +33,11 @@ public class ZipUtil {
 	 * @throws RuntimeException 压缩失败会抛出运行时异常
 	 */
 	public static void toZip(String srcDir, OutputStream out) throws MutilsErrorException {
-
-		long start = System.currentTimeMillis();
 		ZipOutputStream zos = null;
 		try {
 			zos = new ZipOutputStream(out);
 			File sourceFile = new File(srcDir);
 			compress(sourceFile, zos, sourceFile.getName(), true);
-			long end = System.currentTimeMillis();
-			System.out.println("压缩完成，耗时：" + (end - start) + " ms");
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "zip error from ZipUtils");
 		} finally {
@@ -55,7 +54,6 @@ public class ZipUtil {
 	 * @throws RuntimeException 压缩失败会抛出运行时异常
 	 */
 	public static void toZip(List<File> srcFiles, OutputStream out) throws MutilsErrorException {
-		long start = System.currentTimeMillis();
 		ZipOutputStream zos = null;
 		try {
 			zos = new ZipOutputStream(out);
@@ -70,8 +68,6 @@ public class ZipUtil {
 				zos.closeEntry();
 				in.close();
 			}
-			long end = System.currentTimeMillis();
-			System.out.println("压缩完成，耗时：" + (end - start) + " ms");
 		} catch (Exception e) {
 			throw new MutilsErrorException(e, "zip error from ZipUtils");
 		} finally {

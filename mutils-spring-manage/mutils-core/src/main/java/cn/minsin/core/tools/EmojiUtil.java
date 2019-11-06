@@ -7,6 +7,9 @@ package cn.minsin.core.tools;
  * @since 0.1.0
  */
 public class EmojiUtil {
+    protected EmojiUtil() {
+        // allow Subclass
+    }
 
 	public static boolean containsEmoji(String source) {
 		if(StringUtil.isBlank(source)) {

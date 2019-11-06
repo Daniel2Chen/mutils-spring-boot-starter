@@ -1,12 +1,15 @@
 package cn.minsin.alipay;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import cn.minsin.alipay.config.MutilsAlipayProperties;
+import cn.minsin.alipay.model.NotifyModel;
+import cn.minsin.alipay.model.PayModel;
+import cn.minsin.alipay.model.RefundModel;
+import cn.minsin.alipay.model.TransferModel;
+import cn.minsin.core.exception.MutilsErrorException;
+import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.rule.AbstractFunctionRule;
+import cn.minsin.core.tools.MapUtil;
+import cn.minsin.core.tools.ModelUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -20,16 +23,11 @@ import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeRefundResponse;
 
-import cn.minsin.alipay.model.NotifyModel;
-import cn.minsin.alipay.model.PayModel;
-import cn.minsin.alipay.model.RefundModel;
-import cn.minsin.alipay.model.TransferModel;
-import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.init.AlipayConfig;
-import cn.minsin.core.init.core.AbstractConfig;
-import cn.minsin.core.rule.AbstractFunctionRule;
-import cn.minsin.core.tools.MapUtil;
-import cn.minsin.core.tools.ModelUtil;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * 支付宝功能列表
@@ -40,9 +38,16 @@ import cn.minsin.core.tools.ModelUtil;
  */
 public class AlipayFunctions extends AbstractFunctionRule {
 
-	private final static AlipayConfig config = AbstractConfig.loadConfig(AlipayConfig.class);
 
-	/**
+    protected static final MutilsAlipayProperties properties;
+
+    static {
+        properties = AbstractConfig.loadConfig(MutilsAlipayProperties.class);
+        checkProperties(properties, MutilsAlipayProperties.class);
+    }
+
+
+    /**
 	 * 发起支付宝网站支付
 	 * 
 	 * @return
@@ -53,7 +58,7 @@ public class AlipayFunctions extends AbstractFunctionRule {
 		ModelUtil.verificationField(payModel);
 		AlipayTradePrecreateRequest alipayRequest = new AlipayTradePrecreateRequest();
 		alipayRequest.setBizContent(payModel.toString());
-		alipayRequest.setNotifyUrl(config.getNotifyUrl());
+		alipayRequest.setNotifyUrl(properties.getNotifyUrl());
 		return initAlipayClient().execute(alipayRequest);
 	}
 
@@ -67,7 +72,7 @@ public class AlipayFunctions extends AbstractFunctionRule {
 		ModelUtil.verificationField(payModel);
 		AlipayTradeAppPayRequest alipayRequest = new AlipayTradeAppPayRequest();
 		alipayRequest.setBizContent(payModel.toString());
-		alipayRequest.setNotifyUrl(config.getNotifyUrl());
+		alipayRequest.setNotifyUrl(properties.getNotifyUrl());
 		return initAlipayClient().sdkExecute(alipayRequest);
 
 	}
@@ -137,7 +142,7 @@ public class AlipayFunctions extends AbstractFunctionRule {
 	 */
 	public static boolean checkSign(Map<String, String> params) {
 		try {
-			return AlipaySignature.rsaCheckV1(params, config.getPublicKey(), config.getCharset(), config.getSignType());
+			return AlipaySignature.rsaCheckV1(params, properties.getPublicKey(), properties.getCharset(), properties.getSignType());
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 			return false;
@@ -145,7 +150,7 @@ public class AlipayFunctions extends AbstractFunctionRule {
 	}
 
 	protected static AlipayClient initAlipayClient() {
-		return new DefaultAlipayClient(config.getServerUrl(), config.getAppid(), config.getPrivateKey(),
-				config.getFormat(), config.getCharset(), config.getPublicKey(), config.getSignType());
+		return new DefaultAlipayClient(properties.getServerUrl(), properties.getAppid(), properties.getPrivateKey(),
+				properties.getFormat(), properties.getCharset(), properties.getPublicKey(), properties.getSignType());
 	}
 }

@@ -1,10 +1,10 @@
 package cn.minsin.core.tools;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * 	数值工具类  对{@link NumberUtils} 进行拓展
@@ -14,6 +14,9 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class NumberUtil extends NumberUtils {
 
+    protected NumberUtil() {
+        // allow Subclass
+    }
 	/**
 	 * 判断字符串是否是数字（无法具体判断是整型还是浮点型）
 	 * 

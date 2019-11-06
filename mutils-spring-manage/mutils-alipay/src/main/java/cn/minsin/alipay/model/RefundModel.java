@@ -1,10 +1,10 @@
 package cn.minsin.alipay.model;
 
-import java.math.BigDecimal;
-
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.NumberUtil;
+
+import java.math.BigDecimal;
 
 /**
  * 支付宝退款
@@ -63,7 +63,7 @@ public class RefundModel extends AbstractModelRule{
 
 	public void setRefund_amount(BigDecimal refund_amount) {
 		if(refund_amount!=null) {
-			refund_amount =NumberUtil.keepLenthDecimals(2, refund_amount);
+			refund_amount =NumberUtil.decimalsXLength(2, refund_amount);
 		}
 		this.refund_amount = refund_amount;
 	}

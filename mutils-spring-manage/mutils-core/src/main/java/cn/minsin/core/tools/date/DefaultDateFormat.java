@@ -11,7 +11,7 @@ public enum DefaultDateFormat implements DateFormat{
 
 	private String format;
 
-	private DefaultDateFormat(String format) {
+	DefaultDateFormat(String format) {
 		this.format = format;
 	}
 

@@ -12,6 +12,10 @@ import java.util.Date;
  */
 public class CalendarUtil  {
 
+    protected CalendarUtil(){
+        //Allow subClass
+    }
+
 	private static Calendar calendar = Calendar.getInstance();
 
 	/**

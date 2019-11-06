@@ -1,10 +1,10 @@
 package cn.minsin.dianwoda.model;
 
-import java.math.BigDecimal;
-
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.NumberUtil;
+
+import java.math.BigDecimal;
 
 /**
  * 点我达下单时所需的模板 需要初始化它
@@ -95,7 +95,7 @@ public class OrderModel extends AbstractModelRule {
 
 	public void setOrder_price(BigDecimal order_price) {
 		if(order_price!=null) {
-			order_price = NumberUtil.yuanToFen(order_price);
+			order_price = NumberUtil.multiply(order_price,100,0);
 		}
 		this.order_price = order_price;
 	}

@@ -5,7 +5,7 @@
   <parent>
     <groupId>cn.minsin</groupId>
     <artifactId>mutils-spring-manage</artifactId>
-	<version>0.0.3.RELEASE</version>
+	<version>0.0.6.RELEASE</version>
   </parent>
   <artifactId>mutils-wechat-wechatpay-core</artifactId>
   <name>mutils-wechat-wechatpay-core</name>
@@ -19,10 +19,10 @@
 		<wechat.version>0.0.3</wechat.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-core</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>cn.minsin</groupId>
+            <artifactId>mutils-spring-boot-starter</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>

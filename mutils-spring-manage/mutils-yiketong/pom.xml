@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-<version>0.0.3.RELEASE</version>
+<version>0.0.6.RELEASE</version>
 	</parent>
 	<artifactId>mutils-yiketong</artifactId>
 	<name>mutils-yiketong</name>
@@ -20,9 +20,9 @@
 		<httpclient.version>4.5.5</httpclient.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-core</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>cn.minsin</groupId>
+            <artifactId>mutils-spring-boot-starter</artifactId>
+        </dependency>
 	</dependencies>
 </project>

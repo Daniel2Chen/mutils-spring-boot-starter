@@ -1,11 +1,11 @@
 package cn.minsin.core.constant;
 
-public class NumberConstant {
-	
-	public static final int ZERO =0;
-	
-	public static final int ONE=1;
-	
-	public static final int TEN =10;
-	
+public interface NumberConstant {
+
+    int ZERO = 0;
+
+    int ONE = 1;
+
+    int TEN = 10;
+
 }

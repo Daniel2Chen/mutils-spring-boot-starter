@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-<version>0.0.3.RELEASE</version>
+<version>0.0.6.RELEASE</version>
 	</parent>
 	<artifactId>mutils-aliyun-sms</artifactId>
 	<name>mutils-aliyun-sms</name>
@@ -23,7 +23,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-core</artifactId>
+			<artifactId>mutils-spring-boot-starter</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core -->

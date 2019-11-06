@@ -1,11 +1,9 @@
 package cn.minsin.core.rule;
 
-import java.io.Serializable;
-
+import cn.minsin.core.override.FieldCheck;
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.alibaba.fastjson.JSON;
 
 /**
  * 第三方接口所需要继承的父类 这个抽象内不能定义字段
@@ -13,7 +11,7 @@ import com.alibaba.fastjson.JSON;
  * @author minsin
  *
  */
-public abstract class AbstractModelRule implements Serializable {
+public abstract class AbstractModelRule implements FieldCheck {
 
 	/**
 	 * 

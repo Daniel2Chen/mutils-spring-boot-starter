@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-<version>0.0.3.RELEASE</version>
+<version>0.0.6.RELEASE</version>
 	</parent>
 	<artifactId>mutils-wechat-jsapi</artifactId>
 	<name>mutils-wechat-jsapi</name>
@@ -19,10 +19,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-core</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>cn.minsin</groupId>
 			<artifactId>mutils-wechat-wechatpay-core</artifactId>

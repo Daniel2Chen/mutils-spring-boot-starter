@@ -1,19 +1,6 @@
 package cn.minsin.core.tools;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-
-import org.apache.http.Consts;
+import cn.minsin.core.constant.CharSetConstant;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -32,6 +19,18 @@ import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 	httpClient帮助类
  * 	可以参考 {@link HttpClients} 这个帮助类
@@ -41,8 +40,6 @@ public class HttpClientUtil {
 	/**
 	 * 获取SSL验证的HttpClient
 	 * 
-	 * @param httpClient
-	 * @param useCert           是否用证书
 	 * @param password          密码
 	 * @param certificatePath   证书地址
 	 * @param certificateFormat 证书格式
@@ -142,8 +139,6 @@ public class HttpClientUtil {
 
         CloseableHttpClient httpClient = getInstance();
         CloseableHttpResponse response = null;
-        String result = null;
-
         try {
             HttpPost httpPost = new HttpPost(url);
             RequestConfig requestConfig = RequestConfig
@@ -160,13 +155,13 @@ public class HttpClientUtil {
                 basicNameValuePairs.add(new BasicNameValuePair(entity.getKey(), entity.getValue()));
             }
 
-            UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(basicNameValuePairs, Consts.UTF_8);
+            UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(basicNameValuePairs, CharSetConstant.UTF_8);
             httpPost.setEntity(urlEncodedFormEntity);
 
             response = httpClient.execute(httpPost);
 
             HttpEntity entity = response.getEntity();
-            result = EntityUtils.toString(entity, Consts.UTF_8);
+            String  result = EntityUtils.toString(entity, CharSetConstant.UTF_8);
             return result == null ? "" : result.trim();
 
         } finally {
