@@ -2,7 +2,6 @@ package cn.minsin.core.tools;
 
 import cn.minsin.core.annotation.Ignore;
 import cn.minsin.core.annotation.NotNull;
-import cn.minsin.core.constant.MessageConstant;
 import cn.minsin.core.exception.MutilsException;
 import lombok.Getter;
 
@@ -29,7 +28,7 @@ public class ModelUtil {
         SortedMap<String, String> tree = new TreeMap<>();
         for (Field field : getAllFieldsAndFilter(model)) {
             ParseFiled parseFiled = parseFiled(field, model);
-            if (parseFiled.isNotNull()) {
+            if (parseFiled != null) {
                 tree.put(parseFiled.getKey(), parseFiled.getStringValue());
             }
         }
@@ -80,8 +79,7 @@ public class ModelUtil {
      */
     public static <T> void verificationField(T model) throws MutilsException {
         for (Field field : getAllFieldsAndFilter(model)) {
-            ParseFiled parseFiled = parseFiled(field, model);
-            MutilsException.throwException(parseFiled.isNull(), MessageConstant.UNFILLED_ITEM);
+            parseFiled(field, model);
         }
     }
 
@@ -114,15 +112,8 @@ public class ModelUtil {
 
         private String key;
 
-        public boolean isNotNull() {
-            return value != null;
-        }
-        public boolean isNull() {
-            return value == null;
-        }
-
         public String getStringValue() {
-            return isNotNull() ? value.toString() : null;
+            return value != null ? value.toString() : null;
         }
 
         void setData(Object value, String key) {
@@ -141,14 +132,19 @@ public class ModelUtil {
             }
             field.setAccessible(true);
             Object object = field.get(model);
-            if (annotation.notNull() && object == null) {
-                String description = annotation.value();
-                throw new MutilsException(String.format(ERROR_MESSAGE_TEMPLATE, key, description));
+            if (object == null) {
+                if (annotation.notNull()) {
+                    String description = annotation.value();
+                    throw new MutilsException(String.format(ERROR_MESSAGE_TEMPLATE, key, description));
+                } else {
+                    return null;
+                }
             }
             parseFiled.setData(object, key);
+            return parseFiled;
         } catch (Exception e) {
-            e.printStackTrace();
+            // 抛出异常
+            throw new MutilsException(e);
         }
-        return parseFiled;
     }
 }
