@@ -2,7 +2,7 @@ package cn.minsin.wechat.jsapi;
 
 import cn.minsin.core.constant.CharSetConstant;
 import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.core.tools.HttpClientUtil;
 import cn.minsin.core.tools.IOUtil;
 import cn.minsin.wechat.jsapi.config.MutilsWechatJsapiProperties;

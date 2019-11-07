@@ -1,4 +1,4 @@
-package cn.minsin.core.init.core;
+package cn.minsin.core.init;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

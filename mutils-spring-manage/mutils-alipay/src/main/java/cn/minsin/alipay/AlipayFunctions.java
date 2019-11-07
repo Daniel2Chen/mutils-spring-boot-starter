@@ -6,7 +6,7 @@ import cn.minsin.alipay.model.PayModel;
 import cn.minsin.alipay.model.RefundModel;
 import cn.minsin.alipay.model.TransferModel;
 import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.core.rule.AbstractFunctionRule;
 import cn.minsin.core.tools.MapUtil;
 import cn.minsin.core.tools.ModelUtil;

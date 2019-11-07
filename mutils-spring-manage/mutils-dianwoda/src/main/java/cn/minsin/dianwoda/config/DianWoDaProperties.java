@@ -2,7 +2,7 @@ package cn.minsin.dianwoda.config;
 
 import cn.minsin.core.constant.MutilsModelConstant;
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.core.tools.StringUtil;
 import lombok.Getter;
 import lombok.Setter;

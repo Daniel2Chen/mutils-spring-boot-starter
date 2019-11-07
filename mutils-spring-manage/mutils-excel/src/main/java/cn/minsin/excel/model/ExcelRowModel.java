@@ -1,9 +1,11 @@
 package cn.minsin.excel.model;
 
 import cn.minsin.core.rule.AbstractModelRule;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -23,6 +25,16 @@ public class ExcelRowModel extends AbstractModelRule {
     /**
      * key为列下标 value为改该列的值
      */
-    private Map<Integer, Object> cells;
+    @Setter(AccessLevel.NONE)
+    private Map<Integer, Object> cells =new HashMap<>(10);
+
+    /**
+     * 赋值
+     *
+     * @param data
+     */
+    public void setCells(Map<Integer, Object> data) {
+        cells.putAll(data);
+    }
 
 }

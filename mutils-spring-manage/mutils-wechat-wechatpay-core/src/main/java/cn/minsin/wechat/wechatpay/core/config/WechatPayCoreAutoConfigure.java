@@ -1,7 +1,7 @@
 package cn.minsin.wechat.wechatpay.core.config;
 
 import cn.minsin.core.constant.MutilsModelConstant;
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import lombok.Getter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

@@ -1,6 +1,6 @@
 package cn.minsin.wechat.jsapi.model;
 
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.wechat.jsapi.config.MutilsWechatJsapiProperties;
 import cn.minsin.wechat.wechatpay.core.model.RefundModel;
 

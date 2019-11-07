@@ -1,4 +1,4 @@
-package cn.minsin.core.web.activetable;
+package cn.minsin.core.web.table;
 
 import cn.minsin.core.constant.MessageConstant;
 
@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 /**
  * 动态表格注解
  * @author: minton.zhang
- * @since: 2019/10/14 19:38
+ * @since: 0.0.8.RELEASE
  */
 @Target({ElementType.FIELD})
 @Documented

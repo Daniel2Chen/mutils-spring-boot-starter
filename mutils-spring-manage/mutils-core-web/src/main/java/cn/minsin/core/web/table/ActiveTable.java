@@ -1,4 +1,4 @@
-package cn.minsin.core.web.activetable;
+package cn.minsin.core.web.table;
 
 import lombok.Getter;
 

@@ -3,11 +3,11 @@
  */
 package cn.minsin.kuaidi100;
 
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.core.rule.AbstractFunctionRule;
 import cn.minsin.core.tools.HttpClientUtil;
 import cn.minsin.core.tools.IOUtil;
-import cn.minsin.core.web.VO;
+import cn.minsin.core.vo.VO;
 import cn.minsin.kuaidi100.config.MutilsKuaiDi100Properties;
 import cn.minsin.kuaidi100.util.MD5Util;
 import org.apache.http.NameValuePair;

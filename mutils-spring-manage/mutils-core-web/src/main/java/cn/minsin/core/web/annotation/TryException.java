@@ -1,14 +1,15 @@
-package cn.minsin.core.annotation;
+package cn.minsin.core.web.annotation;
 
-import cn.minsin.core.web.DefaultOperationType;
+import cn.minsin.core.web.result.OperationType;
 
 import java.lang.annotation.*;
 
 
 /**
  * 用于切面自动判断
- * @author mintonzhang
- * @date 2019年11月2日
+ * 请使用 {@link OperationType}或其子接口
+ * @author minsin
+ * @since 0.0.8.RELEASE
  */
 @Target({ElementType.METHOD})
 @Documented
@@ -17,10 +18,11 @@ public @interface TryException {
 
     /**
      * 操作类型 {@link TryException#autoChooseKey() }优先级高于value
+     * 请使用OperationType下的操作类型
      *
      * @return
      */
-    DefaultOperationType value() default DefaultOperationType.DO;
+    String value() default OperationType.DO;
 
     /**
      * 自动选择的判断key
@@ -28,4 +30,5 @@ public @interface TryException {
      * @return
      */
     String autoChooseKey() default "";
+
 }

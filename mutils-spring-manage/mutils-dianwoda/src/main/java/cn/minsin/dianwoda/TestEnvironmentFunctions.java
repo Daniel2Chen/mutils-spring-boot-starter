@@ -1,13 +1,11 @@
 package cn.minsin.dianwoda;
 
-import java.io.IOException;
-
+import cn.minsin.core.rule.AbstractFunctionRule;
+import cn.minsin.core.vo.VO;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.http.client.ClientProtocolException;
 
-import com.alibaba.fastjson.JSONObject;
-
-import cn.minsin.core.rule.AbstractFunctionRule;
-import cn.minsin.core.web.VO;
+import java.io.IOException;
 
 
 /**

@@ -3,7 +3,7 @@ package cn.minsin.aliyun.oss;
 import cn.minsin.aliyun.oss.config.MutilsAliyunOssMultiProperties;
 import cn.minsin.aliyun.oss.config.MutilsAliyunOssProperties;
 import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.core.rule.AbstractFunctionRule;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;

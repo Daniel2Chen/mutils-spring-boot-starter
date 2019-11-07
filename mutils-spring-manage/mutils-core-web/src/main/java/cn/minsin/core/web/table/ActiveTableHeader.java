@@ -1,4 +1,4 @@
-package cn.minsin.core.web.activetable;
+package cn.minsin.core.web.table;
 
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * 动态表格表头
  *
  * @author: minton.zhang
- * @since: 2019/10/15 17:52
+ * @since: 0.0.8.RELEASE
  */
 public class ActiveTableHeader {
 

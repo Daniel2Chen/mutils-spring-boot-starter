@@ -1,7 +1,7 @@
 package cn.minsin.gexin.push;
 
 import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.core.rule.AbstractFunctionRule;
 import cn.minsin.core.tools.ModelUtil;
 import cn.minsin.gexin.push.config.GexinPushMultiProperties;

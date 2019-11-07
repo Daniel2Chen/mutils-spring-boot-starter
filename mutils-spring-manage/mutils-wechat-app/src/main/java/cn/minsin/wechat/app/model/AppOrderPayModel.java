@@ -1,6 +1,6 @@
 package cn.minsin.wechat.app.model;
 
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.wechat.app.config.MutilsWechatAppProperties;
 import cn.minsin.wechat.wechatpay.core.model.PayModel;
 

@@ -1,18 +1,20 @@
-package cn.minsin.core.web;
+package cn.minsin.core.web.result;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * service层 与controller层传输对象
  *
  * @author: minton.zhang
- * @since: 2019/11/5 15:28
+ * @since: 0.0.8.RELEASE
  */
-public class TransferResult<T> extends BaseResult<T> {
+public class TransferResult<T> extends BaseResult<TransferResult> {
 
     @Setter
     @Getter
+    @Accessors(chain = true)
     private T value;
 
     public TransferResult() {
@@ -29,21 +31,9 @@ public class TransferResult<T> extends BaseResult<T> {
         this.msg = baseResult.msg;
         this.code = baseResult.code;
     }
-
-    public TransferResult setResult(BaseResult baseResult) {
-        this.code = baseResult.code;
-        this.msg = baseResult.msg;
-        return this;
-    }
-
-    public TransferResult setMsg(String message) {
-        this.msg = message;
-        return this;
-    }
-
-    public TransferResult setCode(int code) {
-        this.code = code;
-        return this;
+    public TransferResult(ResultOptions baseResult) {
+        this.msg = baseResult.getMsg();
+        this.code = baseResult.getCode();
     }
 
     /**
@@ -52,7 +42,7 @@ public class TransferResult<T> extends BaseResult<T> {
      * @param type
      * @return
      */
-    public Result builderResult(DefaultOperationType type) {
+    public Result builderResult(String type) {
         boolean success = this.isSuccess();
         return Result.builderOptionalResult(success, type);
     }

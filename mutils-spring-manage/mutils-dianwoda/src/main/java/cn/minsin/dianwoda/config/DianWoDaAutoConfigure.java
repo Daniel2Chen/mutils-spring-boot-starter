@@ -1,6 +1,6 @@
 package cn.minsin.dianwoda.config;
 
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import lombok.Getter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

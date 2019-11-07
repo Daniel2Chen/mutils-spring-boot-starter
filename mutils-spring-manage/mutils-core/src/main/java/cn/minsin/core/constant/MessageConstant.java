@@ -1,7 +1,5 @@
 package cn.minsin.core.constant;
 
-import cn.minsin.core.web.OperationType;
-
 /**
  * @author: minton.zhang
  * @since: 2019/11/5 10:33
@@ -40,7 +38,7 @@ public interface MessageConstant {
      * @param operationType
      * @return
      */
-    static String isSuccess(boolean isSuccess, OperationType operationType) {
-        return operationType.getOperation().concat(isSuccess(isSuccess));
+    static String isSuccess(boolean isSuccess, String operationType) {
+        return operationType.concat(isSuccess(isSuccess));
     }
 }

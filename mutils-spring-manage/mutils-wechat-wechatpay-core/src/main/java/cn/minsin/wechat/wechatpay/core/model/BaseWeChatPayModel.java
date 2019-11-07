@@ -2,7 +2,7 @@ package cn.minsin.wechat.wechatpay.core.model;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.ModelUtil;
 import cn.minsin.core.tools.StringUtil;

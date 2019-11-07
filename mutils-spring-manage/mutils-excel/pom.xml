@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-    	<version>0.0.3.RELEASE</version>
+    	<version>0.0.8.RELEASE</version>
 	</parent>
 	<artifactId>mutils-excel</artifactId>
 	<name>mutils-excel</name>
@@ -18,11 +18,10 @@
 		<poi.version>4.0.0</poi.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>cn.minsin</groupId>
-			<artifactId>mutils-core</artifactId>
-		</dependency>
-
+        <dependency>
+            <groupId>cn.minsin</groupId>
+            <artifactId>mutils-spring-boot-starter</artifactId>
+        </dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -37,12 +36,5 @@
 			<version>${poi.version}</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-	</dependencies>
+    </dependencies>
 </project>

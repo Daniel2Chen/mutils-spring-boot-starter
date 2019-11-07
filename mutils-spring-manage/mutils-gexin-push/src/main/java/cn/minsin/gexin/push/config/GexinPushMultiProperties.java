@@ -1,7 +1,7 @@
 package cn.minsin.gexin.push.config;
 
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.AbstractChildrenConfig;
+import cn.minsin.core.init.AbstractChildrenConfig;
 import cn.minsin.core.tools.StringUtil;
 import lombok.Getter;
 import lombok.Setter;

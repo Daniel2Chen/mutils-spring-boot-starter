@@ -1,9 +1,5 @@
 package cn.minsin.core.exception;
 
-import cn.minsin.core.constant.MessageConstant;
-import cn.minsin.core.web.DefaultResultOptions;
-import cn.minsin.core.web.OperationType;
-import cn.minsin.core.web.Result;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -19,14 +15,14 @@ public class MutilsException extends RuntimeException {
      */
     private static final long serialVersionUID = -1254579703396031354L;
 
-    public MutilsException(String msg) {
+    public MutilsException(java.lang.String msg) {
         super(msg);
     }
 
     public MutilsException() {
     }
 
-    public MutilsException(Throwable cause, String msg) {
+    public MutilsException(Throwable cause, java.lang.String msg) {
         super(msg, cause);
     }
 
@@ -34,38 +30,47 @@ public class MutilsException extends RuntimeException {
         super(cause);
     }
 
-    private static String getMessage(Exception e, String defaultValue) {
+    protected static java.lang.String getMessage(Throwable e, java.lang.String defaultValue) {
         log.error("An error:", e);
         boolean b = e instanceof MutilsException;
         if (b) {
-            String message = e.getMessage();
+            java.lang.String message = e.getMessage();
             return message == null ? defaultValue : defaultValue.concat(",").concat(message);
         }
         return defaultValue;
     }
 
-    public static Result getMessageToResult(Exception e, OperationType operationType) {
-        return Result.exception(getMessage(e, MessageConstant.isSuccess(false, operationType)));
-    }
-
-    @Override
-    public String getMessage() {
-        return super.getCause() != null ? DefaultResultOptions.EXCEPTION.getMsg() : super.getMessage();
-    }
-
-    public static void throwException(boolean trueCondition, String message) {
+    /**
+     * condition为true时,抛出异常
+     *
+     * @param trueCondition
+     * @param message
+     */
+    public static void throwException(boolean trueCondition, java.lang.String message) {
         if (trueCondition) {
             throw new MutilsException(message);
         }
     }
 
+    /**
+     * condition为true时,抛出异常
+     *
+     * @param trueCondition
+     */
     public static void throwException(boolean trueCondition) {
         if (trueCondition) {
             throw new MutilsException();
         }
     }
 
-    public static void notNull(Object object, String message) {
+
+    /**
+     * 为空时抛出异常
+     *
+     * @param object
+     * @param message
+     */
+    public static void notNull(Object object, java.lang.String message) {
         if (object == null) {
             throw new MutilsException(message);
         }

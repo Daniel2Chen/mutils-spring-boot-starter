@@ -3,9 +3,9 @@ package cn.minsin.core.tools;
 import com.alibaba.fastjson.JSON;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 此方法提供一些map的常用操作， 更多的可以查询 {@link org.apache.commons.collections4.MapUtils}
@@ -18,34 +18,30 @@ public class MapUtil {
     protected MapUtil() {
         // allow Subclass
     }
-	/**
-	 * 将一个对象中不为空 、不是static、Private的字段和值取出来生成一个map
-	 * 
-	 * @param model
-	 * @return
-	 */
-	public static <T> Map<String, Object> toMap(T model) {
-		HashMap<String, Object> hashMap = new HashMap<>();
-		Field[] fields = model.getClass().getDeclaredFields();
-		for (Field field : fields) {
-			int modifiers = field.getModifiers();
-			if (Modifier.isStatic(modifiers) || !Modifier.isPrivate(modifiers)||Modifier.isFinal(modifiers)) {
-				continue;
-			}
-			try {
-				String key = field.getName();
-				field.setAccessible(true);
-				Object object = field.get(model);
-				if (!StringUtil.isBlank(object)) {
-					hashMap.put(key, object);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				continue;
-			}
-		}
-		return hashMap;
-	}
+
+    /**
+     * 将一个对象中不为空 、不是static、Private的字段和值取出来生成一个map
+     *
+     * @param model
+     * @return
+     */
+    public static <T> Map<String, Object> toMap(T model) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        Set<Field> allFieldsAndFilter = ModelUtil.getAllFieldsAndFilter(model);
+        for (Field field : allFieldsAndFilter) {
+            try {
+                String key = field.getName();
+                field.setAccessible(true);
+                Object object = field.get(model);
+                if (object != null) {
+                    hashMap.put(key, object);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return hashMap;
+    }
 
 	public static <T> T mapToObject(Map<String, ?> map, Class<T> clazz) {
 		String jsonString = JSON.toJSONString(map);
@@ -75,5 +71,4 @@ public class MapUtil {
 		map.put(k, v);
 		return map;
 	}
-
 }

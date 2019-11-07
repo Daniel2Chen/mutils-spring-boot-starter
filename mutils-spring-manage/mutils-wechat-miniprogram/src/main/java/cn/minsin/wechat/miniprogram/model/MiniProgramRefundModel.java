@@ -1,6 +1,6 @@
 package cn.minsin.wechat.miniprogram.model;
 
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.wechat.miniprogram.config.MutilsWechatMiniProgramProperties;
 import cn.minsin.wechat.wechatpay.core.model.RefundModel;
 

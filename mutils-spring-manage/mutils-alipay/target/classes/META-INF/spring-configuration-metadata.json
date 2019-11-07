@@ -1,0 +1,74 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "name": "mutils.alipay",
+      "type": "cn.minsin.alipay.config.MutilsAlipayProperties"
+    },
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "name": "mutils.alipay.local-properties",
+      "type": "java.util.Map"
+    },
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "name": "mutils.alipay.slog",
+      "type": "org.slf4j.Logger"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "name": "mutils.alipay.appid",
+      "description": "1.支付宝的APPID 需要在官方申请",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "defaultValue": "UTF-8",
+      "name": "mutils.alipay.charset",
+      "description": "6.编码 默认UTF-8",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "defaultValue": "json",
+      "name": "mutils.alipay.format",
+      "description": "7.返回格式 \t默认json",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "name": "mutils.alipay.notify-url",
+      "description": "4.异步通知页面路径 不能写localhost或127.0.0.1等内网地址，必须要填写外网能够访问到的地址",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "name": "mutils.alipay.private-key",
+      "description": "2.私钥 pkcs8格式的",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "name": "mutils.alipay.public-key",
+      "description": "3.支付宝公钥",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "defaultValue": "https:\/\/openapi.alipay.com\/gateway.do",
+      "name": "mutils.alipay.server-url",
+      "description": "5.请求网关地址 默认https:openapi.alipay.com\/gateway.do",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "cn.minsin.alipay.config.MutilsAlipayProperties",
+      "defaultValue": "RSA2",
+      "name": "mutils.alipay.sign-type",
+      "description": "8.加密类型(推荐使用RSA2)\t 默认RSA2",
+      "type": "java.lang.String"
+    }
+  ]
+}

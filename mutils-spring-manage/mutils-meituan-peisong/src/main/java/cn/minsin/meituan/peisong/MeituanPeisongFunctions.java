@@ -4,7 +4,7 @@ import cn.minsin.core.constant.CharSetConstant;
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.rule.AbstractFunctionRule;
 import cn.minsin.core.tools.HttpClientUtil;
-import cn.minsin.core.web.VO;
+import cn.minsin.core.vo.VO;
 import cn.minsin.meituan.peisong.model.notify.AbstractMeituanNotifyModel;
 import cn.minsin.meituan.peisong.model.notify.OrderExceptionNotifyModel;
 import cn.minsin.meituan.peisong.model.notify.OrderStateNotifyModel;

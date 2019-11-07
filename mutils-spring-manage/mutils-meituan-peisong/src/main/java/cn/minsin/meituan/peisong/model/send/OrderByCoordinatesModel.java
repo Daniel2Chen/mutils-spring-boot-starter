@@ -2,7 +2,7 @@ package cn.minsin.meituan.peisong.model.send;
 
 import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.tools.NumberUtil;
-import cn.minsin.core.web.VO;
+import cn.minsin.core.vo.VO;
 import cn.minsin.meituan.peisong.enums.OrderType;
 
 import java.math.BigDecimal;

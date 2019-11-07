@@ -2,7 +2,7 @@ package cn.minsin.excel.config;
 
 import cn.minsin.core.constant.MutilsModelConstant;
 import cn.minsin.core.exception.MutilsException;
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

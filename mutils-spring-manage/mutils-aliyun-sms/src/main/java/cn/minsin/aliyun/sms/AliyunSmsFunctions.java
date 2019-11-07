@@ -4,7 +4,7 @@ import cn.minsin.aliyun.sms.config.MutilsAliyunSmsProperties;
 import cn.minsin.aliyun.sms.model.AliyunQueryModel;
 import cn.minsin.aliyun.sms.model.AliyunSendSmsModel;
 import cn.minsin.core.exception.MutilsErrorException;
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import cn.minsin.core.rule.AbstractFunctionRule;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;

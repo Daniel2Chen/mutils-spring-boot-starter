@@ -4,7 +4,7 @@ import cn.minsin.core.annotation.NotNull;
 import cn.minsin.core.exception.MutilsErrorException;
 import cn.minsin.core.rule.AbstractModelRule;
 import cn.minsin.core.tools.ModelUtil;
-import cn.minsin.core.web.VO;
+import cn.minsin.core.vo.VO;
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.SendBatchSmsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;

@@ -1,12 +1,12 @@
-package cn.minsin.core.web;
+package cn.minsin.core.web.result;
 
 import lombok.Getter;
 
 /**
  * @author: minton.zhang
- * @since: 2019/10/28 10:16
+ * @since: 0.0.8.RELEASE
  */
-public class FeignResult<T> extends BaseResult {
+public class FeignResult<T> extends BaseResult<FeignResult> {
 
     @Getter
     private T data;

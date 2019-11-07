@@ -1,6 +1,6 @@
 package cn.minsin.core.rule;
 
-import cn.minsin.core.init.core.AbstractConfig;
+import cn.minsin.core.init.AbstractConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

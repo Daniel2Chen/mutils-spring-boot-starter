@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cn.minsin</groupId>
 		<artifactId>mutils-spring-manage</artifactId>
-		<version>0.0.6.RELEASE</version>
+		<version>0.0.8.RELEASE</version>
 	</parent>
 	<artifactId>mutils-alipay</artifactId>
 	<name>mutils-alipay</name>
@@ -16,7 +16,7 @@
 	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<aliypay.version>3.7.4.ALL</aliypay.version>
+		<aliypay.version>4.8.10.ALL</aliypay.version>
 	</properties>
 	<dependencies>
 		<dependency>
