@@ -27,22 +27,4 @@ public class PageCondition {
         int i = NumberUtil.toInt(pageSize, 10);
         this.pageSize = i < 1 ? 10 : i;
     }
-
-
-//
-//    public <T> IPage<T> toPage(Class<T> clazz, boolean needCount) {
-//        return new Page<T>().setSize(pageSize).setCurrent(page).setSearchCount(needCount).setOptimizeCountSql(false);
-//    }
-//
-//    /**
-//     * 转换成制定对象的page
-//     *
-//     * @param <T>
-//     * @param source
-//     * @param data
-//     * @return
-//     */
-//    public <T> Page<T> convertPage(IPage<?> source, List<T> data) {
-//        return new Page<T>(source.getCurrent(), source.getSize(), source.getTotal()).setRecords(data == null ? new ArrayList<>(0) : data);
-//    }
 }

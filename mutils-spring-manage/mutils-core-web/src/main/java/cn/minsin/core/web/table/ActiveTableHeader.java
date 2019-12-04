@@ -1,6 +1,8 @@
 package cn.minsin.core.web.table;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import org.springframework.util.Assert;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -10,24 +12,23 @@ import java.util.List;
  * 动态表格表头
  *
  * @author: minton.zhang
- * @since: 0.0.8.RELEASE
+ * @since: 2019/10/15 17:52
  */
-public class ActiveTableHeader {
+public class ActiveTableHeader extends BaseActiveTable {
 
-
-    @Getter
+    @Getter(AccessLevel.PACKAGE)
     private transient List<ActiveTableHeader> tableHeaders;
 
     @Getter
-    private String columnKey, showName;
+    private String showName;
 
     private ActiveTableHeader(int size) {
         tableHeaders = new ArrayList<>(size);
     }
 
     private ActiveTableHeader(String columnKey, String showName) {
-        this.columnKey = columnKey;
         this.showName = showName;
+        super.setColumnKey(columnKey);
     }
 
     public ActiveTableHeader add(String columnKey, String showName) {
@@ -35,16 +36,16 @@ public class ActiveTableHeader {
         return this;
     }
 
-    static ActiveTableHeader loadClass(Class<?> clazz) {
+    public ActiveTableHeader add(Class<?> clazz) {
+        Assert.notNull(clazz, "动态表格必须传入Class");
         Field[] fields = clazz.getDeclaredFields();
-        ActiveTableHeader activeTableHeader = new ActiveTableHeader(fields.length);
         for (Field field : fields) {
             Th annotation = field.getAnnotation(Th.class);
             if (annotation != null) {
-                activeTableHeader.add(field.getName(), annotation.value());
+                this.add(field.getName(), annotation.value());
             }
         }
-        return activeTableHeader;
+        return this;
     }
 
     public static ActiveTableHeader init(int size) {
@@ -54,4 +55,7 @@ public class ActiveTableHeader {
     public static ActiveTableHeader init() {
         return new ActiveTableHeader(0);
     }
+
+
+
 }

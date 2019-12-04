@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
  * @author: minton.zhang
  * @since: 0.0.8.RELEASE
  */
-public class TransferResult<T> extends BaseResult<TransferResult> {
+public class TransferResult<T> extends BaseResult<TransferResult<T>> {
 
     @Setter
     @Getter
@@ -18,22 +18,18 @@ public class TransferResult<T> extends BaseResult<TransferResult> {
     private T value;
 
     public TransferResult() {
-
     }
 
-    public TransferResult(BaseResult baseResult, T data) {
-        this.code = baseResult.code;
-        this.msg = baseResult.msg;
-        this.value = data;
+    public TransferResult(ResultOptions options, String msg) {
+        super(options, msg);
     }
 
     public TransferResult(BaseResult baseResult) {
-        this.msg = baseResult.msg;
-        this.code = baseResult.code;
+        super(baseResult);
     }
-    public TransferResult(ResultOptions baseResult) {
-        this.msg = baseResult.getMsg();
-        this.code = baseResult.getCode();
+
+    public TransferResult(ResultOptions resultOptions) {
+        super(resultOptions);
     }
 
     /**
@@ -42,9 +38,18 @@ public class TransferResult<T> extends BaseResult<TransferResult> {
      * @param type
      * @return
      */
-    public Result builderResult(String type) {
+    public Result toResult(String type) {
         boolean success = this.isSuccess();
-        return Result.builderOptionalResult(success, type);
+        return Result.optionalResult(success, type);
     }
 
+    @Override
+    public TransferResult<T> setMsg(String message) {
+        return super.setMsg(message);
+    }
+
+    @Override
+    public TransferResult<T> setCode(int code) {
+        return super.setCode(code);
+    }
 }

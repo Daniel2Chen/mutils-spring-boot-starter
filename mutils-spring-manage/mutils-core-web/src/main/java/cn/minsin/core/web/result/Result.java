@@ -7,8 +7,8 @@ import cn.minsin.core.constant.MessageConstant;
 import cn.minsin.core.web.exception.WebMutilsException;
 import lombok.Getter;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 	构建者模式的Result 
@@ -22,7 +22,17 @@ public class Result extends BaseResult<Result> {
     private static final long serialVersionUID = 1L;
 
 
-    public Result(ResultOptions options, java.lang.String... msg) {
+    private Map<String, Object> multidata;
+
+    public Result data(String key, Object value) {
+        if (multidata == null) {
+            multidata = new ConcurrentHashMap<>();
+        }
+        multidata.put(key, value);
+        return this;
+    }
+
+    public Result(ResultOptions options, String msg) {
         super(options, msg);
     }
 
@@ -30,26 +40,36 @@ public class Result extends BaseResult<Result> {
         //allow create
     }
 
-    private HashMap<String, Object> multidata;
-
-    public Result data(java.lang.String key, Object value) {
-        if (multidata == null) {
-            multidata = new HashMap<>(3);
-        }
-        multidata.put(key, value);
-        return this;
-    }
 
     /**
      *批量新增数据
      * @param data
      * @return
      */
-    public Result data(Map<java.lang.String, Object> data) {
+    public Result data(Map<String, Object> data) {
         this.multidata.putAll(data);
         return this;
     }
 
+    @Override
+    public Result setMsg(String message) {
+        return super.setMsg(message);
+    }
+
+    @Override
+    public Result setCode(int code) {
+        return super.setCode(code);
+    }
+
+
+    public Map<String, Object> getMultidata() {
+        return multidata;
+    }
+
+    @Deprecated
+    public void setMultidata(Map<String, Object> multidata) {
+        this.multidata = multidata;
+    }
 
     /**
      * 构造result
@@ -58,7 +78,7 @@ public class Result extends BaseResult<Result> {
      * @param message 提示给前端的消息
      * @return
      */
-    public static Result builder(ResultOptions option, java.lang.String... message) {
+    public static Result builder(ResultOptions option, String message) {
         return new Result(option, message);
     }
 
@@ -67,7 +87,7 @@ public class Result extends BaseResult<Result> {
      *
      * @param msg this default is '操作成功'
      */
-    public static Result ok(java.lang.String... msg) {
+    public static Result ok(String msg) {
         return builder(DefaultResultOptions.SUCCESS, msg);
     }
 
@@ -76,7 +96,7 @@ public class Result extends BaseResult<Result> {
      *
      * @param msg this default is '服务器异常'
      */
-    public static Result exception(java.lang.String... msg) {
+    public static Result exception(String msg) {
         return builder(DefaultResultOptions.EXCEPTION, msg);
     }
 
@@ -85,7 +105,7 @@ public class Result extends BaseResult<Result> {
      *
      * @param msg this default is '缺少必要参数'
      */
-    public static Result missParam(java.lang.String... msg) {
+    public static Result missParam(String msg) {
         return builder(DefaultResultOptions.MISS_PARAM, msg);
     }
 
@@ -94,7 +114,7 @@ public class Result extends BaseResult<Result> {
      *
      * @param msg this default is '操作失败'
      */
-    public static Result fail(java.lang.String... msg) {
+    public static Result fail(String msg) {
         return builder(DefaultResultOptions.FAIL, msg);
     }
 
@@ -103,7 +123,7 @@ public class Result extends BaseResult<Result> {
      *
      * @param msg this default is '用户已失效'
      */
-    public static Result timeout(java.lang.String... msg) {
+    public static Result timeout(String msg) {
         return builder(DefaultResultOptions.OUT_TIME, msg);
     }
 
@@ -112,7 +132,7 @@ public class Result extends BaseResult<Result> {
      *
      * @param msg this default is '服务器跑路了，请稍后重试'
      */
-    public static Result error(java.lang.String... msg) {
+    public static Result error(String msg) {
         return builder(DefaultResultOptions.ERROR, msg);
     }
 
@@ -124,7 +144,7 @@ public class Result extends BaseResult<Result> {
      * @param isSuccess 操作是否成功
      * @return
      */
-    public static Result builderOptionalResult(boolean isSuccess, CharSequence id) {
+    public static Result optionalResult(boolean isSuccess, CharSequence id) {
         return builder(isSuccess ? DefaultResultOptions.SUCCESS : DefaultResultOptions.FAIL,
                 MessageConstant.isSuccess(isSuccess, OperationType.AUTO_CHOOSE(id)));
     }
@@ -137,7 +157,7 @@ public class Result extends BaseResult<Result> {
      * @param isSuccess 操作是否成功
      * @return
      */
-    public static Result builderOptionalResult(boolean isSuccess, String type) {
+    public static Result optionalResult(boolean isSuccess, String type) {
         return builder(isSuccess ? DefaultResultOptions.SUCCESS : DefaultResultOptions.FAIL,
                 MessageConstant.isSuccess(isSuccess, type));
     }
@@ -149,8 +169,7 @@ public class Result extends BaseResult<Result> {
      * @param type
      * @return
      */
-    public static Result builderOptionalResult(Throwable e, String type) {
+    public static Result optionalResult(Throwable e, String type) {
         return WebMutilsException.getMessageToResult(e, type);
     }
-
 }

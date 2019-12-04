@@ -3,9 +3,7 @@
  */
 package cn.minsin.core.web.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * 	用于切面，
@@ -16,6 +14,7 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Documented
+@Retention(RetentionPolicy.RUNTIME)
 public @interface NotFilter {
 	/**
 	 * 	是否过滤，默认true

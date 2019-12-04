@@ -3,6 +3,7 @@ package cn.minsin.core.web.result;
 import cn.minsin.core.tools.StringUtil;
 
 /**
+ * 默认操作
  * @Author: minton.zhang
  * @Date: 2019/9/22 17:47
  * @since: 0.0.8.RELEASE
@@ -16,6 +17,7 @@ public interface OperationType {
     String SELECT = "查询";
     String CANCEL = "取消";
     String GENERATE = "生成";
+    String PUBLISH = "发布";
 
 
     String SIGN_IN = "登录";
@@ -53,7 +55,6 @@ public interface OperationType {
 
     String DISABLE = "禁用";
     String ENABLE = "启用";
-
 
 
     /**
